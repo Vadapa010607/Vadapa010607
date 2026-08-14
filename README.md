@@ -10,3 +10,10 @@
 Vadapa010607/Vadapa010607 is a ✨ special ✨ repository, because `README.md` (this file) appears in its GitHub profile.
 You can see the changes by clicking the Preview link.
 ---
+•	👋 Sziasztok, @Vadapa010607 vagyok
+•	👀 Érdekel a megújuló energia, az energia tárolás, és a 🔋♻🌍
+•	🌱 Jelenleg szabadúszó energiafejlesztőként dolgozom.
+•	💞️ Szívesen fejlesztek, ezt most itt hagyom
+•	📫 Érdeklődni: e-mailben: vad.imre@outlook.com
+•	😄 Becenevek: Vadapa01
+•	⚡ Érdekes tény: Rendkívülinek tartom ezt a technológiai fejlődést 
