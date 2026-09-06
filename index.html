@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>TecLin - KAP Control Room</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --c-bg:#0B1F16; --c-panel:#112A1E; --c-accent:#41B93C; --c-text:#EAF4EC; --c-muted:#8FA79A; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { font-family:Poppins,sans-serif; background-color:var(--c-bg); color:var(--c-text); height:100%; }
+.login-container { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+.login-card { background-color:var(--c-panel); padding:40px; border-radius:12px; max-width:400px; }
+.login-card h2 { margin-bottom:20px; font-size:24px; }
+.form-group { margin-bottom:16px; }
+.form-group label { display:block; font-size:12px; margin-bottom:6px; color:var(--c-muted); }
+.form-group input { width:100%; padding:10px; border:1px solid #2C6B3F; background-color:#0B1F16; color:var(--c-text); border-radius:6px; font-family:Poppins,sans-serif; }
+.btn { width:100%; padding:12px; background-color:var(--c-accent); color:white; border:none; border-radius:6px; font-weight:600; cursor:pointer; margin-top:16px; }
+.btn:hover { background-color:#3AA031; }
+.dashboard { display:none; padding:20px; }
+.dashboard.show { display:block; }
+.header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; padding:10px; background-color:var(--c-panel); border-radius:8px; }
+.kpi { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:24px; }
+.kpi-card { background-color:var(--c-panel); padding:20px; border-radius:8px; }
+.kpi-card .label { font-size:12px; color:var(--c-muted); margin-bottom:8px; }
+.kpi-card .value { font-size:28px; font-weight:700; }
+table { width:100%; border-collapse:collapse; }
+th { padding:12px; text-align:left; font-size:11px; font-weight:600; color:var(--c-muted); background-color:var(--c-panel); }
+td { padding:12px; border-bottom:1px solid #1a2e23; }
+.btn-comment { padding:6px 12px; background-color:transparent; border:1px solid #41B93C; color:var(--c-accent); border-radius:4px; cursor:pointer; font-size:11px; }
+.btn-comment.filled { background-color:var(--c-accent); color:white; }
+</style>
+</head>
+<body>
+<div id="login" class="login-container">
+<div class="login-card">
+<h2>TecLin KAP</h2>
+<p style="margin-bottom:24px; color:var(--c-muted); font-size:14px;">Energialead Control Room</p>
+<div class="form-group">
+<label>Email cím</label>
+<input type="email" id="emailInput" placeholder="neved@teclin.hu">
+</div>
+<button class="btn" onclick="handleLogin()">Belépés</button>
+</div>
+</div>
+
+<div id="dashboard" class="dashboard">
+<div class="header">
+<h1>Energialead Control Room</h1>
+<button class="btn" onclick="logout()" style="width:120px; padding:8px;">Kijelentkezés</button>
+</div>
+
+<div class="kpi" id="kpiGrid"></div>
+
+<div style="background-color:var(--c-panel); border-radius:8px; overflow:hidden;">
+<table id="projectTable">
+<thead>
+<tr><th>Azonosító</th><th>Ügyfél</th><th>Megye</th><th>Típus</th><th>Megjegyzés</th></tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+</div>
+
+<script>
+const ADMIN_EMAILS = ["szabo.csaba@rezsimentor.hu", "peter.schmidt@teclin.hu", "imre.vad@teclin.hu"];
+const MANAGERS = [
+{name:"László Faragó", email:"lfaragó60@gmail.com", territories:["Bács-Kiskun"]},
+{name:"Bandi Tulak", email:"tulakbandi@gmail.com", territories:["Baranya","Somogy","Tolna"]},
+{name:"Aczél Rácz", email:"a.racz@eurotek.eu", territories:["Békés","Csongrád-Csanád"]},
+{name:"Norbert Krasznai", email:"krasznai.norbert.rezsimentor@gmail.com", territories:["Borsod-Abaúj-Zemplén","Szabolcs-Szatmár-Bereg"]},
+{name:"Judit Rekapützer", email:"juditrekaputzer.rezsimentor@gmail.com", territories:["Fejér","Veszprém"]},
+{name:"Zsolt Tóth", email:"tothzsoltrezsimentor@gmail.com", territories:["Győr-Moson-Sopron"]},
+{name:"Anna Csányi", email:"csanna07@gmail.com", territories:["Hajdú-Bihar"]},
+{name:"Szabó Rezsi", email:"rezsimentor@gmail.com", territories:["Jász-Nagykun-Szolnok","Heves","Nógrád","Pest"]},
+{name:"Gyula Babik", email:"babikgyula.rezsimentor@gmail.com", territories:["Komárom-Esztergom"]},
+{name:"András Fábián", email:"fabian.andras.rezsimentor@gmail.com", territories:["Vas","Zala"]},
+{name:"János Kovács", email:"jkovacs@teclin.hu", territories:["Budapest"]},
+{name:"Péter Nagy", email:"nagy.peter@teclin.hu", territories:["Szolnok"]},
+{name:"Márta Molnár", email:"molnar.marta@teclin.hu", territories:["Miskolc"]},
+{name:"István Kiss", email:"kiss.istvan@teclin.hu", territories:["Debrecen"]},
+{name:"Katalin Horváth", email:"horvath.katalin@teclin.hu", territories:["Szeged"]},
+{name:"Tamás Bodnár", email:"bodnar.tamas@teclin.hu", territories:["Pécs"]},
+{name:"Éva Szilágyi", email:"szilagyi.eva@teclin.hu", territories:["Győr"]},
+{name:"Róbert Balázs", email:"balazs.robert@teclin.hu", territories:["Kecskemét"]},
+{name:"Zsuzsanna Varga", email:"varga.zsuzsanna@teclin.hu", territories:["Nyíregyháza"]}
+];
+
+const counties = ["Bács-Kiskun","Baranya","Somogy","Tolna","Békés","Csongrád-Csanád","Borsod-Abaúj-Zemplén","Szabolcs-Szatmár-Bereg","Fejér","Veszprém","Győr-Moson-Sopron","Hajdú-Bihar","Jász-Nagykun-Szolnok","Heves","Nógrád","Pest","Komárom-Esztergom","Vas","Zala","Budapest"];
+const types = ["Szellőzés","Hőszigetelés","Nyílászárók","Fűtéscsere","Vizek. fejlesztés"];
+
+function generateProjects() {
+  const projects = [];
+  for (let i = 1; i <= 400; i++) {
+    const county = counties[Math.floor(Math.random() * counties.length)];
+    const manager = MANAGERS.find(m => m.territories.includes(county));
+    projects.push({
+      id: "KAP-2026-" + String(i).padStart(4, "0"),
+      customer: "Ügyfél " + i,
+      county: county,
+      type: types[Math.floor(Math.random() * types.length)],
+      comment: "",
+      manager: manager ? manager.email : MANAGERS[0].email
+    });
+  }
+  return projects;
+}
+
+let currentUser = null;
+let allProjects = generateProjects();
+
+function handleLogin() {
+  const email = document.getElementById("emailInput").value.toLowerCase().trim();
+  const manager = MANAGERS.find(m => m.email.toLowerCase() === email);
+  if (manager || ADMIN_EMAILS.includes(email)) {
+    currentUser = {
+      email: email,
+      name: manager ? manager.name : "Admin",
+      isAdmin: ADMIN_EMAILS.includes(email),
+      territories: manager ? manager.territories : []
+    };
+    showDashboard();
+  } else {
+    alert("Nincs engedélyed az alkalmazáshoz!");
+  }
+}
+
+function showDashboard() {
+  document.getElementById("login").style.display = "none";
+  document.getElementById("dashboard").classList.add("show");
+  loadDashboard();
+}
+
+function loadDashboard() {
+  const myProjects = allProjects.filter(p => p.manager === currentUser.email);
+  const commented = myProjects.filter(p => p.comment).length;
+  const completion = Math.round((commented / Math.max(myProjects.length, 1)) * 100);
+
+  document.getElementById("kpiGrid").innerHTML = `
+    <div class="kpi-card">
+      <div class="label">Összes projekt</div>
+      <div class="value">${myProjects.length}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">Megjegyzések</div>
+      <div class="value">${commented} (${completion}%)</div>
+    </div>
+  `;
+
+  const tbody = document.querySelector("#projectTable tbody");
+  tbody.innerHTML = myProjects.map(p => `
+    <tr>
+      <td>${p.id}</td>
+      <td>${p.customer}</td>
+      <td>${p.county}</td>
+      <td><span style="background-color:rgba(65,185,60,0.14); color:#A6E56D; padding:4px 8px; border-radius:4px; font-size:11px;">${p.type}</span></td>
+      <td><button class="btn-comment ${p.comment ? 'filled' : ''}" onclick="alert('Edit: ' + this.parentElement.parentElement.cells[0].textContent)">${p.comment ? 'Edit' : 'Add'}</button></td>
+    </tr>
+  `).join("");
+}
+
+function logout() {
+  currentUser = null;
+  document.getElementById("login").style.display = "flex";
+  document.getElementById("dashboard").classList.remove("show");
+  document.getElementById("emailInput").value = "";
+}
+
+document.getElementById("emailInput").addEventListener("keypress", e => {
+  if (e.key === "Enter") handleLogin();
+});
+</script>
+</body>
+</html>
