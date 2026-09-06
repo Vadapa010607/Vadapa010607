@@ -137,6 +137,14 @@ function showDashboard() {
 }
 
 function loadDashboard() {
+  if (currentUser.isAdmin) {
+    loadAdminDashboard();
+  } else {
+    loadManagerDashboard();
+  }
+}
+
+function loadManagerDashboard() {
   const myProjects = allProjects.filter(p => p.manager === currentUser.email);
   const commented = myProjects.filter(p => p.comment).length;
   const completion = Math.round((commented / Math.max(myProjects.length, 1)) * 100);
@@ -160,6 +168,41 @@ function loadDashboard() {
       <td>${p.county}</td>
       <td><span style="background-color:rgba(65,185,60,0.14); color:#A6E56D; padding:4px 8px; border-radius:4px; font-size:11px;">${p.type}</span></td>
       <td><button class="btn-comment ${p.comment ? 'filled' : ''}" onclick="alert('Edit: ' + this.parentElement.parentElement.cells[0].textContent)">${p.comment ? 'Edit' : 'Add'}</button></td>
+    </tr>
+  `).join("");
+}
+
+function loadAdminDashboard() {
+  const totalProjects = allProjects.length;
+  const totalComments = allProjects.filter(p => p.comment).length;
+  const avgCompletion = Math.round((totalComments / totalProjects) * 100);
+
+  document.getElementById("kpiGrid").innerHTML = `
+    <div class="kpi-card">
+      <div class="label">Összes projekt</div>
+      <div class="value">${totalProjects}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">Kitöltött megjegyzések</div>
+      <div class="value">${totalComments} (${avgCompletion}%)</div>
+    </div>
+  `;
+
+  const tbody = document.querySelector("#projectTable tbody");
+  const managerStats = {};
+
+  MANAGERS.forEach(m => {
+    const mProjects = allProjects.filter(p => p.manager === m.email);
+    const mComments = mProjects.filter(p => p.comment).length;
+    managerStats[m.email] = { name: m.name, projects: mProjects.length, comments: mComments };
+  });
+
+  tbody.innerHTML = Object.entries(managerStats).map(([email, stat]) => `
+    <tr>
+      <td>${stat.name}</td>
+      <td>${email}</td>
+      <td>${stat.projects}</td>
+      <td>${stat.comments}</td>
     </tr>
   `).join("");
 }
