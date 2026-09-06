@@ -87,16 +87,18 @@ const MANAGERS = [
 ];
 
 const counties = ["Bács-Kiskun","Baranya","Somogy","Tolna","Békés","Csongrád-Csanád","Borsod-Abaúj-Zemplén","Szabolcs-Szatmár-Bereg","Fejér","Veszprém","Győr-Moson-Sopron","Hajdú-Bihar","Jász-Nagykun-Szolnok","Heves","Nógrád","Pest","Komárom-Esztergom","Vas","Zala","Budapest"];
-const types = ["Szellőzés","Hőszigetelés","Nyílászárók","Fűtéscsere","Vizek. fejlesztés"];
+const types = ["Napelem","Napenergia","Energiatárolás","Szellőzés","Hőszigetelés","Nyílászárók","Fűtéscsere","Vizek. fejlesztés"];
+const customerNames = ["Kovács Familie","Nagy Gábor Kft.","Szilágyi Épület","Kiss László","Molnár Építkezés","Horváth Ház","Varga Család","Balázs Energia","Tóth Fejlesztés","Szabó Otthon","Csányi Lakóház","Rácz Kft.","Faragó Család","Tulak Építés","Krasznai Biznisz","Rekapützer Ház","Babik Energia","Szilágyi Lakás","Varga Villa","Bodnár Család","Kiss Épület","Nagy Energia","Horváth Fejlesztés","Molnár Kft.","Csányi Otthon","Balázs Család","Tóth Ház","Rácz Energia","Faragó Fejlesztés","Tulak Lakóház","Krasznai Család","Rekapützer Kft.","Babik Otthon","Szilágyi Fejlesztés","Varga Energia","Bodnár Ház","Kiss Család","Nagy Biznisz","Horváth Kft.","Molnár Energia"];
 
 function generateProjects() {
   const projects = [];
   for (let i = 1; i <= 400; i++) {
     const county = counties[Math.floor(Math.random() * counties.length)];
     const manager = MANAGERS.find(m => m.territories.includes(county));
+    const customer = customerNames[Math.floor(Math.random() * customerNames.length)];
     projects.push({
       id: "KAP-2026-" + String(i).padStart(4, "0"),
-      customer: "Ügyfél " + i,
+      customer: customer + " #" + i,
       county: county,
       type: types[Math.floor(Math.random() * types.length)],
       comment: "",
@@ -170,5 +172,11 @@ document.getElementById("emailInput").addEventListener("keypress", e => {
   if (e.key === "Enter") handleLogin();
 });
 </script>
+
+<footer style="background-color:#0d2818; padding:16px; text-align:center; margin-top:40px; border-top:1px solid #1a3d2a; font-size:12px; color:#6b8e7e;">
+  <p style="margin:0;">© TecLin Energy Hungary Kft. - Minden jog fenntartva</p>
+  <a href="https://teclin.hu/adatkezelesi-tajekoztato-2/" target="_blank" style="color:#41B93C; text-decoration:none; margin-top:8px; display:inline-block;">Adatkezelési nyilatkozat</a>
+</footer>
+
 </body>
 </html>
