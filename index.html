@@ -3,67 +3,276 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>TecLin - KAP Control Room</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>TecLin – KAP Control Room</title>
+<link rel="icon" type="image/svg+xml" href="assets/teclin-emblem.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root { --c-bg:#0B1F16; --c-panel:#112A1E; --c-accent:#41B93C; --c-text:#EAF4EC; --c-muted:#8FA79A; }
+/* ===== TecLin Design System – tokenek ===== */
+:root {
+  /* Márkaszínek */
+  --tl-green: #41b93c;
+  --tl-forest: #285039;
+  --tl-lime: #81cc29;
+  --tl-spring: #a7e66e;
+  /* Funkcionális */
+  --tl-green-text: #2b7d28;
+  --tl-text: #1f2a24;
+  --tl-muted: #5c6660;
+  --tl-line: #d9e3dc;
+  --tl-tint: #f2f9ec;
+  --tl-white: #ffffff;
+  --tl-warn: #e8a317;
+  --tl-neg: #c8423b;
+  /* Szemantikus aliasok */
+  --surface-page: #ffffff;
+  --surface-card: #ffffff;
+  --surface-tint: #f2f9ec;
+  --surface-zebra: #f2f9ec;
+  --surface-inverse: #285039;
+  --text-body: #1f2a24;
+  --text-heading: #285039;
+  --text-muted: #5c6660;
+  --text-link: #2b7d28;
+  --text-on-inverse: #ffffff;
+  --text-accent-on-inverse: #a7e66e;
+  --border: #d9e3dc;
+  --accent: #41b93c;
+  --accent-hover: #2b7d28;
+  --kpi-value: #41b93c;
+  /* Tipográfia */
+  --font-head: "Exo 2", Montserrat, Arial, sans-serif;
+  --font-body: Inter, "Segoe UI", Calibri, Arial, sans-serif;
+  --fs-h1: 44px; --fs-h2: 30px; --fs-h3: 21px; --fs-body: 16px; --fs-small: 13px; --fs-kpi: 44px;
+  /* Térköz, sarkok */
+  --radius-sm: 8px; --radius: 10px; --radius-lg: 12px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  --rule: 3px;
+}
+[data-theme="dark"] {
+  --surface-page: #14261c;
+  --surface-card: #1c3528;
+  --surface-tint: #1c3528;
+  --surface-zebra: #18301f;
+  --text-body: #eef5f0;
+  --text-heading: #eef5f0;
+  --text-muted: #a9b8ae;
+  --text-link: #a7e66e;
+  --border: #2d4a3a;
+  --accent: #81cc29;
+  --accent-hover: #a7e66e;
+  --kpi-value: #a7e66e;
+}
+
+/* ===== Alap ===== */
 * { margin:0; padding:0; box-sizing:border-box; }
-html, body { font-family:Poppins,sans-serif; background-color:var(--c-bg); color:var(--c-text); height:100%; }
-.login-container { display:flex; align-items:center; justify-content:center; min-height:100vh; }
-.login-card { background-color:var(--c-panel); padding:40px; border-radius:12px; max-width:400px; }
-.login-card h2 { margin-bottom:20px; font-size:24px; }
-.form-group { margin-bottom:16px; }
-.form-group label { display:block; font-size:12px; margin-bottom:6px; color:var(--c-muted); }
-.form-group input { width:100%; padding:10px; border:1px solid #2C6B3F; background-color:#0B1F16; color:var(--c-text); border-radius:6px; font-family:Poppins,sans-serif; }
-.btn { width:100%; padding:12px; background-color:var(--c-accent); color:white; border:none; border-radius:6px; font-weight:600; cursor:pointer; margin-top:16px; }
-.btn:hover { background-color:#3AA031; }
-.dashboard { display:none; padding:20px; }
+html, body { min-height:100%; }
+body {
+  font-family:var(--font-body); font-size:var(--fs-body); line-height:1.6;
+  background:var(--surface-page); color:var(--text-body);
+  display:flex; flex-direction:column; min-height:100vh;
+  transition:background .15s, color .15s;
+}
+main { flex:1; }
+h1, h2, h3 { font-family:var(--font-head); color:var(--text-heading); line-height:1.15; }
+a { color:var(--text-link); }
+.visually-hidden { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+/* ===== Gombok (Button) ===== */
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:11px 20px; font-family:var(--font-body); font-size:16px; font-weight:600; line-height:1.2;
+  border-radius:var(--radius); border:1.5px solid transparent; cursor:pointer; text-decoration:none;
+  transition:background .15s, color .15s, border-color .15s;
+}
+.btn-sm { padding:8px 14px; font-size:14px; }
+.btn-primary { background:var(--tl-green); color:#fff; }
+.btn-primary:hover { background:var(--tl-green-text); }
+.btn-secondary { background:#fff; color:var(--tl-forest); border-color:var(--tl-forest); }
+.btn-secondary:hover { background:var(--tl-tint); }
+.btn-ghost { background:transparent; color:var(--text-link); }
+.btn-ghost:hover { background:var(--surface-tint); }
+.btn-on-inverse { background:transparent; color:#fff; border-color:rgba(255,255,255,.55); }
+.btn-on-inverse:hover { background:rgba(255,255,255,.12); border-color:#fff; }
+.btn:focus-visible, .field input:focus-visible { outline:3px solid var(--tl-spring); outline-offset:2px; }
+.btn-block { width:100%; }
+
+/* ===== Címkék (Badge) ===== */
+.badge {
+  display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:999px;
+  font-size:13px; font-weight:600; line-height:1.3; white-space:nowrap;
+}
+.badge-green { background:var(--tl-tint); color:var(--tl-green-text); }
+.badge-lime { background:var(--tl-spring); color:var(--tl-forest); }
+.badge-forest { background:var(--tl-forest); color:#fff; }
+.badge-neutral { background:#eef2ef; color:var(--tl-muted); }
+.badge-warn { background:#fbf0d9; color:#8a5d00; }
+
+/* ===== Belépés ===== */
+.login { display:flex; align-items:center; justify-content:center; padding:var(--space-7) var(--space-4); min-height:calc(100vh - 120px); }
+.login-card {
+  width:100%; max-width:420px; background:var(--surface-card);
+  border:1px solid var(--border); border-radius:var(--radius-lg); padding:var(--space-6);
+}
+.login-card .logo { height:40px; width:auto; display:block; margin-bottom:var(--space-5); }
+.login-card .logo-dark { display:none; }
+[data-theme="dark"] .login-card .logo-light { display:none; }
+[data-theme="dark"] .login-card .logo-dark { display:block; }
+.login-card h1 { font-size:var(--fs-h3); font-weight:700; }
+.login-card .lead { color:var(--text-muted); font-size:15px; margin:var(--space-1) 0 var(--space-5); }
+.login-card .rule { height:var(--rule); background:var(--tl-green); border-radius:2px; margin-bottom:var(--space-5); width:48px; }
+.field { margin-bottom:var(--space-4); }
+.field label { display:block; font-size:var(--fs-small); font-weight:600; color:var(--text-body); margin-bottom:6px; }
+.field input {
+  width:100%; padding:11px 14px; font-family:var(--font-body); font-size:16px;
+  color:var(--text-body); background:var(--surface-page);
+  border:1px solid var(--border); border-radius:var(--radius-sm);
+}
+.field input::placeholder { color:var(--text-muted); }
+.login-error { display:none; margin-top:var(--space-3); font-size:14px; font-weight:600; color:var(--tl-neg); }
+.login-error.show { display:block; }
+
+/* ===== Fejléc ===== */
+.dashboard { display:none; }
 .dashboard.show { display:block; }
-.header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; padding:10px; background-color:var(--c-panel); border-radius:8px; }
-.kpi { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:24px; }
-.kpi-card { background-color:var(--c-panel); padding:20px; border-radius:8px; }
-.kpi-card .label { font-size:12px; color:var(--c-muted); margin-bottom:8px; }
-.kpi-card .value { font-size:28px; font-weight:700; }
-table { width:100%; border-collapse:collapse; }
-th { padding:12px; text-align:left; font-size:11px; font-weight:600; color:var(--c-muted); background-color:var(--c-panel); }
-td { padding:12px; border-bottom:1px solid #1a2e23; }
-.btn-comment { padding:6px 12px; background-color:transparent; border:1px solid #41B93C; color:var(--c-accent); border-radius:4px; cursor:pointer; font-size:11px; }
-.btn-comment.filled { background-color:var(--c-accent); color:white; }
+.topbar { background:var(--surface-inverse); border-bottom:var(--rule) solid var(--tl-green); color:var(--text-on-inverse); }
+.topbar-inner {
+  max-width:1280px; margin:0 auto; padding:var(--space-4) var(--space-5);
+  display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); flex-wrap:wrap;
+}
+.brand { display:flex; align-items:center; gap:var(--space-4); }
+.brand img { height:32px; width:auto; display:block; }
+.brand .divider { width:1px; height:28px; background:rgba(255,255,255,.3); }
+.brand .app-name { font-family:var(--font-head); font-weight:600; font-size:18px; color:#fff; }
+.topbar-actions { display:flex; align-items:center; gap:var(--space-3); flex-wrap:wrap; }
+.user-chip { font-size:14px; color:var(--text-accent-on-inverse); font-weight:500; margin-right:var(--space-2); }
+
+/* ===== Tartalom ===== */
+.container { max-width:1280px; margin:0 auto; padding:var(--space-6) var(--space-5) var(--space-7); }
+.page-head { margin-bottom:var(--space-5); }
+.page-head h1 { font-size:var(--fs-h2); font-weight:700; }
+.page-head p { color:var(--text-muted); margin-top:var(--space-1); }
+
+/* ===== KPI kártyák (KpiCard) ===== */
+.kpi { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:var(--space-3); margin-bottom:var(--space-6); }
+.kpi-card { padding:18px 20px; border-radius:var(--radius); background:var(--surface-tint); }
+.kpi-card .value {
+  font-family:var(--font-head); font-weight:700; font-size:var(--fs-kpi); line-height:1;
+  color:var(--kpi-value); font-variant-numeric:tabular-nums;
+}
+.kpi-card .value .unit { font-size:.45em; margin-left:6px; }
+.kpi-card .label { margin-top:10px; font-size:14px; color:var(--text-muted); }
+.kpi-card.dark { background:var(--tl-forest); }
+.kpi-card.dark .value { color:var(--tl-spring); }
+.kpi-card.dark .label { color:#fff; }
+[data-theme="dark"] .kpi-card.dark { box-shadow:inset 0 0 0 1px var(--tl-lime); }
+
+/* ===== Táblázat (DataTable) ===== */
+.section-head { display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-3); margin-bottom:var(--space-3); }
+.section-head h2 { font-size:var(--fs-h3); font-weight:600; }
+.section-head .meta { font-size:var(--fs-small); color:var(--text-muted); }
+.table-wrap { overflow-x:auto; border-radius:var(--radius-sm); border:1px solid var(--border); }
+.data-table { width:100%; border-collapse:collapse; font-size:14px; color:var(--text-body); font-variant-numeric:tabular-nums; }
+.data-table th, .data-table td { padding:10px 14px; text-align:left; }
+.data-table th { background:var(--tl-forest); color:#fff; font-weight:600; white-space:nowrap; position:sticky; top:0; }
+.data-table td { border-bottom:1px solid var(--border); background:var(--surface-card); }
+.data-table tbody tr:nth-child(even) td { background:var(--surface-zebra); }
+.data-table tbody tr:last-child td { border-bottom:none; }
+.data-table .num { text-align:right; }
+.data-table tbody tr:nth-child(even) .badge-green { background:#fff; box-shadow:inset 0 0 0 1px var(--tl-line); }
+.data-table .mono { font-weight:600; color:var(--text-heading); white-space:nowrap; }
+.progress { display:inline-flex; align-items:center; gap:8px; }
+.progress-bar { width:80px; height:6px; border-radius:3px; background:var(--border); overflow:hidden; }
+.progress-bar span { display:block; height:100%; background:var(--accent); }
+
+/* ===== Lábléc ===== */
+.footer { border-top:var(--rule) solid var(--tl-green); background:var(--surface-page); }
+.footer-inner {
+  max-width:1280px; margin:0 auto; padding:var(--space-4) var(--space-5);
+  display:flex; justify-content:space-between; align-items:center; gap:var(--space-3); flex-wrap:wrap;
+  font-size:var(--fs-small); color:var(--text-muted);
+}
+.footer a { color:var(--text-link); text-decoration:none; font-weight:600; }
+.footer a:hover { text-decoration:underline; }
+
+@media (max-width: 900px) {
+  .kpi { grid-template-columns:repeat(2, minmax(0,1fr)); }
+  .brand .divider, .brand .app-name { display:none; }
+}
+@media (max-width: 520px) {
+  .container, .topbar-inner, .footer-inner { padding-left:var(--space-4); padding-right:var(--space-4); }
+  .kpi { grid-template-columns:1fr; }
+  .user-chip { display:none; }
+}
 </style>
 </head>
 <body>
-<div id="login" class="login-container">
-<div class="login-card">
-<h2>TecLin KAP</h2>
-<p style="margin-bottom:24px; color:var(--c-muted); font-size:14px;">Energialead Control Room</p>
-<div class="form-group">
-<label>Email cím</label>
-<input type="email" id="emailInput" placeholder="neved@teclin.hu">
-</div>
-<button class="btn" onclick="handleLogin()">Belépés</button>
-</div>
-</div>
+<main>
+<section id="login" class="login" aria-labelledby="loginTitle">
+  <div class="login-card">
+    <img class="logo logo-light" src="assets/teclin-logo.svg" alt="TecLin">
+    <img class="logo logo-dark" src="assets/teclin-logo-inverse.svg" alt="TecLin">
+    <div class="rule" aria-hidden="true"></div>
+    <h1 id="loginTitle">KAP Energialead Control Room</h1>
+    <p class="lead">Lépjen be TecLin vagy partner e-mail-címével.</p>
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <label for="emailInput">E-mail-cím</label>
+        <input type="email" id="emailInput" autocomplete="email" placeholder="neved@teclin.hu" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Belépés</button>
+      <p id="loginError" class="login-error" role="alert">Ehhez az e-mail-címhez nincs hozzáférés.</p>
+    </form>
+  </div>
+</section>
 
 <div id="dashboard" class="dashboard">
-<div class="header">
-<h1>Energialead Control Room</h1>
-<div style="display:flex; gap:12px;">
-<a href="https://teclin.hu/kapcsolat/" target="_blank" class="btn" style="width:auto; padding:8px 16px; text-decoration:none; background-color:#41B93C; color:white; border-radius:6px; cursor:pointer;">Kapcsolat</a>
-<button class="btn" onclick="logout()" style="width:120px; padding:8px;">Kijelentkezés</button>
-</div>
-</div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img src="assets/teclin-logo-inverse.svg" alt="TecLin">
+        <span class="divider" aria-hidden="true"></span>
+        <span class="app-name">Energialead Control Room</span>
+      </div>
+      <div class="topbar-actions">
+        <span class="user-chip" id="userChip"></span>
+        <button type="button" class="btn btn-sm btn-on-inverse" id="themeToggle" aria-pressed="false">Sötét mód</button>
+        <a href="https://teclin.hu/kapcsolat/" target="_blank" rel="noopener" class="btn btn-sm btn-primary">Kapcsolat</a>
+        <button type="button" class="btn btn-sm btn-secondary" onclick="logout()">Kijelentkezés</button>
+      </div>
+    </div>
+  </header>
 
-<div class="kpi" id="kpiGrid"></div>
+  <div class="container">
+    <div class="page-head">
+      <h1 id="pageTitle">Áttekintés</h1>
+      <p id="pageSubtitle"></p>
+    </div>
 
-<div style="background-color:var(--c-panel); border-radius:8px; overflow:hidden;">
-<table id="projectTable">
-<thead>
-<tr><th>Azonosító</th><th>Ügyfél</th><th>Megye</th><th>Típus</th><th>Megjegyzés</th></tr>
-</thead>
-<tbody></tbody>
-</table>
+    <div class="kpi" id="kpiGrid"></div>
+
+    <div class="section-head">
+      <h2 id="tableTitle">Projektek</h2>
+      <span class="meta" id="tableMeta"></span>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table" id="projectTable">
+        <thead><tr></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
 </div>
-</div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>© TecLin Energy Hungary Kft. – Minden jog fenntartva &nbsp;|&nbsp; teclin.hu</span>
+    <a href="https://teclin.hu/adatkezelesi-tajekoztato-2/" target="_blank" rel="noopener">Adatkezelési nyilatkozat</a>
+  </div>
+</footer>
 
 <script>
 const ADMIN_EMAILS = ["szabo.csaba@rezsimentor.hu", "peter.schmidt@teclin.hu", "imre.vad@teclin.hu", "vad.imre81@gmail.com"];
@@ -114,10 +323,40 @@ function generateProjects() {
 let currentUser = null;
 let allProjects = generateProjects();
 
-function handleLogin() {
+function fmt(n) { return Number(n).toLocaleString("hu-HU"); }
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+const TYPE_TONES = { "Napelem":"green", "Napenergia":"green", "Energiatárolás":"lime" };
+function typeBadge(type) {
+  return `<span class="badge badge-${TYPE_TONES[type] || "neutral"}">${esc(type)}</span>`;
+}
+
+function kpiCard(value, label, unit, dark) {
+  return `<div class="kpi-card${dark ? " dark" : ""}">
+    <div class="value">${value}${unit ? `<span class="unit">${unit}</span>` : ""}</div>
+    <div class="label">${label}</div>
+  </div>`;
+}
+
+function setHeader(cols) {
+  document.querySelector("#projectTable thead tr").innerHTML =
+    cols.map(c => `<th scope="col"${c.num ? ' class="num"' : ""}>${c.label}</th>`).join("");
+}
+
+function progress(pct) {
+  return `<span class="progress"><span class="progress-bar" aria-hidden="true"><span style="width:${pct}%"></span></span>${pct}%</span>`;
+}
+
+function handleLogin(e) {
+  if (e) e.preventDefault();
   const email = document.getElementById("emailInput").value.toLowerCase().trim();
   const manager = MANAGERS.find(m => m.email.toLowerCase() === email);
+  const err = document.getElementById("loginError");
   if (manager || ADMIN_EMAILS.includes(email)) {
+    err.classList.remove("show");
     currentUser = {
       email: email,
       name: manager ? manager.name : "Admin",
@@ -126,13 +365,14 @@ function handleLogin() {
     };
     showDashboard();
   } else {
-    alert("Nincs engedélyed az alkalmazáshoz!");
+    err.classList.add("show");
   }
 }
 
 function showDashboard() {
   document.getElementById("login").style.display = "none";
   document.getElementById("dashboard").classList.add("show");
+  document.getElementById("userChip").textContent = currentUser.name;
   loadDashboard();
 }
 
@@ -148,26 +388,29 @@ function loadManagerDashboard() {
   const myProjects = allProjects.filter(p => p.manager === currentUser.email);
   const commented = myProjects.filter(p => p.comment).length;
   const completion = Math.round((commented / Math.max(myProjects.length, 1)) * 100);
+  const storage = myProjects.filter(p => p.type === "Energiatárolás").length;
 
-  document.getElementById("kpiGrid").innerHTML = `
-    <div class="kpi-card">
-      <div class="label">Összes projekt</div>
-      <div class="value">${myProjects.length}</div>
-    </div>
-    <div class="kpi-card">
-      <div class="label">Megjegyzések</div>
-      <div class="value">${commented} (${completion}%)</div>
-    </div>
-  `;
+  document.getElementById("pageTitle").textContent = "Saját projektek";
+  document.getElementById("pageSubtitle").textContent = "Területek: " + currentUser.territories.join(", ");
 
+  document.getElementById("kpiGrid").innerHTML =
+    kpiCard(fmt(myProjects.length), "Összes projekt", "db") +
+    kpiCard(fmt(commented), "Megjegyzéssel ellátott", "db") +
+    kpiCard(fmt(storage), "Energiatárolási lead", "db") +
+    kpiCard(completion, "Kitöltöttség", "%", true);
+
+  document.getElementById("tableTitle").textContent = "Projektek";
+  document.getElementById("tableMeta").textContent = fmt(myProjects.length) + " tétel";
+
+  setHeader([{label:"Azonosító"},{label:"Ügyfél"},{label:"Megye"},{label:"Típus"},{label:"Megjegyzés"}]);
   const tbody = document.querySelector("#projectTable tbody");
   tbody.innerHTML = myProjects.map(p => `
     <tr>
-      <td>${p.id}</td>
-      <td>${p.customer}</td>
-      <td>${p.county}</td>
-      <td><span style="background-color:rgba(65,185,60,0.14); color:#A6E56D; padding:4px 8px; border-radius:4px; font-size:11px;">${p.type}</span></td>
-      <td><button class="btn-comment ${p.comment ? 'filled' : ''}" onclick="alert('Edit: ' + this.parentElement.parentElement.cells[0].textContent)">${p.comment ? 'Edit' : 'Add'}</button></td>
+      <td class="mono">${esc(p.id)}</td>
+      <td>${esc(p.customer)}</td>
+      <td>${esc(p.county)}</td>
+      <td>${typeBadge(p.type)}</td>
+      <td><button type="button" class="btn btn-sm ${p.comment ? "btn-primary" : "btn-secondary"}" onclick="alert('Szerkesztés: ${esc(p.id)}')">${p.comment ? "Szerkesztés" : "Hozzáadás"}</button></td>
     </tr>
   `).join("");
 }
@@ -177,32 +420,34 @@ function loadAdminDashboard() {
   const totalComments = allProjects.filter(p => p.comment).length;
   const avgCompletion = Math.round((totalComments / totalProjects) * 100);
 
-  document.getElementById("kpiGrid").innerHTML = `
-    <div class="kpi-card">
-      <div class="label">Összes projekt</div>
-      <div class="value">${totalProjects}</div>
-    </div>
-    <div class="kpi-card">
-      <div class="label">Kitöltött megjegyzések</div>
-      <div class="value">${totalComments} (${avgCompletion}%)</div>
-    </div>
-  `;
+  document.getElementById("pageTitle").textContent = "Admin áttekintés";
+  document.getElementById("pageSubtitle").textContent = "Területi vezetők és projektállomány összesítése";
 
-  const tbody = document.querySelector("#projectTable tbody");
-  const managerStats = {};
+  document.getElementById("kpiGrid").innerHTML =
+    kpiCard(fmt(totalProjects), "Összes projekt", "db") +
+    kpiCard(fmt(totalComments), "Kitöltött megjegyzések", "db") +
+    kpiCard(fmt(MANAGERS.length), "Területi vezetők", "fő") +
+    kpiCard(avgCompletion, "Átlagos kitöltöttség", "%", true);
 
-  MANAGERS.forEach(m => {
+  const managerStats = MANAGERS.map(m => {
     const mProjects = allProjects.filter(p => p.manager === m.email);
     const mComments = mProjects.filter(p => p.comment).length;
-    managerStats[m.email] = { name: m.name, projects: mProjects.length, comments: mComments };
+    return { name: m.name, email: m.email, projects: mProjects.length, comments: mComments,
+             pct: Math.round((mComments / Math.max(mProjects.length, 1)) * 100) };
   });
 
-  tbody.innerHTML = Object.entries(managerStats).map(([email, stat]) => `
+  document.getElementById("tableTitle").textContent = "Területi vezetők";
+  document.getElementById("tableMeta").textContent = fmt(managerStats.length) + " fő";
+
+  setHeader([{label:"Név"},{label:"E-mail"},{label:"Projektek",num:true},{label:"Megjegyzések",num:true},{label:"Kitöltöttség",num:true}]);
+  const tbody = document.querySelector("#projectTable tbody");
+  tbody.innerHTML = managerStats.map(s => `
     <tr>
-      <td>${stat.name}</td>
-      <td>${email}</td>
-      <td>${stat.projects}</td>
-      <td>${stat.comments}</td>
+      <td class="mono">${esc(s.name)}</td>
+      <td>${esc(s.email)}</td>
+      <td class="num">${fmt(s.projects)}</td>
+      <td class="num">${fmt(s.comments)}</td>
+      <td class="num">${progress(s.pct)}</td>
     </tr>
   `).join("");
 }
@@ -214,15 +459,24 @@ function logout() {
   document.getElementById("emailInput").value = "";
 }
 
-document.getElementById("emailInput").addEventListener("keypress", e => {
-  if (e.key === "Enter") handleLogin();
+function applyTheme(theme) {
+  const dark = theme === "dark";
+  if (dark) document.documentElement.setAttribute("data-theme", "dark");
+  else document.documentElement.removeAttribute("data-theme");
+  const btn = document.getElementById("themeToggle");
+  btn.setAttribute("aria-pressed", String(dark));
+  btn.textContent = dark ? "Világos mód" : "Sötét mód";
+}
+
+document.getElementById("themeToggle").addEventListener("click", () => {
+  const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  applyTheme(next);
+  try { localStorage.setItem("teclin-theme", next); } catch (e) {}
 });
+
+try { applyTheme(localStorage.getItem("teclin-theme") || "light"); } catch (e) { applyTheme("light"); }
+
+document.getElementById("loginForm").addEventListener("submit", handleLogin);
 </script>
-
-<footer style="background-color:#0d2818; padding:16px; text-align:center; margin-top:40px; border-top:1px solid #1a3d2a; font-size:12px; color:#6b8e7e;">
-  <p style="margin:0;">© TecLin Energy Hungary Kft. - Minden jog fenntartva</p>
-  <a href="https://teclin.hu/adatkezelesi-tajekoztato-2/" target="_blank" style="color:#41B93C; text-decoration:none; margin-top:8px; display:inline-block;">Adatkezelési nyilatkozat</a>
-</footer>
-
 </body>
 </html>
