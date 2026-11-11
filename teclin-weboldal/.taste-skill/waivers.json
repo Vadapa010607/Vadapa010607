@@ -1,0 +1,6 @@
+[
+  { "check": "copy-headings", "target": "h2#folyamat-h", "reason": "the page is in Hungarian; every heading names a thing in Hungarian (napelem, EMS, csapat, kérdések, pályázatok), the check reads an English noun list" },
+  { "check": "phone-number", "target": "footer__col:nth-of-type(5)", "reason": "the client's own published office number (+36 30 444 32 57), printed on their current site; this is the real company page, not a demo" },
+  { "check": "section-gaps", "target": "section#ems / section#folyamat", "reason": "the gap is inside the dealt pinned-chapters moment: its held grid centres in its own screens (kit moment.css), the other gaps are even" },
+  { "check": "neighbour", "target": "#quote section.section", "reason": "on a phone the six-field enquiry form grows with what it holds (layout-v4: a phone section is at least its screens and grows); forcing two screens left a 435px hole" }
+]
