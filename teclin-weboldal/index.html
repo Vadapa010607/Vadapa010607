@@ -55,7 +55,7 @@ section{position:relative}
 .hdr.stuck{background:rgba(11,20,16,.82);backdrop-filter:blur(14px);border-color:var(--line)}
 .hdr.stuck .wrap{height:68px}
 .logo img{height:34px;width:auto}
-.nav{display:flex;align-items:center;gap:34px}
+.nav{display:flex;align-items:center;gap:clamp(18px,2vw,30px)}
 .nav a:not(.btn){font:500 13px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:#dfe7e1;position:relative;padding:8px 0}
 .nav a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--lime);transition:width .35s var(--ease)}
 .nav a:not(.btn):hover::after{width:100%}
@@ -112,6 +112,7 @@ section{position:relative}
 .tile .ab{font:500 12px/1 var(--body);letter-spacing:.2em;color:var(--lime);margin-bottom:14px}
 .tile p{color:#c3cfc7;font-size:15.5px;margin-top:12px;max-height:0;opacity:0;overflow:hidden;transition:max-height .6s var(--ease),opacity .5s}
 .tile:hover p,.tile:focus-within p{max-height:120px;opacity:1}
+.tile img.ico{position:static;width:58px;height:58px;object-fit:contain;z-index:0;filter:none!important;transform:none!important;background:#eef6e8;border-radius:50%;padding:6px;margin-bottom:18px;opacity:1}
 .tile .no{position:absolute;top:28px;left:32px;font:400 13px var(--body);color:rgba(255,255,255,.6);letter-spacing:.12em}
 
 /* split media sections */
@@ -141,6 +142,23 @@ section{position:relative}
 .flow .hub{fill:var(--green)}
 .flow .ring{fill:none;stroke:var(--green);stroke-width:1.5;transform-origin:350px 230px;animation:ring 3s ease-out infinite}
 @keyframes ring{from{transform:scale(1);opacity:.8}to{transform:scale(2.6);opacity:0}}
+
+/* engineering showcase */
+.eng-facts{display:grid;grid-template-columns:repeat(4,1fr);border-block:1px solid var(--line);margin:56px 0 40px}
+.eng-facts div{padding:24px 24px 24px 0;border-right:1px solid var(--line)}
+.eng-facts div+div{padding-left:24px}.eng-facts div:last-child{border-right:0}
+.eng-facts b{display:block;font:500 clamp(26px,2.8vw,40px)/1 var(--head);font-stretch:110%;color:#fff}
+.eng-facts span{display:block;margin-top:8px;font-size:14px;color:var(--muted)}
+.gal{display:grid;grid-template-columns:repeat(6,1fr);gap:2px}
+.gal a{grid-column:span 2;aspect-ratio:16/10}
+.gal a:nth-child(1),.gal a:nth-child(2){grid-column:span 3}
+.gal a{position:relative;display:block;overflow:hidden;background:#000}
+
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease),opacity .4s;opacity:.92}
+.gal a:hover img{transform:scale(1.03);opacity:1}
+.gal .tag{position:absolute;left:18px;bottom:18px;font:500 11px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;background:rgba(6,12,9,.78);backdrop-filter:blur(6px);color:var(--lime);padding:10px 14px;border:1px solid rgba(167,230,110,.3)}
+.eng-note{margin-top:18px;font-size:13px;color:var(--dim)}
+@media (max-width:860px){.eng-facts{grid-template-columns:1fr 1fr}.eng-facts div{border-right:0;padding:18px 0!important}.eng-facts div:nth-child(odd){border-right:1px solid var(--line);padding-right:16px!important}.eng-facts div:nth-child(even){padding-left:16px!important}.gal{grid-template-columns:1fr}.gal a,.gal a:nth-child(1),.gal a:nth-child(2){grid-column:auto}}
 
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);margin-top:64px}
@@ -255,6 +273,7 @@ footer a:hover{color:var(--lime)}
     <nav class="nav" id="nav" aria-label="Fő menü">
       <a href="#megoldasok">Megoldások</a>
       <a href="#ems">Rendszer</a>
+      <a href="#tervezes">Tervezés</a>
       <a href="#folyamat">Folyamat</a>
       <a href="#palyazat">Pályázatok</a>
       <a href="#kapcsolat" class="btn btn--solid">Ajánlatot kérek</a>
@@ -267,7 +286,7 @@ footer a:hover{color:var(--lime)}
 <!-- HERO: full-screen drone video over the poster -->
 <section class="hero" id="top">
   <div class="media shade-l">
-    <img src="assets/img/photo-f23244974.webp" alt="" fetchpriority="high">
+    <img src="assets/img/tl-hero.webp" alt="" fetchpriority="high">
     <video data-src="assets/video/hero.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
   </div>
   <div class="wrap hero-in">
@@ -303,12 +322,12 @@ footer a:hover{color:var(--lime)}
       <p class="lead rv d2">A legtöbb cég különálló beszállítókkal építi az energiarendszerét. Mi egyben tervezzük és üzemeltetjük – hogy minden egység a másik hatékonyságát növelje.</p>
     </div>
     <div class="sol">
-      <article class="tile rv" tabindex="0"><img src="assets/img/photo-f12261041-960.webp" alt="" loading="lazy"><span class="no">01</span><div class="ab">PV</div><h3>Napelemes rendszerek</h3><p>Tető, föld és carport, a saját fogyasztáshoz méretezve, statikai és hálózati felméréssel.</p></article>
-      <article class="tile rv d1" tabindex="0"><img src="assets/img/photo-f186370079-960.webp" alt="" loading="lazy"><span class="no">02</span><div class="ab">BESS</div><h3>Ipari energiatárolás</h3><p>Konténeres és szekrényes akkumulátor csúcsvágásra, árkülönbözet-kihasználásra és tartalékra.</p></article>
-      <article class="tile rv d2" tabindex="0"><img src="assets/img/photo-f101379682-960.webp" alt="" loading="lazy"><span class="no">03</span><div class="ab">HP</div><h3>Hőszivattyú</h3><p>Fűtés, hűtés és HMV egy rendszerből, napelemmel és tárolóval együtt vezérelve.</p></article>
-      <article class="tile rv" tabindex="0"><img src="assets/img/photo-f33450932-960.webp" alt="" loading="lazy"><span class="no">04</span><div class="ab">EV</div><h3>E-mobilitás</h3><p>Flotta- és látogatói töltők RFID-azonosítással, dinamikus terheléskezeléssel, elszámolással.</p></article>
-      <article class="tile rv d1" tabindex="0"><img src="assets/img/photo-f113320638-960.webp" alt="" loading="lazy"><span class="no">05</span><div class="ab">EMS</div><h3>Energiamenedzsment</h3><p>Valós idejű monitoring és automatikus optimalizálás a termelés, a tárolás és a piaci ár szerint.</p></article>
-      <article class="tile rv d2" tabindex="0"><img src="assets/img/photo-f28456133-960.webp" alt="" loading="lazy"><span class="no">06</span><div class="ab">GRID</div><h3>Hálózati csatlakozás</h3><p>Csatlakozási igény, engedélyeztetés, visszwatt-védelem és tarifaoptimalizálás.</p></article>
+      <article class="tile rv" tabindex="0"><img src="assets/img/tl-pv-teto.webp" alt="" loading="lazy"><span class="no">01</span><img class="ico" src="assets/brand/ikon-pv.png" alt=""><div class="ab">PV</div><h3>Napelemes rendszerek</h3><p>Tető, föld és carport, a saját fogyasztáshoz méretezve, statikai és hálózati felméréssel.</p></article>
+      <article class="tile rv d1" tabindex="0"><img src="assets/img/tl-bess.webp" alt="" loading="lazy"><span class="no">02</span><img class="ico" src="assets/brand/ikon-bess.png" alt=""><div class="ab">BESS</div><h3>Ipari energiatárolás</h3><p>Konténeres és szekrényes akkumulátor csúcsvágásra, árkülönbözet-kihasználásra és tartalékra.</p></article>
+      <article class="tile rv d2" tabindex="0"><img src="assets/img/photo-f101379682-960.webp" alt="" loading="lazy"><span class="no">03</span><img class="ico" src="assets/brand/ikon-hp.png" alt=""><div class="ab">HP</div><h3>Hőszivattyú</h3><p>Fűtés, hűtés és HMV egy rendszerből, napelemmel és tárolóval együtt vezérelve.</p></article>
+      <article class="tile rv" tabindex="0"><img src="assets/img/photo-f33450932-960.webp" alt="" loading="lazy"><span class="no">04</span><img class="ico" src="assets/brand/ikon-ev.png" alt=""><div class="ab">EV</div><h3>E-mobilitás</h3><p>Flotta- és látogatói töltők RFID-azonosítással, dinamikus terheléskezeléssel, elszámolással.</p></article>
+      <article class="tile rv d1" tabindex="0"><img src="assets/img/tl-ems-infra.webp" alt="" loading="lazy"><span class="no">05</span><img class="ico" src="assets/brand/ikon-ems.png" alt=""><div class="ab">EMS</div><h3>Energiamenedzsment</h3><p>Valós idejű monitoring és automatikus optimalizálás a termelés, a tárolás és a piaci ár szerint.</p></article>
+      <article class="tile rv d2" tabindex="0"><img src="assets/img/photo-f28456133-960.webp" alt="" loading="lazy"><span class="no">06</span><img class="ico" src="assets/brand/ikon-grid.png" alt=""><div class="ab">GRID</div><h3>Hálózati csatlakozás</h3><p>Csatlakozási igény, engedélyeztetés, visszwatt-védelem és tarifaoptimalizálás.</p></article>
     </div>
   </div>
 </section>
@@ -316,7 +335,7 @@ footer a:hover{color:var(--lime)}
 <!-- VIDEO BAND 1 -->
 <section class="band" id="pvbess">
   <div class="media shade-l">
-    <img src="assets/img/photo-f74497191.webp" alt="" loading="lazy">
+    <img src="assets/img/tl-band-pvbess.webp" alt="" loading="lazy">
     <video data-src="assets/video/band-1.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
   </div>
   <div class="wrap"><div class="txt">
@@ -359,6 +378,30 @@ footer a:hover{color:var(--lime)}
   </div>
 </section>
 
+<!-- ENGINEERING SHOWCASE: TecLin's own design visuals -->
+<section class="pad" id="tervezes">
+  <div class="wrap">
+    <div class="head-row">
+      <div><p class="kicker rv">Mérnöki tervezés</p><h2 class="rv d1">Panelszintű terv,<br>mielőtt kapavágás történne</h2></div>
+      <p class="lead rv d2">Minden projekt műholdképen, valós méretekkel indul: kiosztás, sorosztás, inverter-csoportosítás és DC/AC nyomvonalak. Így a döntés előtt látja, mi épül, mennyiből és mennyit termel.</p>
+    </div>
+    <div class="eng-facts rv">
+      <div><b>25 000 m²</b><span>telekterület</span></div>
+      <div><b>6 400</b><span>napelem, kelet–nyugati 2P/2P</span></div>
+      <div><b>3,52 MWp</b><span>DC teljesítmény*</span></div>
+      <div><b>32 × 100 kVA</b><span>string inverter</span></div>
+    </div>
+    <div class="gal rv d1">
+      <a href="assets/img/tl-terv-inverter.webp" target="_blank" rel="noopener"><img src="assets/img/tl-terv-inverter.webp" alt="Földi naperőmű telepítési terve műholdképen, inverterhelyekkel, DC- és AC-nyomvonalakkal" loading="lazy"><span class="tag">Inverter- és kábelnyomvonal-terv</span></a>
+      <a href="assets/img/tl-terv-3d.webp" target="_blank" rel="noopener"><img src="assets/img/tl-terv-3d.webp" alt="Földi naperőmű előzetes 3D látványterve naplementében, műszaki adatokkal" loading="lazy"><span class="tag">3D látványterv</span></a>
+      <a href="assets/img/tl-cad-teto.webp" target="_blank" rel="noopener"><img src="assets/img/tl-cad-teto.webp" alt="Ipari csarnoktetők napelem-kiosztása inverterenként, darabszámokkal" loading="lazy"><span class="tag">Tetős kiosztás inverterenként</span></a>
+      <a href="assets/img/tl-modulmezo.webp" target="_blank" rel="noopener"><img src="assets/img/tl-modulmezo.webp" alt="Csarnoktető modulmezőinek újratervezett elrendezése alaprajzon" loading="lazy"><span class="tag">Modulmezők újratervezése</span></a>
+      <a href="assets/img/tl-teto-kiosztas.webp" target="_blank" rel="noopener"><img src="assets/img/tl-teto-kiosztas.webp" alt="Ipari tető saját napelem-kiosztása légifotón" loading="lazy"><span class="tag">Tetőkiosztás légifotón</span></a>
+    </div>
+    <p class="eng-note">*Előzetes becslés 550 Wp/panel feltételezéssel. Szemléltető koncepció, nem méretezett helyszínrajz.</p>
+  </div>
+</section>
+
 <!-- PROCESS -->
 <section class="pad" id="folyamat">
   <div class="wrap">
@@ -379,7 +422,7 @@ footer a:hover{color:var(--lime)}
 <!-- VIDEO BAND 2 -->
 <section class="band right" id="palyazat">
   <div class="media shade-r">
-    <img src="assets/img/photo-f62349039.webp" alt="" loading="lazy">
+    <img src="assets/img/tl-band-palyazat.webp" alt="" loading="lazy">
     <video data-src="assets/video/band-2.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
   </div>
   <div class="wrap"><div class="txt" style="max-width:600px">
@@ -411,7 +454,7 @@ footer a:hover{color:var(--lime)}
 <!-- CTA VIDEO -->
 <section class="cta">
   <div class="media shade-b">
-    <img src="assets/img/photo-f64156491.webp" alt="" loading="lazy">
+    <img src="assets/img/tl-band-meres.webp" alt="" loading="lazy">
     <video data-src="assets/video/cta.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
   </div>
   <div class="wrap">
