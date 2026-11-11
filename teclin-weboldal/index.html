@@ -1,3 +1,4 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!doctype html>
 <html lang="hu">
 <head>
@@ -219,6 +220,94 @@ section{position:relative}
 @media (max-width:1024px){.ppa-top,.ppa-cols{grid-template-columns:1fr;gap:40px}.ppa-big{grid-template-columns:1fr 1fr}.group{grid-template-columns:1fr}.dl-grid{grid-template-columns:1fr}}
 @media (max-width:600px){.dl{grid-template-columns:1fr}.dl img{width:100%;height:220px}.cmp thead{display:none}.cmp tr{display:grid;padding:16px 0;border-bottom:1px solid var(--line)}.cmp td{border:0;padding:4px 0;width:auto!important}.cmp td:nth-child(2)::before{content:"Saját beruházás: ";color:#fff}.refs td:nth-child(2){display:none}}
 
+/* lightbox for the engineering gallery */
+.lb{position:fixed;inset:0;z-index:90;background:rgba(4,8,6,.94);display:none;align-items:center;justify-content:center;padding:clamp(16px,4vw,56px);cursor:zoom-out}
+.lb.open{display:flex}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.lb button{position:absolute;top:18px;right:18px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(0,0,0,.4);color:#fff;font-size:22px;cursor:pointer}
+.gal a{cursor:zoom-in}
+
+/* BESS box: Hoymiles x GNX x TecLin */
+.bx{background:radial-gradient(70% 60% at 85% 10%,rgba(90,140,230,.12),transparent 70%),radial-gradient(60% 50% at 10% 90%,rgba(65,185,60,.10),transparent 70%),#080f0c}
+.bx-top{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px);align-items:end;margin-bottom:56px}
+.bx-top h2 em{font-style:normal;color:var(--lime)}
+.bx-hero{position:relative;margin:0 0 56px;overflow:hidden;border:1px solid rgba(167,230,110,.28);box-shadow:0 0 0 1px rgba(0,0,0,.4),0 40px 120px -20px rgba(65,185,60,.28),0 30px 80px rgba(0,0,0,.55);aspect-ratio:1907/793;background:#0b1530}
+.bx-hero img{width:100%;height:100%;object-fit:cover;transition:transform 2s var(--ease)}
+.bx-hero:hover img{transform:scale(1.02)}
+.bx-hero iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.bx-hero .play{position:absolute;right:clamp(14px,2.4vw,32px);bottom:clamp(14px,2.4vw,32px);display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 22px 0 8px;border-radius:99px;border:1px solid rgba(255,255,255,.35);background:rgba(6,12,9,.6);backdrop-filter:blur(8px);color:#fff;font:500 13px var(--body);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .3s}
+.bx-hero .play i{width:38px;height:38px;border-radius:50%;background:var(--green);display:grid;place-items:center}
+.bx-hero .play i::after{content:"";margin-left:3px;border-left:11px solid #06120a;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.bx-hero .play:hover{background:rgba(65,185,60,.25)}
+@media (max-width:600px){.bx-hero{margin-left:calc(-1 * var(--gut));margin-right:calc(-1 * var(--gut));border-left:0;border-right:0}.bx-hero .play{height:auto;padding:4px;font-size:0;gap:0}.bx-hero .play i{width:34px;height:34px}}
+.bx-chain{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:64px}
+.bx-chain div{position:relative;background:var(--card);padding:26px 28px}
+.bx-chain div:not(:last-child)::after{content:"";position:absolute;right:-12px;top:50%;width:22px;height:22px;transform:translateY(-50%) rotate(45deg);background:var(--card);border-top:2px solid var(--green);border-right:2px solid var(--green);z-index:1}
+.bx-chain small{display:block;font:500 11px var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--lime);margin-bottom:10px}
+.bx-chain b{display:block;font:500 22px var(--head);font-stretch:112%;text-transform:uppercase}
+.bx-chain span{display:block;margin-top:8px;font-size:14.5px;color:var(--muted)}
+.bx-chain a{color:var(--lime);border-bottom:1px solid rgba(167,230,110,.35)}
+.bx-prod{display:grid;grid-template-columns:.8fr 1.2fr;gap:2px;margin-bottom:96px}
+.bx-photo{position:relative;min-height:560px;overflow:hidden;background:#0a1220}
+.bx-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 60%;transition:transform 1.4s var(--ease)}
+.bx-photo:hover img{transform:scale(1.04)}
+.bx-photo .tag{position:absolute;left:22px;bottom:22px;font:500 11px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;background:rgba(6,12,9,.75);backdrop-filter:blur(6px);color:var(--lime);padding:10px 14px;border:1px solid rgba(167,230,110,.3)}
+.bx-spec{background:var(--card);padding:clamp(24px,3vw,44px)}
+.bx-spec h3{font-size:clamp(24px,2.4vw,34px);margin-bottom:8px}
+.bx-spec>p{color:var(--muted);font-size:15.5px;max-width:60ch}
+.bx-big{display:grid;grid-template-columns:repeat(4,1fr);border-block:1px solid var(--line);margin:28px 0}
+.bx-big div{padding:18px 14px 18px 0}
+.bx-big div+div{padding-left:16px;border-left:1px solid var(--line)}
+.bx-big b{display:block;font:500 clamp(26px,2.6vw,38px)/1 var(--head);font-stretch:110%;color:var(--lime)}
+.bx-big b small{font-size:.45em;color:#fff;margin-left:4px}
+.bx-big span{display:block;margin-top:8px;font-size:13px;color:var(--muted)}
+.bx-feat{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;margin-bottom:28px}
+.bx-feat li{display:flex;gap:12px;font-size:14.5px;color:#d9e3dc}
+.bx-feat li::before{content:"";flex:none;width:18px;height:18px;margin-top:2px;border:1px solid var(--green);border-radius:50%;background:radial-gradient(circle,var(--green) 0 3px,transparent 4px)}
+.bx-codes{font-size:12.5px;color:var(--dim);margin-bottom:26px}
+.bx-actions{display:flex;flex-wrap:wrap;gap:12px}
+.bx-h{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:36px}
+.bx-h h3{font-size:clamp(24px,2.6vw,38px)}
+.bx-h p{max-width:52ch;color:var(--muted)}
+.bx-safe{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-bottom:96px;counter-reset:s}
+.bx-safe div{position:relative;background:var(--card);padding:26px 22px 28px;border-top:2px solid transparent;transition:border-color .3s,background .3s}
+.bx-safe div:hover{border-color:var(--lime);background:#182a21}
+.bx-safe div::before{counter-increment:s;content:counter(s,decimal-leading-zero);display:block;font:300 38px/1 var(--head);font-stretch:110%;color:transparent;-webkit-text-stroke:1px rgba(167,230,110,.65);margin-bottom:18px}
+.bx-safe svg{width:30px;height:30px;stroke:var(--lime);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;margin-bottom:14px}
+.bx-safe b{display:block;font:500 16px var(--head);font-stretch:108%;text-transform:uppercase;margin-bottom:8px}
+.bx-safe span{font-size:14px;color:var(--muted)}
+.bx-refs{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:96px}
+.bx-ref{display:block;background:var(--card);transition:background .3s}
+.bx-ref:hover{background:#182a21}
+.bx-ref .ph{position:relative;aspect-ratio:16/9;overflow:hidden}
+.bx-ref .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.bx-ref:hover .ph img{transform:scale(1.05)}
+.bx-ref .ph span{position:absolute;right:14px;bottom:14px;font:500 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;background:rgba(6,12,9,.75);color:#fff;padding:8px 10px;border:1px solid var(--line)}
+.bx-ref .bd{padding:22px 24px 26px}
+.bx-ref small{display:block;font:500 11px var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--lime);margin-bottom:8px}
+.bx-ref b{display:block;font:500 18px var(--head);font-stretch:108%;text-transform:uppercase;margin-bottom:10px}
+.bx-ref p{font-size:14.5px;color:var(--muted);margin-bottom:14px}
+.bx-ref dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:13.5px}
+.bx-ref dt{color:var(--dim)}.bx-ref dd{color:#fff}
+.bx-vids{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.bx-vid{background:var(--card)}
+.bx-vid .fr{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden}
+.bx-vid .fr img{width:100%;height:100%;object-fit:cover;opacity:.85;transition:opacity .3s,transform 1s var(--ease)}
+.bx-vid .fr button{position:absolute;inset:0;width:100%;border:0;background:transparent;cursor:pointer;display:grid;place-items:center}
+.bx-vid .fr button i{width:62px;height:62px;border-radius:50%;background:rgba(65,185,60,.92);display:grid;place-items:center;box-shadow:0 0 0 0 rgba(65,185,60,.5);transition:transform .3s var(--ease)}
+.bx-vid .fr button i::after{content:"";margin-left:4px;border-left:16px solid #06120a;border-top:10px solid transparent;border-bottom:10px solid transparent}
+.bx-vid .fr button:hover i{transform:scale(1.1)}
+.bx-vid .fr:hover img{opacity:1;transform:scale(1.04)}
+.bx-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.bx-vid .bd{padding:16px 18px 20px}
+.bx-vid b{display:block;font:500 15px var(--body);color:#fff;margin-bottom:6px;line-height:1.35}
+.bx-vid span{font-size:13px;color:var(--muted)}
+.bx-vid a{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font:500 12px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--lime)}
+.bx-vid a svg{width:13px;height:13px}
+.bx-note{margin-top:28px;font-size:12.5px;color:var(--dim);max-width:100ch}
+@media (max-width:1024px){.bx-top,.bx-prod{grid-template-columns:1fr}.bx-photo{min-height:420px}.bx-safe{grid-template-columns:1fr 1fr}.bx-refs{grid-template-columns:1fr 1fr}.bx-vids{grid-template-columns:1fr 1fr}.bx-big{grid-template-columns:1fr 1fr}.bx-big div:nth-child(3){padding-left:0;border-left:0}.bx-big div:nth-child(n+3){border-top:1px solid var(--line)}}
+@media (max-width:600px){.bx-chain,.bx-safe,.bx-refs,.bx-vids,.bx-feat{grid-template-columns:1fr}.bx-chain div:not(:last-child)::after{right:50%;top:auto;bottom:-12px;transform:translateX(50%) rotate(135deg)}.bx-photo{min-height:360px}}
+
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);margin-top:64px}
 .step{padding:34px 26px 10px 0;border-right:1px solid var(--line)}
@@ -321,6 +410,107 @@ footer a:hover{color:var(--lime)}
   .js .rv{opacity:1;transform:none}
   .media video{display:none}
 }
+
+/* AI simulation: from simulation to feasibility study */
+.sim{background:linear-gradient(180deg,#070e0a 0%,var(--bg) 100%);overflow:hidden}
+.sim::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:linear-gradient(rgba(167,230,110,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(167,230,110,.06) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(70% 60% at 70% 20%,#000,transparent 75%);mask-image:radial-gradient(70% 60% at 70% 20%,#000,transparent 75%)}
+.sim .wrap{position:relative}
+.sim-top{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(32px,4vw,64px);align-items:center}
+.sim-top>*{min-width:0}
+.sim-top h2{font-size:clamp(28px,3.5vw,54px);text-wrap:balance}
+.sim-top h2 em{font-style:normal;color:var(--lime)}
+.sim-top .lead{margin:26px 0 34px}
+.sim-nums{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);margin-top:40px}
+.sim-nums div{padding:18px 16px 18px 0;border-bottom:1px solid var(--line)}
+.sim-nums div:nth-child(odd){border-right:1px solid var(--line)}
+.sim-nums div:nth-child(even){padding-left:20px}
+.sim-nums b{display:block;font:500 clamp(24px,2.4vw,34px)/1 var(--head);font-stretch:110%;color:#fff;font-variant-numeric:tabular-nums}
+.sim-nums b small{font-size:.5em;color:var(--lime);margin-left:4px}
+.sim-nums div>span{display:block;margin-top:6px;font-size:13.5px;color:var(--muted)}
+
+.sim-live{background:rgba(16,28,22,.85);border:1px solid var(--line);padding:clamp(16px,2vw,24px);box-shadow:0 40px 90px rgba(0,0,0,.5);backdrop-filter:blur(8px)}
+.sim-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.sim-head b{display:flex;align-items:center;gap:10px;font:500 15px var(--head);font-stretch:110%;text-transform:uppercase;letter-spacing:.04em}
+.sim-head small{display:block;font-size:12.5px;color:var(--dim);margin-top:4px}
+.sim-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(65,185,60,.7);animation:simP 1.8s infinite}
+@keyframes simP{70%{box-shadow:0 0 0 10px rgba(65,185,60,0)}100%{box-shadow:0 0 0 0 rgba(65,185,60,0)}}
+.sim-ctl{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.sim-tab{font:500 11.5px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;padding:10px 12px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:background .25s,color .25s,border-color .25s}
+.sim-tab:hover{color:#fff;border-color:rgba(255,255,255,.35)}
+.sim-tab[aria-selected="true"]{background:var(--green);border-color:var(--green);color:#06120a}
+.sim-play{width:34px;height:33px;border:1px solid var(--line);background:none;color:var(--muted);cursor:pointer;border-radius:2px;font-size:11px}
+.sim-play:hover{color:#fff;border-color:var(--lime)}
+.sim-cv{position:relative;height:260px}
+.sim-cv canvas{width:100%;height:100%;display:block;cursor:crosshair}
+.sim-leg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted);margin:10px 0 14px}
+.sim-leg i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+.sim-ro{display:grid;grid-template-columns:repeat(5,1fr);border-block:1px solid var(--line)}
+.sim-ro div{padding:10px 10px 10px 0}
+.sim-ro div+div{padding-left:12px;border-left:1px solid var(--line)}
+.sim-ro span,.sim-kpi span{display:block;font:500 10.5px/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.sim-ro b{display:block;margin-top:5px;font:500 17px var(--head);font-stretch:108%;font-variant-numeric:tabular-nums}
+.sim-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:14px}
+.sim-kpi{background:var(--card);padding:12px 14px;border-top:2px solid var(--c)}
+.sim-kpi b{display:block;margin-top:6px;font:500 22px/1 var(--head);font-stretch:110%;color:var(--c);font-variant-numeric:tabular-nums}
+.sim-kpi em{display:block;font-style:normal;font-size:11.5px;color:var(--muted);margin-top:4px;min-height:1.2em}
+.sim-note{font-size:12.5px;color:var(--dim);margin-top:12px}
+
+.sim-sub{margin-top:clamp(80px,9vw,130px)}
+.sim-flow{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);position:relative}
+.sim-flow::before{content:"";position:absolute;top:-1px;left:0;height:2px;width:16.66%;background:linear-gradient(90deg,transparent,var(--lime),transparent);animation:simF 6s linear infinite}
+@keyframes simF{from{transform:translateX(-100%)}to{transform:translateX(600%)}}
+.sim-step{padding:30px 22px 8px 0;border-right:1px solid var(--line);transition:background .4s}
+.sim-step+.sim-step{padding-left:22px}.sim-step:last-child{border-right:0}
+.sim-step .n{font:300 46px/1 var(--head);font-stretch:110%;color:transparent;-webkit-text-stroke:1px rgba(167,230,110,.65);margin-bottom:20px;transition:color .4s}
+.sim-step.on .n{color:var(--lime)}
+.sim-step h3{font-size:17px;margin-bottom:10px}
+.sim-step p{font-size:14.5px;color:var(--muted)}
+.sim-ai{display:inline-block;margin-top:12px;font:500 10.5px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:#06120a;background:var(--lime);padding:6px 9px;border-radius:99px}
+
+.sim-mods{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.sim-mod{background:var(--card);padding:28px;display:flex;flex-direction:column;gap:10px;transition:background .3s,transform .3s var(--ease)}
+.sim-mod:hover{background:#182a21}
+.sim-mod .st{align-self:flex-start;font:500 10.5px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;padding:6px 10px;border-radius:99px;border:1px solid}
+.sim-mod .st.ok{color:var(--lime);border-color:rgba(167,230,110,.45)}
+.sim-mod .st.rm{color:#ffe7a6;border-color:rgba(255,231,166,.4)}
+.sim-mod h3{font-size:19px}
+.sim-mod p{font-size:14.5px;color:var(--muted)}
+.sim-mod.road{background:transparent;border:1px dashed rgba(255,231,166,.28)}
+
+.sim-out{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:start}
+.sim-out>*{min-width:0}
+.sim-toc{list-style:none;border-top:1px solid var(--line);counter-reset:t}
+.sim-toc li{counter-increment:t;display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line)}
+.sim-toc li::before{content:counter(t,decimal-leading-zero);font:500 13px var(--body);letter-spacing:.12em;color:var(--lime)}
+.sim-toc b{font:500 16px var(--body);color:#fff}
+.sim-toc span{font-size:13.5px;color:var(--dim);text-align:right}
+.sim-why{display:grid;gap:2px}
+.sim-why div{background:var(--card);padding:22px 24px;border-left:2px solid var(--green)}
+.sim-why b{display:block;font:500 17px var(--head);font-stretch:108%;text-transform:uppercase;margin-bottom:6px}
+.sim-why span{font-size:14.5px;color:var(--muted)}
+.sim-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+
+@media (max-width:1024px){
+  .sim-top,.sim-out{grid-template-columns:1fr}
+  .sim-flow{grid-template-columns:repeat(3,1fr)}
+  .sim-flow::before{display:none}
+  .sim-step{border-bottom:1px solid var(--line)}
+  .sim-step:nth-child(3n){border-right:0}
+  .sim-step:nth-child(3n+1){padding-left:0}
+  .sim-mods{grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){
+  .sim-cv{height:220px}
+  .sim-ro{grid-template-columns:repeat(3,1fr)}
+  .sim-ro div:nth-child(4){padding-left:0;border-left:0}
+  .sim-ro div:nth-child(n+4){border-top:1px solid var(--line)}
+  .sim-kpis{grid-template-columns:1fr 1fr}
+  .sim-flow,.sim-mods{grid-template-columns:1fr}
+  .sim-step{border-right:0!important;padding:24px 0!important}
+  .sim-toc li{grid-template-columns:36px 1fr}
+  .sim-toc span{grid-column:2;text-align:left}
+}
+@media (prefers-reduced-motion:reduce){.sim-dot,.sim-flow::before{animation:none}}
 </style>
 </head>
 <body>
@@ -331,7 +521,9 @@ footer a:hover{color:var(--lime)}
     <a href="#top" class="logo" aria-label="TecLin – vissza a tetejére"><img src="assets/brand/teclin-logo.svg" alt="TecLin" width="161" height="34"></a>
     <nav class="nav" id="nav" aria-label="Fő menü">
       <a href="#megoldasok">Megoldások</a>
+      <a href="#bess-box">BESS</a>
       <a href="#ppa">PPA</a>
+      <a href="#szimulacio">AI-szimuláció</a>
       <a href="#tervezes">Tervezés</a>
       <a href="#referenciak">Referenciák</a>
       <a href="#letoltesek">Letöltések</a>
@@ -354,7 +546,7 @@ footer a:hover{color:var(--lime)}
     <p class="lead rv d2">Gyárak, üzemek, logisztikai központok és mezőgazdasági létesítmények napelemes és energiatárolós rendszerei kulcsrakészen – saját tervezőcsapattal, saját szerelőkkel és saját műszaki ellenőrrel. Beruházás nélkül is, PPA-konstrukcióban.</p>
     <div class="ctas rv d3">
       <a href="#kapcsolat" class="btn btn--solid">Ingyenes felmérés <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      <a href="assets/docs/TecLin_cegbemutato.pdf" download class="btn btn--line">Céges bemutató (PDF) <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></a>
+      <a href="assets/docs/TecLin_cegbemutato.pdf" download="TecLin_cegbemutato.pdf" class="btn btn--line">Céges bemutató (PDF) <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></a>
     </div>
   </div>
   <div class="stats" style="position:absolute;left:0;right:0;bottom:0;width:100%">
@@ -406,6 +598,82 @@ footer a:hover{color:var(--lime)}
   </div></div>
 </section>
 
+<!-- BESS BOX: Hoymiles C&I storage via GNX, delivered by TecLin -->
+<section class="pad bx" id="bess-box">
+  <div class="wrap">
+    <div class="bx-top">
+      <div><p class="kicker rv">BESS box · Hoymiles × GNX × TecLin</p><h2 class="rv d1">Ipari energiatároló,<br><em>szekrénybe zárva</em></h2></div>
+      <p class="lead rv d2">Folyadékhűtéses, kulcsrakész C&amp;I tárolórendszer a Hoymiles-tól: akkumulátor, inverter, EMS és ötszintű tűzvédelem egyetlen kültéri szekrényben. A magyarországi kizárólagos forgalmazóval, a GNX-szel kiemelt partnerkapcsolatban telepítjük és üzemeltetjük.</p>
+    </div>
+
+    <figure class="bx-hero rv" data-yt="jYWfVSI-aPI">
+      <img src="assets/img/hm-roadshow.webp" alt="Hoymiles és GNX: Hoymiles C&amp;I Energy Storage Roadshow 2026, Magyarország – HoyUltra tárolószekrények éjszakai ipari környezetben">
+      <button type="button" class="play" aria-label="A budapesti roadshow videójának lejátszása"><i></i>Budapesti roadshow</button>
+    </figure>
+
+    <div class="bx-chain rv">
+      <div><small>Gyártó</small><b>Hoymiles</b><span>Globális energiatechnológiai gyártó, C&amp;I és közműléptékű tárolórendszerek</span></div>
+      <div><small>Kizárólagos magyarországi forgalmazó</small><b>GNX</b><span>Hazai készlet, gyártói szintű támogatás · <a href="https://gnx.hu/" target="_blank" rel="noopener">gnx.hu</a></span></div>
+      <div><small>Kiemelt partner</small><b>TecLin</b><span>Felmérés, méretezés, engedélyezés, telepítés és üzemeltetés egy kézből</span></div>
+    </div>
+
+    <div class="bx-prod">
+      <div class="bx-photo rv"><img src="assets/img/hm-hoyultra.webp" alt="Hoymiles HoyUltra kültéri energiatároló szekrények éjszakai ipari környezetben" loading="lazy"><span class="tag">HoyUltra 261A · HESS-261-2h</span></div>
+      <div class="bx-spec rv d1">
+        <h3>Hoymiles HoyUltra 261A</h3>
+        <p>Teljesen folyadékhűtéses (akkumulátor és PCS) kereskedelmi-ipari tárolórendszer. 55 °C-on is teljesítménycsökkentés nélkül üzemel, a beépített edge EMS helyben optimalizál, a felhő globális adatelemzést ad.</p>
+        <div class="bx-big">
+          <div><b>261<small>kWh</small></b><span>névleges kapacitás szekrényenként</span></div>
+          <div><b>125<small>kW</small></b><span>névleges teljesítmény @55 °C</span></div>
+          <div><b>90,3<small>%</small></b><span>max. körhatásfok (RTE)</span></div>
+          <div><b>55<small>°C</small></b><span>teljes teljesítmény, derating nélkül</span></div>
+        </div>
+        <ul class="bx-feat">
+          <li>Teljes folyadékhűtés, −30 és +55 °C között</li>
+          <li>IP55 védettség, akár 60 dB zajszint</li>
+          <li>On- és off-grid működés, 100%-os fázisaszimmetria</li>
+          <li>Moduláris: szekrényenként bővíthető MWh-ig</li>
+          <li>Edge EMS + S-Miles Cloud, Modbus RTU/TCP</li>
+          <li>1030 × 2450 × 1400 mm, kis helyigény</li>
+        </ul>
+        <p class="bx-codes">Hálózati megfelelőség: EN 50549-1/-2/-10, VDE-AR-N 4105/4110/4120, 2016/631 EU (NC RfG), CEI 0-16/0-21 · Termékmegfelelőség: IEC 62619, IEC 62477-1, IEC 63056, UN38.3</p>
+        <div class="bx-actions">
+          <a href="#kapcsolat" class="btn btn--solid">BESS-ajánlatot kérek <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a href="assets/docs/Hoymiles_HoyUltra261A_adatlap.pdf" download="Hoymiles_HoyUltra261A_adatlap.pdf" class="btn btn--line">Adatlap (PDF) <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="bx-h"><h3 class="rv">Ötszintű tűzvédelem</h3><p class="rv d1">Rétegzett védelem a felhőalapú korai figyelmeztetéstől az állomásszintű oltásig – szekrényenként, beépítve.</p></div>
+    <div class="bx-safe">
+      <div class="rv"><svg viewBox="0 0 24 24"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 9a4 4 0 0 1-1 8M12 10v4M12 17h.01"/></svg><b>Korai figyelmeztetés</b><span>24/7 felhős monitoring, amely időben jelzi a rendellenességeket.</span></div>
+      <div class="rv d1"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M12 10c0-4 1-7 4-7s2 5-2 7M14 12c4 0 7 1 7 4s-5 2-7-2M12 14c0 4-1 7-4 7s-2-5 2-7M10 12c-4 0-7-1-7-4s5-2 7 2"/></svg><b>Szellőztetés</b><span>Reteszelt elszívás vezeti el a hőt és a gázokat.</span></div>
+      <div class="rv d2"><svg viewBox="0 0 24 24"><path d="M12 2l2 6 6-2-4 5 5 3-6 1 1 6-4-4-4 4 1-6-6-1 5-3-4-5 6 2z"/></svg><b>Robbanás-lefúvatás</b><span>Automatikus nyomáskiegyenlítés a túlnyomás biztonságos elvezetésére.</span></div>
+      <div class="rv d3"><svg viewBox="0 0 24 24"><path d="M9 7h4v14H9zM11 3v4M13 5h4M17 3l2-1M17 7l2 1M18 5h2"/></svg><b>Oltóanyag a szekrényben</b><span>Aeroszolos oltás közvetlenül a szekrényen belül, a továbbterjedés ellen.</span></div>
+      <div class="rv d3"><svg viewBox="0 0 24 24"><path d="M12 3v5M8 8h8M10 8l-1 3M14 8l1 3M6 15l-1 2M9 14l-1 3M12 14v3M15 14l1 3M18 15l1 2"/></svg><b>Állomásszintű védelem</b><span>Vízalapú telepi tűzvédelem mint utolsó védelmi réteg.</span></div>
+    </div>
+
+    <div class="bx-h"><h3 class="rv">Működő rendszerek a világban</h3><p class="rv d1">Ugyanaz a HoyUltra 261A, három különböző feladatra. Kattintson a kapcsolási rajzért.</p></div>
+    <div class="bx-refs">
+      <a class="bx-ref rv" href="assets/img/hm-ref-china-trafo.webp" data-lb><div class="ph"><img src="assets/img/hm-ref-china-trafo-foto.webp" alt="Hat HoyUltra tárolószekrény egy kínai ipari telephelyen" loading="lazy"><span>Kapcsolási rajz ↗</span></div>
+        <div class="bd"><small>Kína</small><b>Transzformátorok közötti teljesítménymegosztás</b><p>Két transzformátor alatti fogyasztás közös optimalizálása: olcsó időszakban tölt, csúcsban ad le.</p><dl><dt>Kapacitás</dt><dd>750 kW / 1 566 kWh</dd><dt>Termék</dt><dd>HoyUltra 261A</dd></dl></div></a>
+      <a class="bx-ref rv d1" href="assets/img/hm-ref-nl-pv.webp" data-lb><div class="ph"><img src="assets/img/hm-ref-nl-pv-foto.webp" alt="Havas HoyUltra tárolószekrények egy holland farmon" loading="lazy"><span>Kapcsolási rajz ↗</span></div>
+        <div class="bd"><small>Hollandia</small><b>PV + tároló mezőgazdasági telephelyen</b><p>Fagyban és hóban is stabil, folyamatos ellátás, csendes üzem a farm mellett.</p><dl><dt>Kapacitás</dt><dd>250 kW / 522 kWh</dd><dt>Termék</dt><dd>HoyUltra 261A</dd></dl></div></a>
+      <a class="bx-ref rv d2" href="assets/img/hm-ref-cn-ev.webp" data-lb><div class="ph"><img src="assets/img/hm-ref-cn-ev-foto.webp" alt="HoyUltra tárolószekrények egy gyár parkolója mellett, EV-töltéshez" loading="lazy"><span>Kapcsolási rajz ↗</span></div>
+        <div class="bd"><small>Kína, Guangdong</small><b>PV + tároló + EV-töltés gyártóüzemben</b><p>Tárolás és EV-töltés együtt, árarbitrázzsal; a folyadékhűtés nagy hőségben is tartja a teljesítményt.</p><dl><dt>Kapacitás</dt><dd>375 kW / 783 kWh</dd><dt>Termék</dt><dd>HoyUltra 261A</dd></dl></div></a>
+    </div>
+
+    <div class="bx-h"><h3 class="rv">Videók a gyártótól</h3><p class="rv d1">Telepítés, alkalmazási területek és a budapesti roadshow – a Hoymiles hivatalos csatornájáról.</p></div>
+    <div class="bx-vids">
+      <div class="bx-vid rv" data-yt="sV9KNmEYhNw"><div class="fr"><img src="assets/img/yt-sV9KNmEYhNw.webp" alt="" loading="lazy"><button type="button" aria-label="Videó lejátszása: HoyUltra 261A telepítési útmutató"><i></i></button></div><div class="bd"><b>HoyUltra 261A telepítési útmutató</b><span>Folyadékhűtéses C&amp;I tároló lépésről lépésre</span><br><a href="https://www.youtube.com/watch?v=sV9KNmEYhNw" target="_blank" rel="noopener">YouTube <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></a></div></div>
+      <div class="bx-vid rv d1" data-yt="TlArb_ZeodM"><div class="fr"><img src="assets/img/yt-TlArb_ZeodM.webp" alt="" loading="lazy"><button type="button" aria-label="Videó lejátszása: HoyTalk Ep.3"><i></i></button></div><div class="bd"><b>HoyTalk Ep.3 – Új generációs C&amp;I tárolás</b><span>Magas integráltság, többféle alkalmazás</span><br><a href="https://www.youtube.com/watch?v=TlArb_ZeodM" target="_blank" rel="noopener">YouTube <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></a></div></div>
+      <div class="bx-vid rv d2" data-yt="jYWfVSI-aPI"><div class="fr"><img src="assets/img/yt-jYWfVSI-aPI.webp" alt="" loading="lazy"><button type="button" aria-label="Videó lejátszása: Élőben Budapestről"><i></i></button></div><div class="bd"><b>Élőben Budapestről</b><span>Hoymiles C&amp;I Energy Storage Roadshow 2026</span><br><a href="https://www.youtube.com/watch?v=jYWfVSI-aPI" target="_blank" rel="noopener">YouTube <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></a></div></div>
+      <div class="bx-vid rv d3" data-yt="ezjQuzJp8fY"><div class="fr"><img src="assets/img/yt-ezjQuzJp8fY.webp" alt="" loading="lazy"><button type="button" aria-label="Videó lejátszása: HoyTalk Ep.5"><i></i></button></div><div class="bd"><b>HoyTalk Ep.5 – Hálózattámogatástól a hálózatképzésig</b><span>Közműléptékű BESS</span><br><a href="https://www.youtube.com/watch?v=ezjQuzJp8fY" target="_blank" rel="noopener">YouTube <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></a></div></div>
+    </div>
+    <p class="bx-note">A termékadatok a Hoymiles HoyUltra 261A (HESS-261-2h) adatlapjából (REV2.2) származnak; a gyártó előzetes értesítés nélkül módosíthatja őket. A Hoymiles és a GNX név és márka a tulajdonosaiké.</p>
+  </div>
+</section>
+
 <!-- PPA: Teclin-EasE -->
 <section class="pad ppa" id="ppa">
   <div class="wrap">
@@ -444,7 +712,7 @@ footer a:hover{color:var(--lime)}
       </div>
     </div>
     <div class="ppa-cta rv">
-      <a href="assets/docs/TecLin_PPA_EasE.pdf" download class="btn btn--solid">PPA-tájékoztató letöltése (PDF) <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></a>
+      <a href="assets/docs/TecLin_PPA_EasE.pdf" download="TecLin_PPA_EasE.pdf" class="btn btn--solid">PPA-tájékoztató letöltése (PDF) <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></a>
       <a href="#kapcsolat" class="btn btn--line">PPA-ajánlatot kérek <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <p class="ppa-note">A konstrukció ott működik, ahol napközben jelentős – néhány száz kilowattos szinttől felfelé – villamosenergia-fogyasztás van. Az ajánlathoz a telephely címe, a rendelkezésre álló felület és 12 hónap (lehetőleg 15 perces) fogyasztási adat szükséges. A tájékoztatás nem minősül ajánlattételnek; a végleges paraméterek a telephely adatai alapján, írásos ajánlatban határozhatók meg.</p>
@@ -469,6 +737,239 @@ footer a:hover{color:var(--lime)}
       <p class="emap-cap" id="emapCap" aria-live="polite"><b>EMS</b><span>Mutasson egy elemre, és megmutatjuk, mit csinál benne az energia.</span></p>
     </div>
   </div>
+</section>
+
+<!-- AI SIMULATION: from simulation to feasibility study -->
+<section class="pad sim" id="szimulacio">
+  <div class="wrap">
+    <div class="sim-top">
+      <div>
+        <p class="kicker rv">AI-vezérelt energetikai modellezés</p>
+        <h2 class="rv d1">Szimuláció&shy;tól a <em>megvalósít&shy;hatósági tanulmányig</em></h2>
+        <p class="lead rv d2">A cég valós, 15 perces fogyasztási adataiból AI-támogatott adatmodell épül. Ez egy teljes évre, 8 760 órán át szimulálja a napelemes termelést, az energiatárolót és a hálózati kapcsolatot, majd döntésre kész műszaki-gazdasági tanulmányt ad: NPV, IRR, megtérülés, visszwatt-kockázat és optimális rendszerméret.</p>
+        <div class="sim-cta rv d3">
+          <a href="#kapcsolat" class="btn btn--solid">Előszimulációt kérek <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a href="#sim-folyamat" class="btn btn--line">Hogyan működik?</a>
+        </div>
+        <div class="sim-nums rv d3">
+          <div><b data-count="35040">35 040</b><span>negyedórás adatpont évente</span></div>
+          <div><b data-count="8760">8 760</b><span>órás termelési és tárolási szimuláció</span></div>
+          <div><b><span data-count="1000">1 000</span><small>+</small></b><span>PV × BESS kombináció az optimum mátrixban</span></div>
+          <div><b><span data-count="25">25</span><small>év</small></b><span>cash-flow, NPV és IRR előrejelzés</span></div>
+        </div>
+      </div>
+
+      <div class="sim-live rv d2" aria-label="Élő napi energiaszimuláció">
+        <div class="sim-head">
+          <div><b><span class="sim-dot"></span>Élő szimuláció</b><small>Áprilisi munkanap · 1 MWp PV · 2 MWh / 1 MW BESS · 15 perces lépés</small></div>
+          <div class="sim-ctl" role="tablist" aria-label="Forgatókönyv">
+            <button class="sim-tab" id="simTabPv" role="tab" aria-selected="true" data-mode="pv">Csak PV</button>
+            <button class="sim-tab" id="simTabBess" role="tab" aria-selected="false" data-mode="bess">PV + BESS</button>
+            <button class="sim-tab" id="simTabEms" role="tab" aria-selected="false" data-mode="ems">+ AI-EMS</button>
+            <button class="sim-play" id="simPlay" aria-label="Szünet">❚❚</button>
+          </div>
+        </div>
+        <div class="sim-cv"><canvas id="simCanvas"></canvas></div>
+        <div class="sim-leg">
+          <span><i style="background:#f2c14e"></i>PV termelés</span>
+          <span><i style="background:#41b93c"></i>Közvetlen felhasználás</span>
+          <span><i style="background:#5ab4e8"></i>BESS töltés / kisütés</span>
+          <span><i style="background:#e5675b"></i>Leszabályozott (visszwatt)</span>
+          <span><i style="background:#dfe7e1"></i>Fogyasztás</span>
+          <span><i style="background:#a7e66e"></i>Töltöttség (SOC)</span>
+        </div>
+        <div class="sim-ro">
+          <div><span>Időpont</span><b id="simT">00:00</b></div>
+          <div><span>PV</span><b id="simPv" style="color:#f2c14e">0 kW</b></div>
+          <div><span>Fogyasztás</span><b id="simL">0 kW</b></div>
+          <div><span>BESS</span><b id="simB" style="color:#5ab4e8">–</b></div>
+          <div><span>SOC</span><b id="simS" style="color:#a7e66e">–</b></div>
+        </div>
+        <div class="sim-kpis">
+          <div class="sim-kpi" style="--c:var(--lime)"><span>PV-ből fedezve</span><b id="kSelf">–</b><em id="dSelf"></em></div>
+          <div class="sim-kpi" style="--c:#e5675b"><span>Elvesző PV</span><b id="kCurt">–</b><em id="dCurt"></em></div>
+          <div class="sim-kpi" style="--c:#5ab4e8"><span>Hálózati csúcs</span><b id="kPeak">–</b><em id="dPeak"></em></div>
+          <div class="sim-kpi" style="--c:#f2c14e"><span>Napi áramköltség</span><b id="kCost">–</b><em id="dCost"></em></div>
+        </div>
+        <p class="sim-note">Szemléltető szimuláció mintaprofillal, nulla betáplálású (visszwatt-védett) csatlakozással. Valós projektnél az ügyfél mért adataival és tarifáival számolunk. Vigye az egeret a görbére a napszak kiválasztásához.</p>
+      </div>
+    </div>
+
+    <!-- process -->
+    <div class="sim-sub" id="sim-folyamat">
+      <div class="head-row">
+        <div><p class="kicker rv">A modellezés menete</p><h2 class="rv d1">Adattól a<br>beruházási döntésig</h2></div>
+        <p class="lead rv d2">Az AI az adattisztításban, a profilmodellezésben és az optimum keresésében gyorsít. A műszaki és pénzügyi validálást mérnökeink végzik.</p>
+      </div>
+      <div class="sim-flow">
+        <div class="sim-step rv"><div class="n">01</div><h3>Adatgyűjtés</h3><p>15 perces mérési adatok, számlák, lekötött teljesítmény, díjszabás, telephely.</p></div>
+        <div class="sim-step rv d1"><div class="n">02</div><h3>AI adatmodell</h3><p>Hiánypótlás, anomáliaszűrés, terhelésprofil- és műszakmintázat-felismerés.</p><span class="sim-ai">AI</span></div>
+        <div class="sim-step rv d2"><div class="n">03</div><h3>Termelés</h3><p>Órás PV-hozam tájolással, dőlésszöggel, árnyékolással és degradációval.</p></div>
+        <div class="sim-step rv d3"><div class="n">04</div><h3>BESS és EMS</h3><p>Visszwatt-védelem, csúcsvágás, önfogyasztás-növelés, tárolóméretezés.</p><span class="sim-ai">AI</span></div>
+        <div class="sim-step rv d3"><div class="n">05</div><h3>Pénzügyi modell</h3><p>CAPEX, cash-flow, NPV, IRR, LCOE, érzékenységvizsgálat, PPA és ESCO.</p></div>
+        <div class="sim-step rv d3"><div class="n">06</div><h3>Tanulmány</h3><p>Döntés-előkészítő riport optimum mátrixszal, pályázathoz és tenderhez is.</p></div>
+      </div>
+    </div>
+
+    <!-- modules -->
+    <div class="sim-sub">
+      <div class="head-row">
+        <div><p class="kicker rv">Modellező modulok</p><h2 class="rv d1">Egy adatmodell,<br>teljes rendszer</h2></div>
+        <p class="lead rv d2">A modulokat egy közös adatmodell köti össze. Ha egy paraméter változik, minden mutató azonnal újraszámolódik.</p>
+      </div>
+      <div class="sim-mods">
+        <article class="sim-mod rv"><span class="st ok">Elérhető</span><h3>Termelés és fogyasztás</h3><p>15 perces adatok betöltése, havi és órás hőtérkép, a termelés és a fogyasztás időbeli egyezése.</p></article>
+        <article class="sim-mod rv d1"><span class="st ok">Elérhető</span><h3>Napelemes rendszer</h3><p>Méretezés, önfogyasztási arány, visszwatt-veszteség, fajlagos CAPEX és hálózati díjszabás.</p></article>
+        <article class="sim-mod rv d2"><span class="st ok">Elérhető</span><h3>Energiatároló</h3><p>C&amp;I BESS termékkatalógus: kapacitás, DoD, RTE, ciklusszám és a tároló hozzáadott értéke.</p></article>
+        <article class="sim-mod rv"><span class="st ok">Elérhető</span><h3>Pénzügyi elemzés</h3><p>Kumulált cash-flow, NPV, IRR és megtérülés diszkontrátával, áreszkalációval, maradványértékkel.</p></article>
+        <article class="sim-mod rv d1"><span class="st ok">Elérhető</span><h3>Optimum mátrix</h3><p>PV × BESS méretkombinációk tömeges futtatása és rangsorolása, majd tanulmány generálása.</p></article>
+        <article class="sim-mod rv d2"><span class="st ok">Elérhető</span><h3>Vezetői dashboard</h3><p>Havi energiamérleg, energiaáramlás, CO₂-megtakarítás és a változatok összevetése egy képernyőn.</p></article>
+        <article class="sim-mod road rv"><span class="st rm">Fejlesztés alatt</span><h3>AI-EMS és dinamikus ár</h3><p>Fogyasztás- és termelés-előrejelzés, HUPX-alapú árarbitrázs, prediktív tárolóvezérlés.</p></article>
+        <article class="sim-mod road rv d1"><span class="st rm">Fejlesztés alatt</span><h3>EV-töltés és hálózat</h3><p>Töltési profilok, lekötött teljesítmény optimalizálása, hálózatfejlesztési alternatívák.</p></article>
+        <article class="sim-mod road rv d2"><span class="st rm">Fejlesztés alatt</span><h3>Kockázat és digitális iker</h3><p>Monte Carlo szimuláció ár, időjárás és terhelés szerint, P50/P90 megtérülés, üzemi monitoring.</p></article>
+      </div>
+    </div>
+
+    <!-- output -->
+    <div class="sim-sub sim-out">
+      <div>
+        <p class="kicker rv">Az eredmény</p>
+        <h2 class="rv d1" style="font-size:clamp(28px,3.6vw,52px)">Döntésre kész tanulmány</h2>
+        <p class="lead rv d2" style="margin:22px 0 32px">A vezetőség, a bank és a pályázatkezelő is ugyanazt a strukturált, visszakövethető anyagot kapja.</p>
+        <ol class="sim-toc rv d2">
+          <li><b>Vezetői összefoglaló</b><span>javaslat, kulcsmutatók</span></li>
+          <li><b>Kiinduló állapot és fogyasztási profil</b><span>15 perces adatelemzés</span></li>
+          <li><b>PV műszaki koncepció</b><span>méret, hozam, önfogyasztás</span></li>
+          <li><b>Energiatároló és EMS stratégia</b><span>visszwatt, csúcsvágás</span></li>
+          <li><b>Hálózati csatlakozás és díjszabás</b><span>RHD, lekötés</span></li>
+          <li><b>Pénzügyi modell és érzékenység</b><span>NPV, IRR, LCOE</span></li>
+          <li><b>Finanszírozás</b><span>saját, PPA, ESCO</span></li>
+          <li><b>Kockázatok és ütemterv</b><span>megvalósítási roadmap</span></li>
+        </ol>
+      </div>
+      <div class="sim-why rv d2">
+        <div><b>Napok helyett percek</b><span>Az első előszimuláció a fogyasztási adatok beérkezése után elkészül.</span></div>
+        <div><b>Pontos méretezés</b><span>Se túlméretezett napelem, se kihasználatlan tároló: az optimumot a mátrix mutatja meg.</span></div>
+        <div><b>Kezelt visszwatt-kockázat</b><span>Előre látszik, mennyi termelés veszne el, és mi előzi meg.</span></div>
+        <div><b>Bank- és pályázatképes</b><span>Átlátható feltételezések, reprodukálható számítás, exportálható riport.</span></div>
+        <div><b>Forgatókönyvek valós időben</b><span>Energiaár, CAPEX vagy diszkontráta változására minden mutató frissül.</span></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(()=>{
+  const root=document.getElementById('szimulacio'); if(!root) return;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fmt=n=>Math.round(n).toLocaleString('hu-HU');
+  const q=s=>root.querySelector(s);
+
+  // count-up when the numbers enter the view (the final value is in the HTML already)
+  if(!reduce){
+    const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;cio.unobserve(e.target);
+      const el=e.target,target=+el.dataset.count,t0=performance.now();
+      const tick=t=>{const p=Math.min(1,(t-t0)/1500);el.textContent=fmt(target*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick);
+    }),{threshold:.6});
+    root.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+  }
+
+  // process: highlight steps in turn
+  const steps=root.querySelectorAll('.sim-step'); let si=0;
+  const stepTick=()=>{steps.forEach((s,i)=>s.classList.toggle('on',i===si));si=(si+1)%steps.length};
+  stepTick(); if(!reduce) setInterval(stepTick,1500);
+
+  // daily model: 96 x 15 min
+  const N=96,DT=.25,PV_KWP=1000,CAP=2088,USABLE=.9,PMAX=1000,RTE=.884,EXPORT_LIMIT=0;
+  const SOC_MIN=CAP*(1-USABLE)/2,SOC_MAX=CAP-SOC_MIN,eff=Math.sqrt(RTE),PEAK_TARGET=120;
+  const pv=[],load=[],price=[];
+  for(let i=0;i<N;i++){const h=i*DT;
+    let p=h>6&&h<19.5?Math.pow(Math.sin(Math.PI*(h-6)/13.5),1.4)*.52*PV_KWP:0;
+    p*=1-.35*Math.exp(-Math.pow((h-14.5)/.9,2)); pv.push(Math.max(0,p));
+    let l=85; if(h>=6&&h<22) l=175+25*Math.sin((h-6)/16*Math.PI); if(h>=5.5&&h<6) l=130;
+    l+=70*Math.exp(-Math.pow((h-7)/.5,2))+55*Math.exp(-Math.pow((h-19)/.8,2))+8*Math.sin(i*1.7)+5*Math.cos(i*.9);
+    load.push(l); price.push(h<6||h>=22?62:(h>=17&&h<21?128:100));
+  }
+  // forecast (here: the known profile) of PV surplus and the morning energy above the peak target
+  const PV_SURPLUS_FC=pv.reduce((t,p,i)=>t+Math.max(0,p-load[i]),0)*DT*eff;
+  const MORNING_NEED=load.reduce((t,l,i)=>t+(i*DT>=5&&i*DT<11?Math.max(0,l-pv[i]-PEAK_TARGET):0),0)*DT;
+
+  function simulate(mode){
+    const r={dir:[],pvch:[],gch:[],dis:[],curt:[],grid:[],soc:[]}; let soc=SOC_MIN;
+    const day=rec=>{for(let i=0;i<N;i++){
+      const P=pv[i],L=load[i],h=i*DT,direct=Math.min(P,L);
+      let surplus=P-direct,deficit=L-direct,ch=0,dis=0,gch=0;
+      if(mode!=='pv'){
+        ch=Math.min(surplus,PMAX,(SOC_MAX-soc)/(eff*DT)); soc+=ch*eff*DT; surplus-=ch;
+        let want=deficit;
+        if(mode==='ems'&&(price[i]<70||h<11)){ // keep a reserve for the morning peak, release the rest
+          const free=Math.max(0,(soc-SOC_MIN-MORNING_NEED/eff)*eff/DT);
+          want=Math.max(Math.max(0,deficit-PEAK_TARGET),Math.min(deficit,free));
+        }
+        dis=Math.min(want,PMAX,(soc-SOC_MIN)*eff/DT); soc-=dis/eff*DT; deficit-=dis;
+        if(mode==='ems'&&price[i]<70&&h<6){ // off-peak charge: only what the morning needs and the PV surplus leaves room for
+          const target=Math.min(SOC_MIN+1.1*MORNING_NEED/eff,SOC_MAX-PV_SURPLUS_FC+MORNING_NEED);
+          if(soc<target){gch=Math.max(0,Math.min(PEAK_TARGET-deficit,(target-soc)/(eff*DT)));soc+=gch*eff*DT}
+        }
+      }
+      const exp=Math.min(surplus,EXPORT_LIMIT);
+      if(rec){r.dir.push(direct);r.pvch.push(ch);r.gch.push(gch);r.dis.push(dis);r.curt.push(surplus-exp);r.grid.push(deficit+gch);r.soc.push(soc/CAP)}
+    }};
+    if(mode!=='pv') day(false); day(true);
+    const sum=a=>a.reduce((s,v)=>s+v,0)*DT, Ls=sum(load);
+    const pvDis=Math.max(0,sum(r.dis)-sum(r.gch)*RTE);
+    r.k={self:Math.min(1,(sum(r.dir)+pvDis)/Ls),curt:sum(r.curt),peak:Math.max(...r.grid),cost:r.grid.reduce((s,g,i)=>s+g*DT*price[i],0)};
+    return r;
+  }
+  const SIM={pv:simulate('pv'),bess:simulate('bess'),ems:simulate('ems')};
+
+  const cv=q('#simCanvas'),ctx=cv.getContext('2d');
+  let W=0,H=0,mode='pv',cursor=0,playing=!reduce,last=0;
+  const pad={l:40,r:34,t:24,b:24},YMAX=600;
+  const X=i=>pad.l+(W-pad.l-pad.r)*i/(N-1), Y=v=>pad.t+(H-pad.t-pad.b)*(1-v/YMAX);
+  function resize(){const d=devicePixelRatio||1,b=cv.getBoundingClientRect();W=b.width;H=b.height;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);draw()}
+  const area=(top,bot,up,col)=>{ctx.beginPath();for(let i=0;i<=up;i++)ctx.lineTo(X(i),Y(top[i]));for(let i=up;i>=0;i--)ctx.lineTo(X(i),Y(bot?bot[i]:0));ctx.closePath();ctx.fillStyle=col;ctx.fill()};
+  const line=(a,up,col,w,dash,yf)=>{ctx.beginPath();ctx.setLineDash(dash||[]);for(let i=0;i<=up;i++)ctx.lineTo(X(i),yf?yf(a[i]):Y(a[i]));ctx.strokeStyle=col;ctx.lineWidth=w;ctx.stroke();ctx.setLineDash([])};
+
+  function draw(){
+    if(!W) return; const s=SIM[mode],up=Math.min(N-1,Math.floor(cursor));
+    ctx.clearRect(0,0,W,H); ctx.font='11px "Inter Tight",system-ui,sans-serif';
+    for(let v=0;v<=YMAX;v+=200){ctx.strokeStyle='rgba(255,255,255,.07)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad.l,Y(v));ctx.lineTo(W-pad.r,Y(v));ctx.stroke();ctx.fillStyle='#7d8a82';ctx.textAlign='right';ctx.fillText(v,pad.l-8,Y(v)+4)}
+    ctx.textAlign='center'; for(let h=0;h<=24;h+=(W<500?6:3)) ctx.fillText(String(h).padStart(2,'0')+':00',X(Math.min(N-1,h*4)),H-6);
+    ctx.textAlign='left'; ctx.fillText('kW',4,10);
+    if(mode!=='pv'){ctx.textAlign='right';ctx.fillStyle='#a7e66e';ctx.fillText('SOC',W-2,10);ctx.fillText('100%',W-2,Y(YMAX)+4)}
+    line(pv,N-1,'rgba(242,193,78,.22)',1.4,[3,4]); line(load,N-1,'rgba(223,231,225,.22)',1.2,[3,4]);
+    const dir=s.dir, chTop=dir.map((d,i)=>d+s.pvch[i]), curtTop=chTop.map((c,i)=>c+s.curt[i]), disTop=dir.map((d,i)=>d+s.dis[i]);
+    area(dir,null,up,'rgba(65,185,60,.55)'); area(chTop,dir,up,'rgba(90,180,232,.55)'); area(curtTop,chTop,up,'rgba(229,103,91,.6)'); area(disTop,dir,up,'rgba(90,180,232,.32)');
+    line(pv,up,'#f2c14e',2); line(load,up,'#dfe7e1',1.6,[5,4]);
+    if(mode!=='pv') line(s.soc,up,'#a7e66e',1.8,[2,3],v=>Y(v*YMAX));
+    const cx=X(up),g=ctx.createLinearGradient(cx-36,0,cx,0); g.addColorStop(0,'rgba(167,230,110,0)'); g.addColorStop(1,'rgba(167,230,110,.16)');
+    ctx.fillStyle=g; ctx.fillRect(cx-36,pad.t,36,H-pad.t-pad.b);
+    ctx.strokeStyle='rgba(167,230,110,.9)'; ctx.beginPath(); ctx.moveTo(cx,pad.t); ctx.lineTo(cx,H-pad.b); ctx.stroke();
+    [[pv[up],'#f2c14e'],[load[up],'#dfe7e1']].forEach(([v,c])=>{ctx.beginPath();ctx.arc(cx,Y(v),3.5,0,7);ctx.fillStyle=c;ctx.fill()});
+    const net=s.dis[up]-s.pvch[up]-s.gch[up];
+    q('#simT').textContent=String(Math.floor(up/4)).padStart(2,'0')+':'+String((up%4)*15).padStart(2,'0');
+    q('#simPv').textContent=fmt(pv[up])+' kW'; q('#simL').textContent=fmt(load[up])+' kW';
+    q('#simB').textContent=mode==='pv'?'–':(net>0?'▼ ':net<0?'▲ ':'')+fmt(Math.abs(net))+' kW';
+    q('#simS').textContent=mode==='pv'?'–':Math.round(s.soc[up]*100)+'%';
+  }
+  function kpis(){
+    const k=SIM[mode].k,b=SIM.pv.k,d=(v,base,lower)=>mode==='pv'?'kiinduló állapot':(v===base?'változatlan':((v<base)===lower?'▼ ':'▲ ')+Math.abs(Math.round((v-base)/base*100))+'%');
+    q('#kSelf').textContent=Math.round(k.self*100)+'%'; q('#dSelf').textContent=mode==='pv'?'kiinduló állapot':'+'+Math.round((k.self-b.self)*100)+' százalékpont';
+    q('#kCurt').textContent=fmt(k.curt)+' kWh'; q('#dCurt').textContent=d(k.curt,b.curt,true);
+    q('#kPeak').textContent=fmt(k.peak)+' kW'; q('#dPeak').textContent=d(k.peak,b.peak,true);
+    q('#kCost').textContent=fmt(k.cost/1000)+' e Ft'; q('#dCost').textContent=d(k.cost,b.cost,true);
+  }
+  function loop(t){if(playing){cursor+=(last?Math.min(100,t-last):16)/85;if(cursor>N+18)cursor=0;draw()}last=t;requestAnimationFrame(loop)}
+
+  const tabs=root.querySelectorAll('.sim-tab');
+  tabs.forEach(bt=>bt.addEventListener('click',()=>{tabs.forEach(x=>x.setAttribute('aria-selected',x===bt));mode=bt.dataset.mode;kpis();draw()}));
+  const pb=q('#simPlay'),setPlay=p=>{playing=p;pb.textContent=p?'❚❚':'▶';pb.setAttribute('aria-label',p?'Szünet':'Lejátszás')};
+  pb.addEventListener('click',()=>setPlay(!playing));
+  cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();cursor=Math.max(0,Math.min(N-1,(e.clientX-r.left-pad.l)/(W-pad.l-pad.r)*(N-1)));if(playing)setPlay(false);draw()});
+  cursor=reduce?N-1:52; setPlay(playing);
+  addEventListener('resize',resize); resize(); kpis(); requestAnimationFrame(loop);
+})();
+</script>
 </section>
 
 <!-- ENGINEERING SHOWCASE: TecLin's own design visuals -->
@@ -590,11 +1091,11 @@ footer a:hover{color:var(--lime)}
       <p class="lead rv d2">Ossza meg a pénzügyi vezetővel vagy a döntéshozókkal – mindkét anyag PDF formátumban letölthető.</p>
     </div>
     <div class="dl-grid">
-      <a class="dl rv" href="assets/docs/TecLin_cegbemutato.pdf" download>
+      <a class="dl rv" href="assets/docs/TecLin_cegbemutato.pdf" download="TecLin_cegbemutato.pdf">
         <img src="assets/img/tl-cover-ceg.webp" alt="A TecLin céges bemutató címlapja" loading="lazy" style="object-fit:contain;background:#0b1410">
         <div><span class="pill">PDF · 1,1 MB</span><h3>Céges bemutató</h3><p>Rólunk, számokban, szolgáltatások, a TecLin energetikai stratégiája, munkamenet és kiemelt referenciák.</p><span class="btn btn--solid">Letöltés <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></span></div>
       </a>
-      <a class="dl rv d1" href="assets/docs/TecLin_PPA_EasE.pdf" download>
+      <a class="dl rv d1" href="assets/docs/TecLin_PPA_EasE.pdf" download="TecLin_PPA_EasE.pdf">
         <img src="assets/img/tl-cover-ppa.webp" alt="A Teclin-EasE PPA tájékoztató címlapja" loading="lazy">
         <div><span class="pill">PDF · 0,3 MB</span><h3>PPA-konstrukció</h3><p>0 € beruházás, rögzített euróár: a szerződés nyolc pontja, a pénzügyi logika és a 12 hónapos ütemterv.</p><span class="btn btn--solid">Letöltés <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></span></div>
       </a>
@@ -620,7 +1121,7 @@ footer a:hover{color:var(--lime)}
       <label>E-mail<input type="email" name="email" required autocomplete="email"></label>
       <label>Telefon<input type="tel" name="tel" autocomplete="tel"></label>
       <label class="full">Érdeklődés
-        <select name="tema"><option>Napelem (PV)</option><option>Energiatárolás (BESS)</option><option>PV + BESS</option><option>Hőszivattyú</option><option>E-mobilitás (EV-töltés)</option><option>Energiamenedzsment (EMS)</option><option>PPA – beruházás nélkül</option><option>Komplex megoldás</option></select>
+        <select name="tema"><option>Napelem (PV)</option><option>Energiatárolás (BESS) – Hoymiles</option><option>PV + BESS</option><option>Hőszivattyú</option><option>E-mobilitás (EV-töltés)</option><option>Energiamenedzsment (EMS)</option><option>PPA – beruházás nélkül</option><option>Komplex megoldás</option></select>
       </label>
       <label class="full">Üzenet<textarea name="uzenet" placeholder="Telephely, éves villamosenergia-fogyasztás, célok…"></textarea></label>
       <label class="chk full"><input type="checkbox" required> Elfogadom az adatkezelési tájékoztatót.</label>
@@ -634,13 +1135,14 @@ footer a:hover{color:var(--lime)}
   <div class="wrap">
     <div class="fgrid">
       <div><img src="assets/brand/teclin-logo.svg" alt="TecLin" width="171" height="36" style="height:36px;width:auto;margin-bottom:20px"><p>Integrált energiamegoldások vállalatoknak – napelem, tárolás, hőszivattyú, e-mobilitás és energiamenedzsment egy kézből.</p></div>
-      <div><h4>Megoldások</h4><ul><li><a href="#megoldasok">Napelem (PV)</a></li><li><a href="#megoldasok">Energiatárolás (BESS)</a></li><li><a href="#megoldasok">Hőszivattyú</a></li><li><a href="#ems">EV-töltés &amp; EMS</a></li></ul></div>
-      <div><h4>Cég</h4><ul><li><a href="#ppa">PPA-konstrukció</a></li><li><a href="#referenciak">Referenciák</a></li><li><a href="#folyamat">Működésünk</a></li><li><a href="#letoltesek">Letöltések</a></li></ul></div>
+      <div><h4>Megoldások</h4><ul><li><a href="#megoldasok">Napelem (PV)</a></li><li><a href="#bess-box">BESS box – Hoymiles</a></li><li><a href="#megoldasok">Hőszivattyú</a></li><li><a href="#ems">EV-töltés &amp; EMS</a></li></ul></div>
+      <div><h4>Cég</h4><ul><li><a href="#ppa">PPA-konstrukció</a></li><li><a href="#szimulacio">AI-szimuláció</a></li><li><a href="#referenciak">Referenciák</a></li><li><a href="#folyamat">Működésünk</a></li><li><a href="#letoltesek">Letöltések</a></li></ul></div>
       <div><h4>Elérhetőség</h4><ul><li>TecLin Energy Hungary Kft.</li><li>8000 Székesfehérvár, Rozmaring utca 3.</li><li>Cégjegyzékszám: 07-09-035165</li><li>Adószám: 25125179-2-07</li><li><a href="mailto:iroda@teclin.hu">iroda@teclin.hu</a></li></ul></div>
     </div>
     <div class="fbot"><span>© 2026 TecLin Energy Hungary Kft. – Minden jog fenntartva.</span><span><a href="credits.html">Fotó- és videóforrások</a></span></div>
   </div>
 </footer>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Kép nagyítva"><img alt=""><button type="button" aria-label="Bezárás">×</button></div>
 
 <script>
 (()=>{
@@ -789,6 +1291,16 @@ footer a:hover{color:var(--lime)}
       svg.addEventListener('pointerdown',stop,{once:true});}
   })();
 
+  // gallery lightbox (also works when the page is packed into one file)
+  (()=>{const lb=document.getElementById('lb');if(!lb)return;const im=lb.querySelector('img');let last=null;
+    const close=()=>{lb.classList.remove('open');if(last)last.focus()};
+    document.querySelectorAll('.gal a, a[data-lb]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();last=a;const i=a.querySelector('img');const h=a.getAttribute('href');im.src=(!h||h==='#')&&i?i.src:h;im.alt=i?i.alt:'';lb.classList.add('open');lb.querySelector('button').focus()}));
+    lb.addEventListener('click',close);addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('open'))close()});})();
+
+  // YouTube cards: the video loads only when asked (privacy-friendly youtube-nocookie)
+  document.querySelectorAll('.bx-vid[data-yt], .bx-hero[data-yt]').forEach(c=>{const b=c.querySelector('button');if(!b)return;
+    b.addEventListener('click',()=>{const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+c.dataset.yt+'?autoplay=1&rel=0';f.title=b.getAttribute('aria-label');f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;(c.querySelector('.fr')||c).replaceChildren(f)});});
+
   // PDF downloads: a normal link on the live site; inside the claude.ai viewer the save goes through the downloads capability
   let dlNs=null;
   if(window.claude&&typeof claude.use==='function') claude.use('downloads').then(n=>{dlNs=n}).catch(()=>{});
@@ -812,3 +1324,5 @@ footer a:hover{color:var(--lime)}
 </script>
 </body>
 </html>
+
+</body></html>
