@@ -80,7 +80,7 @@ section{position:relative}
 @keyframes kb{to{transform:scale(1.08)}}
 .hero-in>*{max-width:900px}
 .hero-in{padding-bottom:calc(var(--stats-h,118px) + clamp(40px,6vh,80px))}
-.hero h1{font-size:clamp(38px,6.6vw,104px);font-weight:500;font-stretch:115%}
+.hero h1{font-size:clamp(34px,6vw,100px);font-weight:500;font-stretch:115%}
 .hero h1 em{font-style:normal;color:var(--lime)}
 .hero .lead{margin:28px 0 40px;color:#c9d6ce}
 .hero .ctas{display:flex;flex-wrap:wrap;gap:14px}
@@ -159,6 +159,52 @@ section{position:relative}
 .gal .tag{position:absolute;left:18px;bottom:18px;font:500 11px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;background:rgba(6,12,9,.78);backdrop-filter:blur(6px);color:var(--lime);padding:10px 14px;border:1px solid rgba(167,230,110,.3)}
 .eng-note{margin-top:18px;font-size:13px;color:var(--dim)}
 @media (max-width:860px){.eng-facts{grid-template-columns:1fr 1fr}.eng-facts div{border-right:0;padding:18px 0!important}.eng-facts div:nth-child(odd){border-right:1px solid var(--line);padding-right:16px!important}.eng-facts div:nth-child(even){padding-left:16px!important}.gal{grid-template-columns:1fr}.gal a,.gal a:nth-child(1),.gal a:nth-child(2){grid-column:auto}}
+
+/* PPA */
+.ppa{background:radial-gradient(900px 500px at 15% 20%,rgba(65,185,60,.14),transparent 60%),var(--bg-2)}
+.ppa-top{display:grid;grid-template-columns:1.1fr .9fr;gap:72px;align-items:end;margin-bottom:56px}
+.ppa-big{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:64px}
+.ppa-big div{background:var(--card);padding:34px 28px}
+.ppa-big b{display:block;font:500 clamp(30px,3.6vw,52px)/1 var(--head);font-stretch:112%;color:var(--lime)}
+.ppa-big span{display:block;margin-top:12px;color:#d5dfd9;font-size:15px}
+.cmp{width:100%;border-collapse:collapse;font-size:15.5px}
+.cmp th{font:500 12px var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 20px 16px 0;border-bottom:1px solid var(--line)}
+.cmp th.us{color:var(--lime)}
+.cmp td{padding:20px 20px 20px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted)}
+.cmp td:first-child{color:#fff;font:500 15px var(--body);width:16%}
+.cmp td.us{color:#e6efe9}
+.cmp td.us::before{content:"✓";color:var(--lime);margin-right:10px}
+.ppa-cols{display:grid;grid-template-columns:1.3fr .7fr;gap:72px;align-items:start}
+.tl{list-style:none;display:grid;gap:0;border-left:1px solid var(--line);margin-top:8px}
+.tl li{position:relative;padding:0 0 26px 26px}
+.tl li::before{content:"";position:absolute;left:-5px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(65,185,60,.18)}
+.tl b{display:block;font:500 15px var(--body);color:#fff}
+.tl small{display:block;font:500 12px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:4px}
+.tl span{font-size:14.5px;color:var(--muted)}
+.ppa-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:40px}
+.ppa-note{font-size:13px;color:var(--dim);margin-top:24px;max-width:90ch}
+/* references */
+.refs{width:100%;border-collapse:collapse}
+.refs td{padding:22px 16px 22px 0;border-bottom:1px solid var(--line);font-size:16px;color:var(--muted)}
+.refs td:first-child{font:500 clamp(17px,1.5vw,21px) var(--head);font-stretch:108%;color:#fff;text-transform:uppercase}
+.refs td:last-child{text-align:right;font:500 clamp(20px,2vw,28px) var(--head);font-stretch:110%;color:var(--lime);white-space:nowrap}
+.refs tr{transition:background .3s}.refs tr:hover{background:rgba(255,255,255,.03)}
+.ref-more{margin-top:32px;color:var(--muted);font-size:15.5px;max-width:95ch}
+.group{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:72px}
+.group div{background:var(--card);padding:28px}
+.group b{display:block;font:500 17px var(--head);font-stretch:108%;text-transform:uppercase;margin-bottom:8px}
+.group span{font-size:15px;color:var(--muted)}
+/* downloads */
+.dl-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.dl{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:center;background:var(--card);border:1px solid var(--line);padding:24px;transition:border-color .3s,transform .4s var(--ease),background .3s}
+.dl:hover{border-color:var(--green);transform:translateY(-4px);background:#182a21}
+.dl img{width:200px;height:200px;object-fit:cover;object-position:top;border:1px solid var(--line)}
+.dl .pill{display:inline-block;font:500 11px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;color:#06120a;background:var(--lime);padding:7px 10px;border-radius:99px;margin-bottom:14px}
+.dl h3{margin-bottom:10px}
+.dl p{font-size:15px;color:var(--muted);margin-bottom:18px}
+.dl .btn{height:44px}
+@media (max-width:1024px){.ppa-top,.ppa-cols{grid-template-columns:1fr;gap:40px}.ppa-big{grid-template-columns:1fr 1fr}.group{grid-template-columns:1fr}.dl-grid{grid-template-columns:1fr}}
+@media (max-width:600px){.dl{grid-template-columns:1fr}.dl img{width:100%;height:220px}.cmp thead{display:none}.cmp tr{display:grid;padding:16px 0;border-bottom:1px solid var(--line)}.cmp td{border:0;padding:4px 0;width:auto!important}.cmp td:nth-child(2)::before{content:"Saját beruházás: ";color:#fff}.refs td:nth-child(2){display:none}}
 
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);margin-top:64px}
@@ -272,10 +318,10 @@ footer a:hover{color:var(--lime)}
     <a href="#top" class="logo" aria-label="TecLin – vissza a tetejére"><img src="assets/brand/teclin-logo.svg" alt="TecLin" width="161" height="34"></a>
     <nav class="nav" id="nav" aria-label="Fő menü">
       <a href="#megoldasok">Megoldások</a>
-      <a href="#ems">Rendszer</a>
+      <a href="#ppa">PPA</a>
       <a href="#tervezes">Tervezés</a>
-      <a href="#folyamat">Folyamat</a>
-      <a href="#palyazat">Pályázatok</a>
+      <a href="#referenciak">Referenciák</a>
+      <a href="#letoltesek">Letöltések</a>
       <a href="#kapcsolat" class="btn btn--solid">Ajánlatot kérek</a>
     </nav>
     <button class="burger" id="burger" aria-label="Menü" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
@@ -286,25 +332,25 @@ footer a:hover{color:var(--lime)}
 <!-- HERO: full-screen drone video over the poster -->
 <section class="hero" id="top">
   <div class="media shade-l">
-    <img src="assets/img/tl-hero.webp" alt="" fetchpriority="high">
+    <img src="assets/img/tl-hero-banner.webp" alt="" fetchpriority="high" style="object-position:70% 50%">
     <video data-src="assets/video/hero.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
   </div>
   <div class="wrap hero-in">
-    <p class="kicker rv">Integrált energiaökoszisztéma vállalatoknak</p>
-    <h1 class="rv d1">Energia, ami<br><em>üzleti előnnyé</em> válik</h1>
-    <p class="lead rv d2">Napelem, ipari energiatárolás, hőszivattyú, EV-töltés és energiamenedzsment egyetlen felelős partnertől – a felméréstől a pályázaton át az üzemeltetésig.</p>
+    <p class="kicker rv">Ipari napelemes rendszerek 100 kW-tól 1 MW felett</p>
+    <h1 class="rv d1">Energia&shy;megoldások<br><em>egy kézből</em></h1>
+    <p class="lead rv d2">Gyárak, üzemek, logisztikai központok és mezőgazdasági létesítmények napelemes és energiatárolós rendszerei kulcsrakészen – saját tervezőcsapattal, saját szerelőkkel és saját műszaki ellenőrrel. Beruházás nélkül is, PPA-konstrukcióban.</p>
     <div class="ctas rv d3">
       <a href="#kapcsolat" class="btn btn--solid">Ingyenes felmérés <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      <a href="#megoldasok" class="btn btn--line">Megoldásaink</a>
+      <a href="assets/docs/TecLin_cegbemutato.pdf" download class="btn btn--line">Céges bemutató (PDF) <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></a>
     </div>
   </div>
   <div class="stats" style="position:absolute;left:0;right:0;bottom:0;width:100%">
     <button class="vctl" id="vctl" aria-label="Háttérvideó szüneteltetése" hidden><svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg></button>
     <div class="wrap">
-      <div class="stat"><b>6</b><span>technológia egy rendszerben</span></div>
-      <div class="stat"><b>~3<small>év</small></b><span>megtérülés (projektfüggő)</span></div>
-      <div class="stat"><b>1</b><span>felelős partner a teljes projekten</span></div>
-      <div class="stat"><b>10<small>év</small></b><span>akár ennyi garancia hőszivattyúkra</span></div>
+      <div class="stat"><b>2 000<small>+</small></b><span>lakossági projekt országszerte</span></div>
+      <div class="stat"><b>100<small>+</small></b><span>ipari, logisztikai és agrár referencia</span></div>
+      <div class="stat"><b>3,9<small>MW</small></b><span>kiemelt ipari PV-referenciák</span></div>
+      <div class="stat"><b>550<small>m²</small></b><span>saját csarnok és raktár Székesfehérváron</span></div>
     </div>
   </div>
 </section>
@@ -345,6 +391,51 @@ footer a:hover{color:var(--lime)}
     <ul class="checks rv d3"><li>Nagyobb önfogyasztási arány</li><li>Kisebb teljesítménydíj, alacsonyabb számla</li><li>Tartalék hálózati kimaradás esetére</li></ul>
     <a href="#kapcsolat" class="btn btn--line rv d3">Kérjen PV+BESS kalkulációt <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div></div>
+</section>
+
+<!-- PPA: Teclin-EasE -->
+<section class="pad ppa" id="ppa">
+  <div class="wrap">
+    <div class="ppa-top">
+      <div><p class="kicker rv">PPA · Teclin-EasE konstrukció</p><h2 class="rv d1">Mi építjük meg.<br>Ön csak az energiát fizeti.</h2></div>
+      <p class="lead rv d2">Az Ön telephelyén építjük meg és üzemeltetjük a napelemes és akkumulátoros erőművet, saját mérlegünkben tartjuk, a megtermelt villamos energiát pedig rögzített euróáron értékesítjük Önnek. Mérőóra mögött, hálózati visszatáplálás nélkül.</p>
+    </div>
+    <div class="ppa-big rv">
+      <div><b>0 €</b><span>beruházás (CAPEX) az Ön oldalán</span></div>
+      <div><b>EUR</b><span>rögzített ár minden megtermelt MWh-ra</span></div>
+      <div><b>10–20 év</b><span>választható futamidő</span></div>
+      <div><b>5. évtől</b><span>vásárlási opció, majd a futamidő végén</span></div>
+    </div>
+    <div class="ppa-cols">
+      <div class="rv">
+        <table class="cmp">
+          <thead><tr><th></th><th>Saját beruházás</th><th class="us">Teclin-EasE PPA</th></tr></thead>
+          <tbody>
+            <tr><td>Tőke</td><td>Az Ön CAPEX-e, a mérlegben jelenik meg, és versenyez az alaptevékenység beruházásaival.</td><td class="us">A mi beruházásunk – nem jelenik meg az Ön könyveiben.</td></tr>
+            <tr><td>Idő</td><td>12–18 hónapnyi belső munka: tender, engedélyek, hálózati ügyek, kivitelezők.</td><td class="us">Egy döntés az elején, utána rendszeres előrehaladási jelentések.</td></tr>
+            <tr><td>Üzemeltetés</td><td>Karbantartás, monitoring, biztosítás és pótalkatrészek az Ön feladatai.</td><td class="us">Minden költség a szerződéses díj része, a teljes futamidő alatt.</td></tr>
+            <tr><td>Teljesítmény</td><td>Ha a hozam elmarad a várttól, a veszteséget Ön viseli.</td><td class="us">Ha az erőmű kevesebbet termel a modellezettnél, a veszteség minket terhel.</td></tr>
+            <tr><td>Technológia</td><td>A garanciális és elavulási kockázat az Öné.</td><td class="us">A technológiai és garanciális kockázatot mi viseljük.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="rv d1">
+        <p class="kicker">12 hónap az üzembe helyezésig</p>
+        <ol class="tl">
+          <li><small>1–6. hónap</small><b>Kereskedelmi előkészítés</b><span>Ajánlat, term sheet, szerződés</span></li>
+          <li><small>5–8. hónap</small><b>Előkészítés</b><span>Környezeti vizsgálat, műszaki tervek</span></li>
+          <li><small>7–10. hónap</small><b>Engedélyezés</b><span>Építési engedély, TMMT, MEKH-bejelentés</span></li>
+          <li><small>10–12. hónap</small><b>Kivitelezés</b><span>Építés, üzembe helyezés, használatbavétel</span></li>
+          <li><small>12. hónaptól</small><b>Üzemeltetés</b><span>Kereskedelmi üzemkezdés – indul a megtakarítás</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="ppa-cta rv">
+      <a href="assets/docs/TecLin_PPA_EasE.pdf" download class="btn btn--solid">PPA-tájékoztató letöltése (PDF) <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></a>
+      <a href="#kapcsolat" class="btn btn--line">PPA-ajánlatot kérek <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <p class="ppa-note">A konstrukció ott működik, ahol napközben jelentős – néhány száz kilowattos szinttől felfelé – villamosenergia-fogyasztás van. Az ajánlathoz a telephely címe, a rendelkezésre álló felület és 12 hónap (lehetőleg 15 perces) fogyasztási adat szükséges. A tájékoztatás nem minősül ajánlattételnek; a végleges paraméterek a telephely adatai alapján, írásos ajánlatban határozhatók meg.</p>
+  </div>
 </section>
 
 <!-- EMS -->
@@ -402,19 +493,43 @@ footer a:hover{color:var(--lime)}
   </div>
 </section>
 
+<!-- REFERENCES -->
+<section class="pad" id="referenciak">
+  <div class="wrap">
+    <div class="head-row">
+      <div><p class="kicker rv">Kiemelt referenciák</p><h2 class="rv d1">Ahol már<br>termelünk</h2></div>
+      <p class="lead rv d2">Közművektől áruházakon át ipari üzemekig – visszwatt-védelemmel, kulcsrakészen, saját tervezésű kiosztással és nyomvonallal.</p>
+    </div>
+    <table class="refs rv">
+      <tr><td>E.R.Ö.V. Zrt.</td><td>Közműszolgáltatói hálózat, 25 telephely</td><td>1 000 kW</td></tr>
+      <tr><td>Kiskunvíz</td><td>Víziközmű-szolgáltatói rendszerek</td><td>500 kW</td></tr>
+      <tr><td>Metro Áruház Budaörs</td><td>Áruház, visszwatt-védelemmel</td><td>500 kWp</td></tr>
+      <tr><td>Metro Áruház Székesfehérvár</td><td>Áruház, visszwatt-védelemmel</td><td>500 kWp</td></tr>
+      <tr><td>Pápa Teszéri Téglagyár</td><td>Ipari rendszer, komplex visszwatt-védelem</td><td>400 kW</td></tr>
+      <tr><td>Zentis Kft.</td><td>Élelmiszeripari üzem, Drégelypalánk</td><td>200 kWh</td></tr>
+    </table>
+    <p class="ref-more rv">További 6 vállalati és agrár rendszer 50–57 kW teljesítménnyel (szálloda, üzemcsarnok, ifjúsági szálló, csirkenevelde, almahűtő, kiserőmű), valamint ipari és agrár projektek: Debrecen, Felcsút, Komárom, Környe, Tata, Abony, Ács, Budapest XV., Csongrád.</p>
+    <div class="group rv d1">
+      <div><b>TecLin Energy Hungary Kft.</b><span>Napelemes és villanyszerelők, hálózatra csatlakozás</span></div>
+      <div><b>Conducator Kft.</b><span>Infrastrukturális, föld- és kiegészítő szerelési munkák</span></div>
+      <div><b>Hungarosolar Zrt.</b><span>Megawattos ipari erőművek mérnöki irányítása</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- PROCESS -->
 <section class="pad" id="folyamat">
   <div class="wrap">
     <div class="head-row">
       <div><p class="kicker rv">Működésünk</p><h2 class="rv d1">Tervezéstől<br>üzemeltetésig</h2></div>
-      <p class="lead rv d2">Egy projektmenedzser, egy szerződés, egy felelős – az elejétől a végéig.</p>
+      <p class="lead rv d2">Saját tervező, saját szerelő és saját műszaki ellenőr a projekt teljes hosszán.</p>
     </div>
     <div class="steps">
-      <div class="step rv"><div class="n">01</div><h3>Felmérés</h3><p>Helyszíni bejárás, fogyasztási profil és hálózati lehetőségek elemzése.</p></div>
-      <div class="step rv d1"><div class="n">02</div><h3>Tervezés</h3><p>Méretezés, megtérülési modell és tervdokumentáció mérnöki háttérrel.</p></div>
-      <div class="step rv d2"><div class="n">03</div><h3>Finanszírozás</h3><p>Pályázat, hitelprogram és engedélyezés – az ügyintézést átvállaljuk.</p></div>
-      <div class="step rv d3"><div class="n">04</div><h3>Kivitelezés</h3><p>Ütemezett telepítés, beüzemelés, átadás és üzembe helyezés.</p></div>
-      <div class="step rv d3"><div class="n">05</div><h3>Üzemeltetés</h3><p>Távfelügyelet, karbantartás, szerviz és folyamatos optimalizálás.</p></div>
+      <div class="step rv"><div class="n">01</div><h3>Felmérés</h3><p>Helyszíni felmérés és a negyedórás fogyasztásra méretezett ajánlat.</p></div>
+      <div class="step rv d1"><div class="n">02</div><h3>Tervezés</h3><p>Saját tervezőcsapat, mérnöki pontosságú előkészítés, 2–3 rangsorolt változat.</p></div>
+      <div class="step rv d2"><div class="n">03</div><h3>Engedélyeztetés</h3><p>Gyors és zökkenőmentes engedélyezési folyamat, hálózati ügyintézés.</p></div>
+      <div class="step rv d3"><div class="n">04</div><h3>Kivitelezés</h3><p>Saját szerelők, stabil anyagellátás a saját székesfehérvári raktárból.</p></div>
+      <div class="step rv d3"><div class="n">05</div><h3>Átadás</h3><p>Műszaki ellenőrzés, hálózatra csatlakozás és üzemeltetés.</p></div>
     </div>
   </div>
 </section>
@@ -465,6 +580,26 @@ footer a:hover{color:var(--lime)}
   </div>
 </section>
 
+<!-- DOWNLOADS -->
+<section class="pad" id="letoltesek" style="padding-top:0">
+  <div class="wrap">
+    <div class="head-row" style="margin-bottom:40px">
+      <div><p class="kicker rv">Letölthető anyagok</p><h2 class="rv d1">Vigye magával</h2></div>
+      <p class="lead rv d2">Ossza meg a pénzügyi vezetővel vagy a döntéshozókkal – mindkét anyag PDF formátumban letölthető.</p>
+    </div>
+    <div class="dl-grid">
+      <a class="dl rv" href="assets/docs/TecLin_cegbemutato.pdf" download>
+        <img src="assets/img/tl-cover-ceg.webp" alt="A TecLin céges bemutató címlapja" loading="lazy" style="object-fit:contain;background:#0b1410">
+        <div><span class="pill">PDF · 1,1 MB</span><h3>Céges bemutató</h3><p>Rólunk, számokban, szolgáltatások, a TecLin energetikai stratégiája, munkamenet és kiemelt referenciák.</p><span class="btn btn--solid">Letöltés <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></span></div>
+      </a>
+      <a class="dl rv d1" href="assets/docs/TecLin_PPA_EasE.pdf" download>
+        <img src="assets/img/tl-cover-ppa.webp" alt="A Teclin-EasE PPA tájékoztató címlapja" loading="lazy">
+        <div><span class="pill">PDF · 0,3 MB</span><h3>PPA-konstrukció</h3><p>0 € beruházás, rögzített euróár: a szerződés nyolc pontja, a pénzügyi logika és a 12 hónapos ütemterv.</p><span class="btn btn--solid">Letöltés <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section class="pad" id="kapcsolat">
   <div class="wrap contact-grid">
@@ -483,7 +618,7 @@ footer a:hover{color:var(--lime)}
       <label>E-mail<input type="email" name="email" required autocomplete="email"></label>
       <label>Telefon<input type="tel" name="tel" autocomplete="tel"></label>
       <label class="full">Érdeklődés
-        <select name="tema"><option>Napelem (PV)</option><option>Energiatárolás (BESS)</option><option>PV + BESS</option><option>Hőszivattyú</option><option>E-mobilitás (EV-töltés)</option><option>Energiamenedzsment (EMS)</option><option>Komplex megoldás</option></select>
+        <select name="tema"><option>Napelem (PV)</option><option>Energiatárolás (BESS)</option><option>PV + BESS</option><option>Hőszivattyú</option><option>E-mobilitás (EV-töltés)</option><option>Energiamenedzsment (EMS)</option><option>PPA – beruházás nélkül</option><option>Komplex megoldás</option></select>
       </label>
       <label class="full">Üzenet<textarea name="uzenet" placeholder="Telephely, éves villamosenergia-fogyasztás, célok…"></textarea></label>
       <label class="chk full"><input type="checkbox" required> Elfogadom az adatkezelési tájékoztatót.</label>
@@ -498,8 +633,8 @@ footer a:hover{color:var(--lime)}
     <div class="fgrid">
       <div><img src="assets/brand/teclin-logo.svg" alt="TecLin" width="171" height="36" style="height:36px;width:auto;margin-bottom:20px"><p>Integrált energiamegoldások vállalatoknak – napelem, tárolás, hőszivattyú, e-mobilitás és energiamenedzsment egy kézből.</p></div>
       <div><h4>Megoldások</h4><ul><li><a href="#megoldasok">Napelem (PV)</a></li><li><a href="#megoldasok">Energiatárolás (BESS)</a></li><li><a href="#megoldasok">Hőszivattyú</a></li><li><a href="#ems">EV-töltés &amp; EMS</a></li></ul></div>
-      <div><h4>Cég</h4><ul><li><a href="#folyamat">Működésünk</a></li><li><a href="#palyazat">Pályázatok</a></li><li><a href="#gyik">GYIK</a></li><li><a href="#kapcsolat">Kapcsolat</a></li></ul></div>
-      <div><h4>Elérhetőség</h4><ul><li>TecLin Energy Hungary Kft.</li><li>8000 Székesfehérvár, Rozmaring utca 3.</li><li>Adószám: 25125179-2-07</li><li><a href="mailto:iroda@teclin.hu">iroda@teclin.hu</a></li></ul></div>
+      <div><h4>Cég</h4><ul><li><a href="#ppa">PPA-konstrukció</a></li><li><a href="#referenciak">Referenciák</a></li><li><a href="#folyamat">Működésünk</a></li><li><a href="#letoltesek">Letöltések</a></li></ul></div>
+      <div><h4>Elérhetőség</h4><ul><li>TecLin Energy Hungary Kft.</li><li>8000 Székesfehérvár, Rozmaring utca 3.</li><li>Cégjegyzékszám: 07-09-035165</li><li>Adószám: 25125179-2-07</li><li><a href="mailto:iroda@teclin.hu">iroda@teclin.hu</a></li></ul></div>
     </div>
     <div class="fbot"><span>© 2026 TecLin Energy Hungary Kft. – Minden jog fenntartva.</span><span><a href="credits.html">Fotó- és videóforrások</a></span></div>
   </div>
@@ -540,6 +675,17 @@ footer a:hover{color:var(--lime)}
       ctl.setAttribute('aria-label',paused?'Háttérvideó lejátszása':'Háttérvideó szüneteltetése');
       ctl.innerHTML=paused?'<svg viewBox="0 0 24 24"><path d="M7 5l12 7-12 7z"/></svg>':'<svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>'});
   }
+
+  // PDF downloads: a normal link on the live site; inside the claude.ai viewer the save goes through the downloads capability
+  let dlNs=null;
+  if(window.claude&&typeof claude.use==='function') claude.use('downloads').then(n=>{dlNs=n}).catch(()=>{});
+  document.addEventListener('click',async e=>{
+    const a=e.target.closest('a[download]'); if(!a||!dlNs) return;
+    e.preventDefault();
+    const href=a.getAttribute('href');
+    try{const blob=await (await fetch(href)).blob(); await dlNs.save({filename:href.split('/').pop(),data:blob});}
+    catch(err){ if(err&&(err.code==='declined'||err.code==='rate_limited')) return; window.open(a.href,'_blank','noopener'); }
+  });
 
   // form -> mailto (until a form backend / HubSpot form is connected)
   $('#form').addEventListener('submit',e=>{
