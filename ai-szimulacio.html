@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI Energiaszimuláció – TecLin</title>
+<meta name="description" content="Szimulációtól a megvalósíthatósági tanulmányig – AI-vezérelt energetikai modellezés a TecLin-től.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   TecLin – AI szimulációs bemutató blokk
+   Minden szabály a .tsim gyökérre van szűkítve, így a <section class="tsim">
+   blokk (CSS + HTML + JS) változtatás nélkül beilleszthető a kalkulátor
+   Dashboard fülére vagy a weboldalra.
+   ========================================================================== */
+body { margin:0; background:#0b111b; }
+
+.tsim {
+  --bg:#0b111b; --panel:#111a27; --panel2:#152133; --line:#1f2d42;
+  --text:#e8eef6; --muted:#8a9bb2; --orange:#f5a623; --orange2:#ffbf47;
+  --green:#2fbf71; --teclin:#41b93c; --blue:#3fa9f5; --red:#e5534b; --purple:#a371f7;
+  font-family:Poppins, system-ui, sans-serif; color:var(--text); background:var(--bg);
+  padding:56px 24px; position:relative; overflow:hidden; line-height:1.5;
+}
+.tsim *, .tsim *::before, .tsim *::after { box-sizing:border-box; }
+.tsim::before { /* háttér-rács */
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.35;
+  background-image:linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%);
+}
+.tsim-wrap { max-width:1240px; margin:0 auto; position:relative; }
+
+/* ---------- HERO ---------- */
+.tsim-hero { display:grid; grid-template-columns:1.05fr 1fr; gap:40px; align-items:center; }
+.tsim-badge {
+  display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:999px;
+  border:1px solid rgba(245,166,35,.45); background:rgba(245,166,35,.08);
+  color:var(--orange2); font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+}
+.tsim-dot { width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 0 0 rgba(47,191,113,.7); animation:tsim-pulse 1.8s infinite; }
+@keyframes tsim-pulse { 70% { box-shadow:0 0 0 10px rgba(47,191,113,0); } 100% { box-shadow:0 0 0 0 rgba(47,191,113,0); } }
+.tsim h2 { font-size:clamp(30px,4.2vw,50px); line-height:1.08; margin:18px 0 16px; font-weight:800; letter-spacing:-.02em; }
+.tsim-grad { background:linear-gradient(90deg,var(--orange) 0%, var(--orange2) 35%, var(--green) 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.tsim-lead { color:var(--muted); font-size:16px; max-width:560px; margin:0 0 26px; }
+.tsim-lead b { color:var(--text); font-weight:600; }
+.tsim-cta-row { display:flex; flex-wrap:wrap; gap:12px; }
+.tsim-btn {
+  display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:10px;
+  font-weight:600; font-size:14px; text-decoration:none; cursor:pointer; border:0; font-family:inherit;
+  transition:transform .15s, box-shadow .15s;
+}
+.tsim-btn:hover { transform:translateY(-2px); }
+.tsim-btn-primary { background:linear-gradient(135deg,var(--orange),#ff8c1a); color:#1a1205; box-shadow:0 8px 24px rgba(245,166,35,.28); }
+.tsim-btn-ghost { background:transparent; color:var(--text); border:1px solid var(--line); }
+.tsim-btn-ghost:hover { border-color:var(--orange); }
+
+.tsim-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:34px; }
+.tsim-stat { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px 12px; }
+.tsim-stat .v { font-size:22px; font-weight:700; color:var(--orange); font-variant-numeric:tabular-nums; }
+.tsim-stat .l { font-size:11px; color:var(--muted); line-height:1.35; }
+
+/* ---------- ÉLŐ SZIMULÁCIÓ ---------- */
+.tsim-live {
+  background:linear-gradient(180deg,var(--panel2),var(--panel)); border:1px solid var(--line); border-radius:18px;
+  padding:18px; box-shadow:0 30px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(245,166,35,.06) inset; position:relative;
+}
+.tsim-live-head { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+.tsim-live-title { font-size:13px; font-weight:600; display:flex; align-items:center; gap:8px; }
+.tsim-live-sub { font-size:11px; color:var(--muted); }
+.tsim-tabs { display:flex; gap:6px; flex-wrap:wrap; }
+.tsim-tab {
+  font-family:inherit; font-size:11px; font-weight:600; padding:6px 10px; border-radius:8px; cursor:pointer;
+  background:transparent; color:var(--muted); border:1px solid var(--line); transition:all .15s;
+}
+.tsim-tab:hover { color:var(--text); }
+.tsim-tab.on { color:#1a1205; background:var(--orange); border-color:var(--orange); }
+.tsim-canvas-box { position:relative; height:240px; }
+.tsim-canvas-box canvas { width:100%; height:100%; display:block; }
+.tsim-legend { display:flex; flex-wrap:wrap; gap:12px; font-size:11px; color:var(--muted); margin:8px 0 12px; }
+.tsim-legend i { display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:-1px; }
+.tsim-readout { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+.tsim-ro { background:rgba(255,255,255,.025); border:1px solid var(--line); border-radius:10px; padding:8px 10px; }
+.tsim-ro .l { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+.tsim-ro .v { font-size:15px; font-weight:700; font-variant-numeric:tabular-nums; }
+.tsim-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:8px; }
+.tsim-kpi { border-radius:10px; padding:8px 10px; border:1px solid var(--line); border-top:3px solid var(--c,var(--orange)); }
+.tsim-kpi .l { font-size:10px; color:var(--muted); }
+.tsim-kpi .v { font-size:16px; font-weight:700; color:var(--c,var(--orange)); font-variant-numeric:tabular-nums; transition:color .3s; }
+.tsim-note { font-size:10.5px; color:var(--muted); margin-top:10px; }
+.tsim-play { font-family:inherit; background:none; border:1px solid var(--line); color:var(--muted); border-radius:8px; width:30px; height:28px; cursor:pointer; font-size:12px; }
+.tsim-play:hover { color:var(--text); border-color:var(--orange); }
+
+/* ---------- SZEKCIÓ FEJLÉC ---------- */
+.tsim-sec { margin-top:72px; }
+.tsim-eyebrow { font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--orange); display:flex; align-items:center; gap:10px; }
+.tsim-eyebrow::before { content:""; width:4px; height:16px; border-radius:2px; background:var(--orange); }
+.tsim h3 { font-size:clamp(22px,2.6vw,30px); margin:8px 0 8px; font-weight:700; letter-spacing:-.01em; }
+.tsim-sec > p { color:var(--muted); margin:0 0 28px; max-width:760px; }
+
+/* ---------- FOLYAMAT (PIPELINE) ---------- */
+.tsim-pipe { display:grid; grid-template-columns:repeat(6,1fr); gap:14px; position:relative; }
+.tsim-pipe::before { /* összekötő vonal */
+  content:""; position:absolute; top:34px; left:6%; right:6%; height:2px; background:var(--line); z-index:0;
+}
+.tsim-pipe-flow {
+  position:absolute; top:33px; left:6%; height:4px; width:14%; border-radius:4px; z-index:0;
+  background:linear-gradient(90deg,transparent,var(--orange),var(--green),transparent);
+  animation:tsim-flow 5s linear infinite; filter:blur(.5px);
+}
+@keyframes tsim-flow { from { left:4%; } to { left:84%; } }
+.tsim-step { position:relative; z-index:1; text-align:center; }
+.tsim-step-ico {
+  width:68px; height:68px; margin:0 auto 12px; border-radius:18px; display:grid; place-items:center; font-size:28px;
+  background:var(--panel2); border:1px solid var(--line); transition:all .3s;
+}
+.tsim-step.act .tsim-step-ico { border-color:var(--orange); box-shadow:0 0 0 6px rgba(245,166,35,.1), 0 10px 30px rgba(245,166,35,.25); transform:translateY(-3px); }
+.tsim-step-n { font-size:10px; font-weight:700; color:var(--orange); letter-spacing:.1em; }
+.tsim-step h4 { font-size:14px; margin:2px 0 6px; font-weight:600; }
+.tsim-step p { font-size:12px; color:var(--muted); margin:0; line-height:1.45; }
+.tsim-step .ai { display:inline-block; margin-top:8px; font-size:10px; font-weight:600; color:var(--purple); background:rgba(163,113,247,.1); border:1px solid rgba(163,113,247,.3); padding:2px 8px; border-radius:999px; }
+
+/* ---------- MODULOK ---------- */
+.tsim-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.tsim-card {
+  background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px; position:relative;
+  border-top:3px solid var(--c); transition:transform .2s, border-color .2s, box-shadow .2s;
+}
+.tsim-card:hover { transform:translateY(-4px); box-shadow:0 18px 40px rgba(0,0,0,.35); }
+.tsim-card-head { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:10px; }
+.tsim-card-ico { font-size:22px; }
+.tsim-tag { font-size:10px; font-weight:700; padding:3px 9px; border-radius:999px; white-space:nowrap; }
+.tsim-tag.ok { color:var(--green); background:rgba(47,191,113,.1); border:1px solid rgba(47,191,113,.35); }
+.tsim-tag.rm { color:var(--blue); background:rgba(63,169,245,.1); border:1px solid rgba(63,169,245,.35); }
+.tsim-card h4 { margin:0 0 6px; font-size:16px; font-weight:600; }
+.tsim-card > p { margin:0 0 12px; font-size:13px; color:var(--muted); }
+.tsim-card ul { margin:0; padding:0; list-style:none; font-size:12.5px; }
+.tsim-card li { padding:5px 0 5px 18px; position:relative; border-top:1px dashed var(--line); }
+.tsim-card li::before { content:"▸"; position:absolute; left:2px; color:var(--c); }
+
+/* ---------- KIMENET / TANULMÁNY ---------- */
+.tsim-out { display:grid; grid-template-columns:1fr 1.1fr; gap:24px; align-items:stretch; }
+.tsim-doc {
+  background:linear-gradient(160deg,#18263a,#0f1724); border:1px solid var(--line); border-radius:16px; padding:24px; position:relative; overflow:hidden;
+}
+.tsim-doc::after { content:"AUTOMATIKUSAN GENERÁLT"; position:absolute; right:16px; top:16px; font-size:9.5px; font-weight:700; letter-spacing:.1em; background:var(--orange); color:#1a1205; padding:4px 10px; border-radius:999px; }
+.tsim-toc { list-style:none; padding:0; margin:14px 0 0; counter-reset:toc; }
+.tsim-toc li { counter-increment:toc; display:flex; gap:12px; align-items:baseline; padding:9px 0; border-bottom:1px solid var(--line); font-size:13.5px; }
+.tsim-toc li::before { content:counter(toc,decimal-leading-zero); font-size:11px; font-weight:700; color:var(--orange); min-width:20px; }
+.tsim-toc li span { color:var(--muted); font-size:12px; margin-left:auto; text-align:right; }
+.tsim-why { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.tsim-why div { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; }
+.tsim-why b { display:block; font-size:14px; margin:6px 0 4px; }
+.tsim-why span { font-size:12.5px; color:var(--muted); }
+.tsim-why .e { font-size:20px; }
+
+/* ---------- CTA SÁV ---------- */
+.tsim-final {
+  margin-top:72px; border-radius:20px; padding:36px; position:relative; overflow:hidden;
+  background:radial-gradient(circle at 15% 0%, rgba(245,166,35,.22), transparent 55%), radial-gradient(circle at 100% 100%, rgba(65,185,60,.22), transparent 55%), var(--panel);
+  border:1px solid rgba(245,166,35,.4); display:grid; grid-template-columns:1.4fr 1fr; gap:24px; align-items:center;
+}
+.tsim-final h3 { margin-top:0; }
+.tsim-final p { color:var(--muted); margin:0; }
+.tsim-final-r { display:flex; flex-direction:column; gap:10px; align-items:flex-end; }
+.tsim-partners { margin-top:28px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:center; font-size:12px; color:var(--muted); }
+.tsim-partners span.p { padding:6px 12px; border:1px solid var(--line); border-radius:8px; background:var(--panel); color:var(--text); font-weight:500; }
+
+/* ---------- MEGJELENÉS ANIMÁCIÓ ---------- */
+.tsim-rv { opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+.tsim-rv.in { opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce) {
+  .tsim-rv { opacity:1; transform:none; transition:none; }
+  .tsim-pipe-flow, .tsim-dot { animation:none; }
+}
+
+/* ---------- RESZPONZÍV ---------- */
+@media (max-width:1020px) {
+  .tsim-hero, .tsim-out, .tsim-final { grid-template-columns:1fr; }
+  .tsim-final-r { align-items:flex-start; }
+  .tsim-pipe { grid-template-columns:repeat(3,1fr); row-gap:28px; }
+  .tsim-pipe::before, .tsim-pipe-flow { display:none; }
+  .tsim-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:640px) {
+  .tsim { padding:40px 16px; }
+  .tsim-stats { grid-template-columns:repeat(2,1fr); }
+  .tsim-readout { grid-template-columns:repeat(3,1fr); }
+  .tsim-kpis { grid-template-columns:repeat(2,1fr); }
+  .tsim-pipe, .tsim-grid, .tsim-why { grid-template-columns:1fr; }
+  .tsim-step { display:grid; grid-template-columns:68px 1fr; gap:14px; text-align:left; align-items:start; }
+  .tsim-step-ico { margin:0; }
+  .tsim-final { padding:24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= AI SZIMULÁCIÓS BEMUTATÓ BLOKK ================= -->
+<section class="tsim" id="ai-szimulacio">
+<div class="tsim-wrap">
+
+  <!-- HERO -->
+  <div class="tsim-hero">
+    <div class="tsim-rv">
+      <span class="tsim-badge"><span class="tsim-dot"></span>AI-vezérelt energetikai modellezés</span>
+      <h2>Szimulációtól a <span class="tsim-grad">megvalósíthatósági tanulmányig</span></h2>
+      <p class="tsim-lead">
+        A cég valós, <b>15 perces fogyasztási adataiból</b> AI-támogatott adatmodell épül, amely
+        <b>8 760 órán át</b> szimulálja a napelemes termelést, az energiatárolót és a hálózati kapcsolatot,
+        majd döntésre kész <b>műszaki-gazdasági tanulmánnyá</b> alakítja az eredményt: NPV, IRR,
+        megtérülés, visszwatt-kockázat és optimális rendszerméret, egy helyen.
+      </p>
+      <div class="tsim-cta-row">
+        <a class="tsim-btn tsim-btn-primary" href="https://teclin.hu/kapcsolat/" target="_blank" rel="noopener">⚡ Ingyenes előszimulációt kérek</a>
+        <a class="tsim-btn tsim-btn-ghost" href="#tsim-folyamat">Hogyan működik? ↓</a>
+      </div>
+      <div class="tsim-stats">
+        <div class="tsim-stat"><div class="v" data-count="35040">0</div><div class="l">negyedórás adatpont / év elemezve</div></div>
+        <div class="tsim-stat"><div class="v" data-count="8760">0</div><div class="l">órás termelési és tárolási szimuláció</div></div>
+        <div class="tsim-stat"><div class="v" data-count="1000" data-suffix="+">0</div><div class="l">PV × BESS méretkombináció az optimum mátrixban</div></div>
+        <div class="tsim-stat"><div class="v" data-count="25" data-suffix=" év">0</div><div class="l">cash-flow, NPV és IRR előrejelzés</div></div>
+      </div>
+    </div>
+
+    <!-- ÉLŐ SZIMULÁCIÓ -->
+    <div class="tsim-live tsim-rv" aria-label="Élő napi energiaszimuláció">
+      <div class="tsim-live-head">
+        <div>
+          <div class="tsim-live-title"><span class="tsim-dot"></span>Élő szimuláció · tipikus áprilisi munkanap</div>
+          <div class="tsim-live-sub">1 MWp PV · 2 MWh BESS / 1 MW · 15 perces felbontás</div>
+        </div>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <div class="tsim-tabs" role="tablist">
+            <button class="tsim-tab on" data-mode="pv" role="tab">Csak PV</button>
+            <button class="tsim-tab" data-mode="bess" role="tab">PV + BESS</button>
+            <button class="tsim-tab" data-mode="ems" role="tab">PV + BESS + AI-EMS</button>
+          </div>
+          <button class="tsim-play" id="tsimPlay" title="Szünet / lejátszás" aria-label="Szünet / lejátszás">❚❚</button>
+        </div>
+      </div>
+      <div class="tsim-canvas-box"><canvas id="tsimCanvas"></canvas></div>
+      <div class="tsim-legend">
+        <span><i style="background:#f5a623"></i>PV termelés</span>
+        <span><i style="background:#2fbf71"></i>Közvetlen felhasználás</span>
+        <span><i style="background:#3fa9f5"></i>BESS töltés / kisütés</span>
+        <span><i style="background:#e5534b"></i>Visszwatt / leszabályozott</span>
+        <span><i style="background:#8a9bb2"></i>Fogyasztás</span>
+        <span><i style="background:#a371f7"></i>Töltöttség (SOC)</span>
+      </div>
+      <div class="tsim-readout">
+        <div class="tsim-ro"><div class="l">Időpont</div><div class="v" id="roT">00:00</div></div>
+        <div class="tsim-ro"><div class="l">PV</div><div class="v" id="roPv" style="color:var(--orange)">0 kW</div></div>
+        <div class="tsim-ro"><div class="l">Fogyasztás</div><div class="v" id="roL">0 kW</div></div>
+        <div class="tsim-ro"><div class="l">BESS</div><div class="v" id="roB" style="color:var(--blue)">0 kW</div></div>
+        <div class="tsim-ro"><div class="l">SOC</div><div class="v" id="roS" style="color:var(--purple)">–</div></div>
+      </div>
+      <div class="tsim-kpis">
+        <div class="tsim-kpi" style="--c:var(--green)"><div class="l">PV-ből fedezett fogyasztás</div><div class="v" id="kSelf">–</div></div>
+        <div class="tsim-kpi" style="--c:var(--red)"><div class="l">Elvesző PV-energia</div><div class="v" id="kCurt">–</div></div>
+        <div class="tsim-kpi" style="--c:var(--blue)"><div class="l">Hálózati csúcs</div><div class="v" id="kPeak">–</div></div>
+        <div class="tsim-kpi" style="--c:var(--orange)"><div class="l">Napi energiaköltség</div><div class="v" id="kCost">–</div></div>
+      </div>
+      <div class="tsim-note">Illusztratív szimuláció szintetikus napi profillal (nulla betáplálású, visszwatt-korlátozott csatlakozás). Valós projektnél az ügyfél mért adataival és aktuális tarifáival számolunk.</div>
+    </div>
+  </div>
+
+  <!-- FOLYAMAT -->
+  <div class="tsim-sec tsim-rv" id="tsim-folyamat">
+    <div class="tsim-eyebrow">Hogyan dolgozunk</div>
+    <h3>6 lépés az adattól a beruházási döntésig</h3>
+    <p>Minden lépés mérhető, visszakövethető és ismételhető. Az AI az adattisztításban, a profilmodellezésben és az optimum keresésében gyorsít, a műszaki és pénzügyi validálást mérnökeink végzik.</p>
+    <div class="tsim-pipe">
+      <div class="tsim-pipe-flow"></div>
+      <div class="tsim-step"><div class="tsim-step-ico">📥</div><div><div class="tsim-step-n">01</div><h4>Adatgyűjtés</h4><p>15 perces mérési adatok, számlák, lekötött teljesítmény, RHD-kategória, telephely.</p></div></div>
+      <div class="tsim-step"><div class="tsim-step-ico">🧠</div><div><div class="tsim-step-n">02</div><h4>AI adatmodell</h4><p>Hiánypótlás, anomáliaszűrés, terhelésprofil- és műszakmintázat-felismerés.</p><span class="ai">AI</span></div></div>
+      <div class="tsim-step"><div class="tsim-step-ico">☀️</div><div><div class="tsim-step-n">03</div><h4>Termelési szimuláció</h4><p>Órás PV-hozam tájolással, dőlésszöggel, árnyékolással és degradációval.</p></div></div>
+      <div class="tsim-step"><div class="tsim-step-ico">🔋</div><div><div class="tsim-step-n">04</div><h4>BESS és EMS optimalizálás</h4><p>Visszwatt-védelem, csúcslevágás, önfogyasztás-növelés, tárolóméretezés.</p><span class="ai">AI</span></div></div>
+      <div class="tsim-step"><div class="tsim-step-ico">💰</div><div><div class="tsim-step-n">05</div><h4>Pénzügyi modell</h4><p>CAPEX, cash-flow, NPV, IRR, LCOE, érzékenységvizsgálat, PPA/ESCO konstrukció.</p></div></div>
+      <div class="tsim-step"><div class="tsim-step-ico">📑</div><div><div class="tsim-step-n">06</div><h4>Megvalósíthatósági tanulmány</h4><p>Döntés-előkészítő riport, optimum mátrix, pályázatban és tenderben is használható.</p></div></div>
+    </div>
+  </div>
+
+  <!-- MODULOK -->
+  <div class="tsim-sec tsim-rv">
+    <div class="tsim-eyebrow">Modellező modulok</div>
+    <h3>Egy platform, a teljes energetikai rendszer</h3>
+    <p>A kalkulátor minden fülét egy közös adatmodell köti össze: ha egy paraméter változik, minden mutató valós időben újraszámolódik.</p>
+    <div class="tsim-grid">
+      <div class="tsim-card" style="--c:var(--orange)">
+        <div class="tsim-card-head"><span class="tsim-card-ico">📊</span><span class="tsim-tag ok">Elérhető</span></div>
+        <h4>Dashboard</h4><p>Vezetői összkép egy képernyőn.</p>
+        <ul><li>Havi energiamérleg és fedezeti források</li><li>PV és PV+BESS KPI-k összevetése</li><li>Energiaáramlás (Sankey) és CO₂-megtakarítás</li></ul>
+      </div>
+      <div class="tsim-card" style="--c:var(--green)">
+        <div class="tsim-card-head"><span class="tsim-card-ico">⛅</span><span class="tsim-tag ok">Elérhető</span></div>
+        <h4>Termelés</h4><p>Fogyasztás és termelés időbeli egyezése.</p>
+        <ul><li>15 perces fogyasztási adatok betöltése</li><li>Havi és órás hőtérkép</li><li>Termelési korrekció, szezonalitás</li></ul>
+      </div>
+      <div class="tsim-card" style="--c:var(--orange2)">
+        <div class="tsim-card-head"><span class="tsim-card-ico">☀️</span><span class="tsim-tag ok">Elérhető</span></div>
+        <h4>Napelemes rendszer</h4><p>Méretezés a valós igényhez.</p>
+        <ul><li>Önfogyasztási arány és visszwatt-veszteség</li><li>Fajlagos CAPEX és LCOE</li><li>Hálózati díjszabási kategóriák (RHD)</li></ul>
+      </div>
+      <div class="tsim-card" style="--c:var(--blue)">
+        <div class="tsim-card-head"><span class="tsim-card-ico">🔋</span><span class="tsim-tag ok">Elérhető</span></div>
+        <h4>Energiatároló</h4><p>C&amp;I BESS termékkatalógusból választva.</p>
+        <ul><li>Kapacitás, DoD, RTE, ciklusszám</li><li>Hozzáadott NPV a csak PV-hez képest</li><li>Visszwatt-korlátozás kezelése</li></ul>
+      </div>
+      <div class="tsim-card" style="--c:var(--purple)">
+        <div class="tsim-card-head"><span class="tsim-card-ico">💰</span><span class="tsim-tag ok">Elérhető</span></div>
+        <h4>Pénzügyi elemzés</h4><p>Befektetői nézőpontú megtérülés.</p>
+        <ul><li>Kumulált cash-flow és megtérülési görbe</li><li>NPV / IRR / SPP diszkontrátával és áreszkalációval</li><li>Maradványérték</li></ul>
+      </div>
+      <div class="tsim-card" style="--c:var(--teclin)">
+        <div class="tsim-card-head"><span class="tsim-card-ico">🧮</span><span class="tsim-tag ok">Elérhető</span></div>
+        <h4>Optimum mátrix</h4><p>A legjobb PV × BESS kombináció.</p>
+        <ul><li>Méretkombinációk tömeges futtatása</li><li>NPV, megtérülés és önellátás rangsor</li><li>Egy kattintással tanulmány generálás</li></ul>
+      </div>
+      <div class="tsim-card" style="--c:var(--blue)">
+        <div class="tsim-card-head"><span class="tsim-card-ico">🤖</span><span class="tsim-tag rm">Fejlesztés alatt</span></div>
+        <h4>AI-EMS és dinamikus tarifa</h4><p>Prediktív tárolóvezérlés.</p>
+        <ul><li>Fogyasztás- és termelés-előrejelzés</li><li>HUPX-alapú árarbitrázs</li><li>Csúcsteljesítmény-menedzsment</li></ul>
+      </div>
+      <div class="tsim-card" style="--c:var(--blue)">
+        <div class="tsim-card-head"><span class="tsim-card-ico">🚗</span><span class="tsim-tag rm">Fejlesztés alatt</span></div>
+        <h4>EV-töltés és hálózati integráció</h4><p>Flotta, töltőpark, csatlakozási kapacitás.</p>
+        <ul><li>Töltési profilok szimulációja</li><li>Lekötött teljesítmény optimalizálása</li><li>Hálózatfejlesztési alternatívák</li></ul>
+      </div>
+      <div class="tsim-card" style="--c:var(--blue)">
+        <div class="tsim-card-head"><span class="tsim-card-ico">🎲</span><span class="tsim-tag rm">Fejlesztés alatt</span></div>
+        <h4>Kockázat és digitális iker</h4><p>Bizonytalanság számszerűsítve.</p>
+        <ul><li>Monte Carlo szimuláció (ár, időjárás, terhelés)</li><li>P50 / P90 megtérülés</li><li>Üzemeltetési digitális iker, monitoring</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- KIMENET -->
+  <div class="tsim-sec tsim-rv">
+    <div class="tsim-eyebrow">Az eredmény</div>
+    <h3>Döntésre kész tanulmány, nem csak egy táblázat</h3>
+    <p>A szimuláció eredménye strukturált megvalósíthatósági tanulmány, amely a vezetőségnek, a bankoknak és a pályázatoknak is egyaránt érthető.</p>
+    <div class="tsim-out">
+      <div class="tsim-doc">
+        <div style="font-size:12px; color:var(--muted);">Tanulmány tartalma</div>
+        <div style="font-size:18px; font-weight:700;">Energetikai megvalósíthatósági tanulmány</div>
+        <ol class="tsim-toc">
+          <li>Vezetői összefoglaló<span>javaslat, kulcsmutatók</span></li>
+          <li>Kiinduló állapot és fogyasztási profil<span>15 perces adatelemzés</span></li>
+          <li>PV-rendszer műszaki koncepció<span>méret, hozam, önfogyasztás</span></li>
+          <li>Energiatároló és EMS stratégia<span>visszwatt, csúcslevágás</span></li>
+          <li>Hálózati csatlakozás és díjszabás<span>RHD, lekötés</span></li>
+          <li>Pénzügyi modell és érzékenység<span>NPV, IRR, LCOE, cash-flow</span></li>
+          <li>Finanszírozás: saját, PPA, ESCO<span>konstrukciók összevetése</span></li>
+          <li>Kockázatok és ütemterv<span>megvalósítási roadmap</span></li>
+        </ol>
+      </div>
+      <div class="tsim-why">
+        <div><span class="e">⚡</span><b>Napok helyett percek</b><span>Az első előszimuláció már a fogyasztási adatok beérkezése után elkészül.</span></div>
+        <div><span class="e">🎯</span><b>Pontos méretezés</b><span>Se túlméretezett PV, se kihasználatlan tároló: az optimumot a mátrix mutatja meg.</span></div>
+        <div><span class="e">🛡️</span><b>Kezelt visszwatt-kockázat</b><span>A szimuláció előre megmutatja, mennyi termelés veszne el, és mi előzi meg.</span></div>
+        <div><span class="e">🏦</span><b>Bank- és pályázatképes</b><span>Átlátható feltételezések, reprodukálható számítás, exportálható riport.</span></div>
+        <div><span class="e">🔁</span><b>Forgatókönyvek valós időben</b><span>Energiaár, CAPEX vagy diszkontráta változására azonnal frissül minden mutató.</span></div>
+        <div><span class="e">🤝</span><b>Gyártófüggetlen</b><span>Több gyártó termékkatalógusából választunk, a projekt igényéhez igazítva.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="tsim-final tsim-rv">
+    <div>
+      <div class="tsim-eyebrow">Próbálja ki a saját adataival</div>
+      <h3>Küldje el egy év fogyasztási adatait, mi megmutatjuk a rendszer optimumát.</h3>
+      <p>Ingyenes előszimuláció ipari és kereskedelmi ügyfeleknek: PV, BESS, EV-töltés és energiagazdálkodás egy modellben.</p>
+    </div>
+    <div class="tsim-final-r">
+      <a class="tsim-btn tsim-btn-primary" href="https://teclin.hu/kapcsolat/" target="_blank" rel="noopener">📊 Előszimulációt kérek</a>
+      <span style="font-size:12px; color:var(--muted);">TecLin Energy Hungary Kft.</span>
+    </div>
+  </div>
+  <div class="tsim-partners tsim-rv">
+    <span>Partnereink és gyártóink:</span>
+    <span class="p">HungaroSolar</span><span class="p">GNX</span><span class="p">ASSIX</span><span class="p">HiTHIUM</span>
+    <span class="p">Huawei</span><span class="p">Rezsimentor</span><span class="p">TCL Solar</span><span class="p">Hoymiles</span>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const root = document.getElementById('ai-szimulacio');
+  if (!root) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fmt = n => Math.round(n).toLocaleString('hu-HU');
+
+  /* ---------- Megjelenés + számláló animáció ---------- */
+  const countUp = el => {
+    const target = +el.dataset.count, suf = el.dataset.suffix || '';
+    if (reduce) { el.textContent = fmt(target) + suf; return; }
+    const t0 = performance.now(), dur = 1600;
+    const tick = t => {
+      const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(target * e) + suf;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('[data-count]').forEach(countUp);
+    io.unobserve(e.target);
+  }), { threshold: .15 });
+  root.querySelectorAll('.tsim-rv').forEach(el => io.observe(el));
+
+  /* ---------- Folyamatlépések kiemelése ---------- */
+  const steps = root.querySelectorAll('.tsim-step');
+  let si = 0;
+  const stepTick = () => { steps.forEach((s, i) => s.classList.toggle('act', i === si)); si = (si + 1) % steps.length; };
+  stepTick(); if (!reduce) setInterval(stepTick, 1500);
+
+  /* ---------- Napi szimulációs modell (96 × 15 perc) ---------- */
+  const N = 96, DT = 0.25;
+  const PV_KWP = 1000, CAP = 2088, USABLE = 0.9, PMAX = 1000, RTE = 0.884;
+  const EXPORT_LIMIT = 0;                         // visszwatt-védelem: nulla betáplálás
+  const SOC_MIN = CAP * (1 - USABLE) / 2, SOC_MAX = CAP - SOC_MIN;
+  const eff = Math.sqrt(RTE);
+
+  const pv = [], load = [], price = [];
+  for (let i = 0; i < N; i++) {
+    const h = i * DT;
+    // PV: áprilisi nap (~6:00–19:30), ~52% csúcs, délutáni felhősödés
+    let p = h > 6 && h < 19.5 ? Math.pow(Math.sin(Math.PI * (h - 6) / 13.5), 1.4) * 0.52 * PV_KWP : 0;
+    p *= 1 - 0.35 * Math.exp(-Math.pow((h - 14.5) / 0.9, 2));
+    pv.push(Math.max(0, p));
+    // Ipari terhelés: két műszak, reggeli felfutás, esti csúcs
+    let l = 85;
+    if (h >= 6 && h < 22) l = 175 + 25 * Math.sin((h - 6) / 16 * Math.PI);
+    if (h >= 5.5 && h < 6) l = 130;
+    l += 70 * Math.exp(-Math.pow((h - 7) / 0.5, 2)) + 55 * Math.exp(-Math.pow((h - 19) / 0.8, 2));
+    l += 8 * Math.sin(i * 1.7) + 5 * Math.cos(i * 0.9);
+    load.push(l);
+    // Illusztratív energiaár (Ft/kWh): csúcs / völgy
+    price.push(h < 6 || h >= 22 ? 62 : (h >= 17 && h < 21 ? 128 : 100));
+  }
+
+  // AI-előrejelzés (itt: ismert profil): várható PV-többlet és reggeli csúcsigény
+  const PV_SURPLUS_FC = pv.reduce((t, p, i) => t + Math.max(0, p - load[i]), 0) * DT * eff;
+  const PEAK_TARGET = 120;                      // AI-EMS csúcslevágási cél (kW)
+  const MORNING_NEED = load.reduce((t, l, i) => t + (i * DT >= 5 && i * DT < 11 ? Math.max(0, l - pv[i] - PEAK_TARGET) : 0), 0) * DT;
+
+  function simulate(mode) {
+    const r = { dir: [], ch: [], pvch: [], gch: [], dis: [], curt: [], grid: [], soc: [] };
+    let soc = SOC_MIN;
+    const peakTarget = PEAK_TARGET;
+    const runDay = record => {
+      for (let i = 0; i < N; i++) {
+        const P = pv[i], L = load[i], h = i * DT;
+        const direct = Math.min(P, L);
+        let surplus = P - direct, deficit = L - direct, ch = 0, dis = 0, gridCh = 0;
+        if (mode !== 'pv') {
+          ch = Math.min(surplus, PMAX, (SOC_MAX - soc) / (eff * DT));
+          soc += ch * eff * DT; surplus -= ch;
+          let want = deficit;
+          if (mode === 'ems' && (price[i] < 70 || h < 11)) {
+            // Völgyidőszak és délelőtt: tartalékot hagy a reggeli csúcslevágáshoz,
+            // a tartalék feletti energiát szabadon kisüti
+            const free = Math.max(0, (soc - SOC_MIN - MORNING_NEED / eff) * eff / DT);
+            want = Math.max(Math.max(0, deficit - peakTarget), Math.min(deficit, free));
+          }
+          dis = Math.min(want, PMAX, (soc - SOC_MIN) * eff / DT);
+          soc -= dis / eff * DT; deficit -= dis;
+          if (mode === 'ems' && price[i] < 70 && h < 6) {
+            // Előrejelzés-alapú völgytöltés: csak a reggeli csúcshoz szükséges energiát,
+            // a csúcscél alatt maradva, és úgy, hogy a várható napi PV-többlet is elférjen
+            const target = Math.min(SOC_MIN + 1.1 * MORNING_NEED / eff, SOC_MAX - PV_SURPLUS_FC + MORNING_NEED);
+            if (soc < target) {
+              gridCh = Math.max(0, Math.min(peakTarget - deficit, (target - soc) / (eff * DT)));
+              soc += gridCh * eff * DT;
+            }
+          }
+        }
+        const exp = Math.min(surplus, EXPORT_LIMIT);
+        if (record) {
+          r.dir.push(direct); r.ch.push(ch + gridCh); r.pvch.push(ch); r.gch.push(gridCh); r.dis.push(dis);
+          r.curt.push(surplus - exp); r.grid.push(deficit + gridCh); r.soc.push(soc / CAP);
+        }
+      }
+    };
+    if (mode !== 'pv') runDay(false);           // bemelegítő nap: stacioner kezdő SOC
+    runDay(true);
+    const sum = a => a.reduce((s, v) => s + v, 0) * DT;
+    const Lsum = sum(load), PVsum = sum(pv);
+    // A hálózatról töltött (majd kisütött) energia nem számít PV-fedezetnek
+    const pvDis = Math.max(0, sum(r.dis) - sum(r.gch) * RTE);
+    r.k = {
+      self: Math.min(1, (sum(r.dir) + pvDis) / Lsum),
+      curt: sum(r.curt), curtPct: sum(r.curt) / PVsum,
+      peak: Math.max(...r.grid),
+      cost: r.grid.reduce((s, g, i) => s + g * DT * price[i], 0)
+    };
+    return r;
+  }
+  const SIM = { pv: simulate('pv'), bess: simulate('bess'), ems: simulate('ems') };
+
+  /* ---------- Rajzolás ---------- */
+  const cv = document.getElementById('tsimCanvas'), ctx = cv.getContext('2d');
+  let W = 0, H = 0, mode = 'pv', cursor = 0, playing = !reduce, last = 0;
+  const pad = { l: 38, r: 34, t: 10, b: 22 };
+  const YMAX = 900;
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1, b = cv.getBoundingClientRect();
+    W = b.width; H = b.height; cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); draw();
+  }
+  const X = i => pad.l + (W - pad.l - pad.r) * i / (N - 1);
+  const Y = v => pad.t + (H - pad.t - pad.b) * (1 - v / YMAX);
+
+  function area(top, bottom, upto, color) {
+    ctx.beginPath();
+    for (let i = 0; i <= upto; i++) ctx.lineTo(X(i), Y(top[i]));
+    for (let i = upto; i >= 0; i--) ctx.lineTo(X(i), Y(bottom ? bottom[i] : 0));
+    ctx.closePath(); ctx.fillStyle = color; ctx.fill();
+  }
+  function line(arr, upto, color, w, dash, yf) {
+    ctx.beginPath(); ctx.setLineDash(dash || []);
+    for (let i = 0; i <= upto; i++) ctx.lineTo(X(i), yf ? yf(arr[i]) : Y(arr[i]));
+    ctx.strokeStyle = color; ctx.lineWidth = w; ctx.stroke(); ctx.setLineDash([]);
+  }
+
+  function draw() {
+    if (!W) return;
+    const s = SIM[mode], up = Math.min(N - 1, Math.floor(cursor));
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = '10px Poppins, sans-serif'; ctx.fillStyle = '#5d6f88';
+    // rács
+    for (let v = 0; v <= YMAX; v += 200) {
+      ctx.strokeStyle = '#1c293c'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(pad.l, Y(v)); ctx.lineTo(W - pad.r, Y(v)); ctx.stroke();
+      ctx.textAlign = 'right'; ctx.fillText(v, pad.l - 6, Y(v) + 3);
+    }
+    ctx.textAlign = 'center';
+    for (let h = 0; h <= 24; h += 3) ctx.fillText(String(h).padStart(2, '0') + ':00', X(Math.min(N - 1, h * 4)), H - 6);
+    ctx.textAlign = 'left'; ctx.fillText('kW', 4, pad.t + 8);
+    ctx.textAlign = 'right'; ctx.fillStyle = '#a371f7'; ctx.fillText('SOC', W - 4, pad.t + 8);
+
+    // halvány teljes PV-görbe (előnézet)
+    line(pv, N - 1, 'rgba(245,166,35,.18)', 1.5, [3, 4]);
+    line(load, N - 1, 'rgba(138,155,178,.25)', 1.2, [3, 4]);
+
+    // rétegek a kurzorig: közvetlen → töltés → leszabályozott (a PV felosztása)
+    const dir = s.dir, chTop = dir.map((d, i) => d + s.pvch[i]);
+    area(dir, null, up, 'rgba(47,191,113,.55)');
+    area(chTop, dir, up, 'rgba(63,169,245,.55)');
+    const curtTop = chTop.map((c, i) => c + s.curt[i]);
+    area(curtTop, chTop, up, 'rgba(229,83,75,.55)');
+    // kisütés a fogyasztás alá, a közvetlen fölé
+    const disTop = dir.map((d, i) => d + s.dis[i]);
+    area(disTop, dir, up, 'rgba(63,169,245,.35)');
+    line(pv, up, '#f5a623', 2);
+    line(load, up, '#c3cede', 1.6, [5, 4]);
+    if (mode !== 'pv') line(s.soc, up, '#a371f7', 1.8, null, v => Y(v * YMAX));
+
+    // kurzor
+    const cx = X(up);
+    const g = ctx.createLinearGradient(cx - 30, 0, cx, 0); g.addColorStop(0, 'rgba(245,166,35,0)'); g.addColorStop(1, 'rgba(245,166,35,.18)');
+    ctx.fillStyle = g; ctx.fillRect(cx - 30, pad.t, 30, H - pad.t - pad.b);
+    ctx.strokeStyle = 'rgba(245,166,35,.9)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx, pad.t); ctx.lineTo(cx, H - pad.b); ctx.stroke();
+    [[pv[up], '#f5a623'], [load[up], '#e8eef6']].forEach(([v, c]) => { ctx.beginPath(); ctx.arc(cx, Y(v), 3.5, 0, 7); ctx.fillStyle = c; ctx.fill(); });
+
+    // kiolvasás
+    const hh = up * DT, t = String(Math.floor(hh)).padStart(2, '0') + ':' + String((up % 4) * 15).padStart(2, '0');
+    const b = s.dis[up] - s.ch[up];
+    root.querySelector('#roT').textContent = t;
+    root.querySelector('#roPv').textContent = fmt(pv[up]) + ' kW';
+    root.querySelector('#roL').textContent = fmt(load[up]) + ' kW';
+    root.querySelector('#roB').textContent = mode === 'pv' ? '–' : (b > 0 ? '▼ ' : b < 0 ? '▲ ' : '') + fmt(Math.abs(b)) + ' kW';
+    root.querySelector('#roS').textContent = mode === 'pv' ? '–' : Math.round(s.soc[up] * 100) + '%';
+  }
+
+  function kpis() {
+    const k = SIM[mode].k;
+    root.querySelector('#kSelf').textContent = Math.round(k.self * 100) + '%';
+    root.querySelector('#kCurt').textContent = fmt(k.curt) + ' kWh';
+    root.querySelector('#kPeak').textContent = fmt(k.peak) + ' kW';
+    root.querySelector('#kCost').textContent = (k.cost / 1000).toLocaleString('hu-HU', { maximumFractionDigits: 0 }) + ' e Ft';
+  }
+
+  function loop(t) {
+    if (playing) {
+      const dt = last ? Math.min(100, t - last) : 16;
+      cursor += dt / 85;                       // ~8 s egy nap
+      if (cursor > N + 18) cursor = 0;          // rövid szünet a nap végén
+      draw();
+    }
+    last = t; requestAnimationFrame(loop);
+  }
+
+  root.querySelectorAll('.tsim-tab').forEach(b => b.addEventListener('click', () => {
+    root.querySelectorAll('.tsim-tab').forEach(x => x.classList.toggle('on', x === b));
+    mode = b.dataset.mode; kpis(); draw();
+  }));
+  const playBtn = root.querySelector('#tsimPlay');
+  const setPlay = p => { playing = p; playBtn.textContent = p ? '❚❚' : '▶'; };
+  playBtn.addEventListener('click', () => setPlay(!playing));
+  cv.addEventListener('mousemove', e => {
+    const r = cv.getBoundingClientRect();
+    cursor = Math.max(0, Math.min(N - 1, (e.clientX - r.left - pad.l) / (W - pad.l - pad.r) * (N - 1)));
+    if (playing) setPlay(false); draw();
+  });
+
+  if (reduce) cursor = N - 1;
+  setPlay(playing);
+  window.addEventListener('resize', resize);
+  resize(); kpis(); requestAnimationFrame(loop);
+})();
+</script>
+</section>
+<!-- ================= /AI SZIMULÁCIÓS BEMUTATÓ BLOKK ================= -->
+
+</body>
+</html>
