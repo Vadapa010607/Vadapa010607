@@ -1,302 +1,512 @@
 <!doctype html>
-<html lang="hu" data-type="service" data-radius="soft" data-buttons="solid" data-motion>
+<html lang="hu">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TecLin: napelem, energiatárolás és EMS vállalatoknak</title>
-<meta name="description" content="Napelemes rendszer, ipari akkumulátor, hőszivattyú, EV-töltés és energiamenedzsment egy partnertől, a felméréstől a pályázaton át az üzemeltetésig.">
+<title>TecLin – Napelem, energiatárolás és EMS vállalatoknak</title>
+<meta name="description" content="Napelemes rendszer, ipari akkumulátor, hőszivattyú, EV-töltés és energiamenedzsment egy partnertől – a felméréstől a pályázaton át az üzemeltetésig.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="TecLin: napelem, energiatárolás és EMS vállalatoknak">
-<meta property="og:description" content="Hat energetikai technológia egy szerződésben, Székesfehérvárról.">
+<meta property="og:title" content="TecLin – Energia, ami üzleti előnnyé válik">
+<meta property="og:description" content="Hat energetikai technológia, egy felelős partner.">
 <meta property="og:image" content="share.jpg">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b1410">
 <link rel="icon" href="assets/brand/teclin-emblem.svg" type="image/svg+xml">
-<meta name="theme-color" content="#fbfcf9">
-<!-- <link rel="canonical" href="https://teclin.hu/"> -->
-<meta name="site-kind" content="other">
-<meta name="page-type" content="service">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/system.css">
-<link rel="stylesheet" href="assets/ui/cards.css">
-<link rel="stylesheet" href="assets/motion/motion.css">
-<link rel="stylesheet" href="assets/backgrounds/backgrounds.css">
-<link rel="stylesheet" href="assets/layout/layout.css">
-<link rel="stylesheet" href="assets/icons/icon.css">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,300..700&family=Inter+Tight:wght@300..600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --p-bg: #fbfcf9; --p-surface: #f2f9ec; --p-ink: #1f2a24; --p-muted: #56605a;
-  --p-accent: #2b7d28; --p-accent-ink: #fbfcf9; --p-action: #2b7d28; --p-action-ink: #fbfcf9;
-  --p-inv-bg: #1f2a24; --p-inv-surface: #2c3630; --p-inv-ink: #fbfcf9; --p-inv-muted: #a0a5a1;
-  --p-inv-accent: #fbfcf9; --p-inv-accent-ink: #1f2a24; --p-inv-action: #fbfcf9; --p-inv-action-ink: #1f2a24;
-  --font-display: "Manrope", system-ui, sans-serif;
-  --font-text: "Manrope", system-ui, sans-serif;
-  --display-weight: 400;
-  --display-tracking: -0.035em;
-  --display-tracking-xl: -0.045em;
-  --ly-scale: 0.97;
+:root{
+  --bg:#0b1410; --bg-2:#101c16; --card:#14221b; --line:rgba(255,255,255,.12);
+  --ink:#f2f6f3; --muted:#a6b3ab; --dim:#7d8a82;
+  --green:#41b93c; --lime:#a7e66e; --green-d:#2b7d28;
+  --head:"Archivo",system-ui,sans-serif; --body:"Inter Tight",system-ui,sans-serif;
+  --wrap:1320px; --gut:clamp(20px,4vw,56px); --ease:cubic-bezier(.2,.7,.2,1);
 }
-</style>
-<link rel="stylesheet" href="assets/diagrams/diagram.css">
-<script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
-<script src="assets/backgrounds/backgrounds.js"></script>
-<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
-<link rel="modulepreload" href="assets/moments/moments.js">
-<link rel="modulepreload" href="assets/moments/lib.js">
-<link rel="modulepreload" href="assets/moments/pinned-chapters/moment.js">
-<!-- page CSS: the client's logo file in the bar and the footer, and one --p-h for the diagram panel -->
-<style>
-  .nav__logo img { display: block; height: 32px; width: auto; }
-  .closing__links .nav__logo img { height: 36px; }
-  #ems .panel { --p-h: 520px; background: var(--p-bg); }
-  /* a phone keeps the six names and the photograph on one screen: the one-line descriptions wait for the tablet */
-  @media (max-width: 639px) { #megoldasok .rows p { display: none; } #megoldasok .grid.fill > .frame--fill { flex: none; height: auto; aspect-ratio: 16 / 9; } }
-  #quote .frame { aspect-ratio: 4 / 3; }
-  @media (max-width: 639px) { #quote .frame { aspect-ratio: 4 / 5; } }
-  /* at 320 the six names fill the screen: the photograph waits for a wider phone */
-  @media (max-width: 359px) { #megoldasok .frame { display: none; } }
-  #quote .grid > * { min-width: 0; }
-  /* under 380px the bar holds the emblem and the menu; the main action waits in the open sheet */
-  @media (max-width: 379px) { .nav:not(.is-open) .nav__actions { display: none; } .nav:not(.is-open) .nav__toggle { margin-left: auto; } }
-  @media (max-width: 1023px) { #palyazat .frame, #megoldasok .frame { aspect-ratio: 4 / 3; height: auto; } }
-  @media (max-width: 639px) { #ems .panel { --p-h: 340px; } }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px;overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(var(--wrap),100% - 2*var(--gut));margin-inline:auto}
+h1,h2,h3{font-family:var(--head);font-stretch:112%;font-weight:500;text-transform:uppercase;letter-spacing:.005em;line-height:1.02}
+h2{font-size:clamp(30px,5vw,72px)}
+h1,h2,h3{overflow-wrap:break-word;hyphens:manual}
+h3{font-size:clamp(20px,1.6vw,24px);line-height:1.15}
+.kicker{font:500 13px/1 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--lime);display:inline-flex;align-items:center;gap:12px;margin-bottom:22px}
+.kicker::before{content:"";width:28px;height:1px;background:currentColor}
+.lead{font-size:clamp(17px,1.35vw,20px);color:var(--muted);max-width:58ch;font-weight:300}
+section{position:relative}
+.pad{padding:clamp(96px,12vw,170px) 0}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 26px;border-radius:2px;font:500 14px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;border:1px solid transparent;cursor:pointer;transition:background .3s,color .3s,border-color .3s,transform .3s var(--ease)}
+.btn svg{width:16px;height:16px;transition:transform .3s var(--ease)}
+.btn:hover svg{transform:translateX(4px)}
+.btn:active{transform:scale(.98)}
+.btn--solid{background:var(--green);color:#06120a}
+.btn--solid:hover{background:var(--lime)}
+.btn--line{border-color:rgba(255,255,255,.45);color:#fff;background:rgba(10,20,15,.25);backdrop-filter:blur(6px)}
+.btn--line:hover{background:#fff;color:#0b1410;border-color:#fff}
+:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+
+/* header */
+.hdr{position:fixed;inset:0 0 auto;z-index:50;transition:background .4s,border-color .4s,height .4s;border-bottom:1px solid transparent}
+.hdr .wrap{height:84px;display:flex;align-items:center;justify-content:space-between;gap:24px;transition:height .4s}
+.hdr.stuck{background:rgba(11,20,16,.82);backdrop-filter:blur(14px);border-color:var(--line)}
+.hdr.stuck .wrap{height:68px}
+.logo img{height:34px;width:auto}
+.nav{display:flex;align-items:center;gap:34px}
+.nav a:not(.btn){font:500 13px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:#dfe7e1;position:relative;padding:8px 0}
+.nav a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--lime);transition:width .35s var(--ease)}
+.nav a:not(.btn):hover::after{width:100%}
+.nav .btn{height:44px}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--line);background:none;color:#fff;border-radius:2px;cursor:pointer}
+.burger span{display:block;width:18px;height:1.5px;background:currentColor;margin:5px auto;transition:transform .3s}
+.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;background:#fff;color:#000;padding:8px 12px;z-index:99}
+
+/* media layers (video over poster) */
+.media{position:absolute;inset:0;overflow:hidden;z-index:-1;background:#050a07}
+.media img,.media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.media video{opacity:0;transition:opacity 1.2s}
+.media video.on{opacity:1}
+.shade-l::after,.shade-b::after,.shade-r::after{content:"";position:absolute;inset:0}
+.shade-l::after{background:linear-gradient(90deg,rgba(6,12,9,.92) 0%,rgba(6,12,9,.7) 38%,rgba(6,12,9,.15) 75%),linear-gradient(0deg,rgba(6,12,9,.85),transparent 40%)}
+.shade-r::after{background:linear-gradient(270deg,rgba(6,12,9,.92) 0%,rgba(6,12,9,.7) 40%,rgba(6,12,9,.1) 78%)}
+.shade-b::after{background:linear-gradient(0deg,rgba(6,12,9,.95) 0%,rgba(6,12,9,.45) 55%,rgba(6,12,9,.35) 100%)}
+
+/* hero */
+.hero{min-height:100svh;display:flex;align-items:flex-end;isolation:isolate;padding:140px 0 0}
+.hero .media img,.hero .media video{animation:kb 30s var(--ease) infinite alternate}
+@keyframes kb{to{transform:scale(1.08)}}
+.hero-in>*{max-width:900px}
+.hero-in{padding-bottom:calc(var(--stats-h,118px) + clamp(40px,6vh,80px))}
+.hero h1{font-size:clamp(38px,6.6vw,104px);font-weight:500;font-stretch:115%}
+.hero h1 em{font-style:normal;color:var(--lime)}
+.hero .lead{margin:28px 0 40px;color:#c9d6ce}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:14px}
+.stats{border-top:1px solid var(--line);background:rgba(6,12,9,.55);backdrop-filter:blur(10px)}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:26px 24px 28px 0;border-right:1px solid var(--line)}
+.stat+.stat{padding-left:24px}.stat:last-child{border-right:0}
+.stat b{display:block;font:500 clamp(28px,3vw,44px)/1 var(--head);font-stretch:110%;color:#fff}
+.stat b small{font-size:.5em;color:var(--lime);margin-left:4px}
+.stat span{display:block;margin-top:8px;font-size:14px;color:var(--muted)}
+.vctl{position:absolute;right:var(--gut);bottom:calc(100% + 24px);width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(0,0,0,.25);color:#fff;display:grid;place-items:center;cursor:pointer}
+.vctl svg{width:14px;height:14px;fill:currentColor}
+
+/* marquee */
+.marq{border-block:1px solid var(--line);overflow:hidden;padding:26px 0;background:var(--bg)}
+.marq-t{display:flex;gap:56px;width:max-content;animation:mq 40s linear infinite}
+.marq span{font:500 15px var(--head);font-stretch:112%;letter-spacing:.14em;text-transform:uppercase;color:#cfd9d2;display:flex;align-items:center;gap:56px;white-space:nowrap}
+.marq span::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--green)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* solutions grid */
+.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:64px}
+.head-row .lead{max-width:46ch}
+.sol{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.tile{position:relative;aspect-ratio:4/5;overflow:hidden;isolation:isolate;background:#000;display:flex;flex-direction:column;justify-content:flex-end;padding:32px}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform 1.2s var(--ease),filter .6s;filter:saturate(.85) brightness(.8)}
+.tile::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(5,10,7,.95) 10%,rgba(5,10,7,.2) 60%,rgba(5,10,7,.35))}
+.tile:hover img{transform:scale(1.06);filter:saturate(1) brightness(.9)}
+.tile .ab{font:500 12px/1 var(--body);letter-spacing:.2em;color:var(--lime);margin-bottom:14px}
+.tile p{color:#c3cfc7;font-size:15.5px;margin-top:12px;max-height:0;opacity:0;overflow:hidden;transition:max-height .6s var(--ease),opacity .5s}
+.tile:hover p,.tile:focus-within p{max-height:120px;opacity:1}
+.tile .no{position:absolute;top:28px;left:32px;font:400 13px var(--body);color:rgba(255,255,255,.6);letter-spacing:.12em}
+
+/* split media sections */
+.band{min-height:100svh;display:flex;align-items:center;isolation:isolate}
+.band .txt{max-width:560px}
+.band.right .wrap{display:flex;justify-content:flex-end}
+.band .lead{margin:24px 0 36px;color:#c9d6ce}
+.checks{list-style:none;display:grid;gap:14px;margin:0 0 38px}
+.checks li{display:flex;gap:14px;color:#e2eae5}
+.checks li::before{content:"";flex:none;width:20px;height:20px;margin-top:3px;border:1px solid var(--green);border-radius:50%;background:radial-gradient(circle,var(--green) 0 4px,transparent 5px)}
+
+/* EMS */
+.ems{background:radial-gradient(1200px 600px at 75% 50%,rgba(65,185,60,.10),transparent 60%),var(--bg-2)}
+.ems-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:72px;align-items:center}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
+.kpis div{border-top:1px solid var(--green);padding-top:16px}
+.kpis b{font:500 26px var(--head);font-stretch:112%;color:var(--lime);display:block}
+.kpis span{font-size:14px;color:var(--muted)}
+.flow{width:100%;height:auto;overflow:visible}
+.flow .wire{fill:none;stroke:rgba(167,230,110,.18);stroke-width:2}
+.flow .pulse{fill:none;stroke:var(--lime);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:4 26;animation:dash 1.8s linear infinite;filter:drop-shadow(0 0 6px var(--green))}
+.flow .rev{animation-direction:reverse}
+@keyframes dash{to{stroke-dashoffset:-60}}
+.flow .node rect{fill:#0f1b15;stroke:rgba(167,230,110,.35);stroke-width:1}
+.flow .node text{fill:#fff;font:600 15px var(--head);text-anchor:middle;letter-spacing:.04em}
+.flow .node text.s{fill:var(--lime);font:500 10.5px var(--body);letter-spacing:.18em}
+.flow .hub{fill:var(--green)}
+.flow .ring{fill:none;stroke:var(--green);stroke-width:1.5;transform-origin:350px 230px;animation:ring 3s ease-out infinite}
+@keyframes ring{from{transform:scale(1);opacity:.8}to{transform:scale(2.6);opacity:0}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);margin-top:64px}
+.step{padding:34px 26px 10px 0;border-right:1px solid var(--line)}
+.step+.step{padding-left:26px}.step:last-child{border-right:0}
+.step .n{font:300 54px/1 var(--head);font-stretch:110%;color:transparent;-webkit-text-stroke:1px rgba(167,230,110,.65);margin-bottom:26px}
+.step h3{font-size:19px;margin-bottom:12px}
+.step p{font-size:15.5px;color:var(--muted)}
+
+/* funding */
+.fund{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.flist{display:grid;gap:2px}
+.fitem{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;padding:26px 28px;background:var(--card);border-left:2px solid transparent;transition:border-color .3s,background .3s,transform .3s var(--ease)}
+.fitem:hover{border-color:var(--green);background:#182a21;transform:translateX(6px)}
+.fitem .pill{font:500 11px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;color:#06120a;background:var(--lime);padding:8px 12px;border-radius:99px}
+.fitem b{display:block;font:500 18px var(--head);font-stretch:108%;text-transform:uppercase}
+.fitem span{font-size:15px;color:var(--muted)}
+
+/* FAQ */
+.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:72px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:24px;align-items:center;padding:26px 0;font:500 19px/1.35 var(--body)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font:300 28px/1 var(--body);color:var(--lime);transition:transform .3s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 48px 26px 0;color:var(--muted)}
+
+/* CTA band */
+.cta{min-height:80svh;display:flex;align-items:center;isolation:isolate;text-align:left}
+.cta h2{font-size:clamp(30px,6.4vw,100px);max-width:14ch}
+.cta .lead{margin:26px 0 38px;color:#d5dfd9}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:72px}
+.cinfo{display:grid;gap:26px;margin-top:44px}
+.cinfo small{display:block;font:500 12px var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.cinfo a{font:500 20px var(--body);border-bottom:1px solid var(--line);transition:border-color .3s,color .3s}
+.cinfo a:hover{color:var(--lime);border-color:var(--lime)}
+form{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;background:var(--card);padding:clamp(24px,3.5vw,48px);border:1px solid var(--line)}
+form .full{grid-column:1/-1}
+label{display:block;font:500 12px var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+input,select,textarea{display:block;width:100%;margin-top:10px;font:400 16px var(--body);color:#fff;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);padding:12px 0;border-radius:0;transition:border-color .3s}
+select option{color:#000}
+textarea{min-height:96px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--lime)}
+.chk{display:flex;gap:12px;align-items:flex-start;text-transform:none;letter-spacing:0;font:400 14px var(--body)}
+.chk input{width:auto;margin:3px 0 0}
+form .btn{justify-self:start}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:72px 0 32px;color:var(--muted);font-size:15px}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px}
+footer h4{font:500 12px var(--body);letter-spacing:.2em;text-transform:uppercase;color:#fff;margin-bottom:18px}
+footer ul{list-style:none;display:grid;gap:10px}
+footer a:hover{color:var(--lime)}
+.fbot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);padding-top:24px;font-size:13px;color:var(--dim)}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.js .rv.in{opacity:1;transform:none}
+.d1{transition-delay:.1s!important}.d2{transition-delay:.2s!important}.d3{transition-delay:.3s!important}
+
+@media (max-width:1024px){
+  .sol{grid-template-columns:repeat(2,1fr)}
+  .ems-grid,.fund,.faq-grid,.contact-grid{grid-template-columns:1fr;gap:48px}
+  .steps{grid-template-columns:1fr 1fr}
+  .step{border-right:0;border-bottom:1px solid var(--line);padding:28px 0!important}
+  .fgrid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .burger{display:block}
+  .nav{position:fixed;inset:0;background:rgba(8,15,11,.97);flex-direction:column;justify-content:center;gap:28px;transform:translateX(100%);transition:transform .45s var(--ease)}
+  .nav{visibility:hidden}
+  .nav.open{transform:none;visibility:visible}
+  .nav a:not(.btn){font-size:18px}
+  .burger{position:relative;z-index:60}
+  .hero{flex-direction:column;align-items:stretch;justify-content:flex-end}
+  .hero-in{padding-bottom:40px}
+  .stats{position:relative!important}
+  .vctl{bottom:auto;top:-62px;right:var(--gut);display:none}
+  .stats .wrap{grid-template-columns:1fr 1fr}
+  .stat{border-right:0;padding:18px 0!important}
+  .stat:nth-child(odd){border-right:1px solid var(--line);padding-right:16px!important}
+  .stat:nth-child(even){padding-left:16px!important}
+  .shade-l::after,.shade-r::after{background:linear-gradient(0deg,rgba(6,12,9,.95) 15%,rgba(6,12,9,.55) 60%,rgba(6,12,9,.35))}
+  .band{align-items:flex-end;padding:120px 0 72px}
+  .band.right .wrap{justify-content:flex-start}
+}
+@media (max-width:600px){
+  .sol{grid-template-columns:1fr}
+  .tile{aspect-ratio:4/3}
+  .tile p{max-height:none;opacity:1}
+  .steps{grid-template-columns:1fr}
+  form{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr}
+  .hero .btn{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv{opacity:1;transform:none}
+  .media video{display:none}
+}
 </style>
 </head>
 <body>
-<!-- type: service (an energy integrator; people hire it for PV, BESS, heat pumps, EV charging, EMS and grid work)
-     deal: hero split, nav nav-split, close close-type, footer footer-columns, rhythm surface-pairs, buttons solid,
-           mark arc (not used: the client's own logo replaces it), grounds none (kind other)
-     palette: the client's own colours through start.mjs brand (TecLin green #41b93c darkened to #2b7d28 for 4.5:1 labels,
-           the ink #1f2a24 and the pale green surface #f2f9ec of the brand guide); type manrope (second pairing: the first, schibsted, failed hero-lines at 1440)
-     moments: pinned-chapters on #folyamat (the three stages of a project, one photograph each) -->
-<header class="nav nav--split">
-  <div class="wrap nav__bar">
-    <a class="skip-link" href="#top">Ugrás a tartalomhoz</a>
-    <nav class="nav__links" aria-label="Fő menü">
-      <div class="nav__item">
-        <a class="nav__link" href="#megoldasok">Megoldások <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <div class="nav__menu">
-          <div class="wrap grid">
-            <a class="menu-card span-3" href="#megoldasok">
-              <div class="panel"><img class="frame__img" src="assets/img/photo-f12261041-500.webp" width="500" height="376" alt="Napelemek egy lapostetőn" data-source="stand-in" data-subject="napelemes tetőrendszer"></div>
-              <span class="t-card">Napelemes rendszer</span>
-              <span class="t-small muted">Tető, föld vagy carport</span>
-            </a>
-            <a class="menu-card span-3" href="#megoldasok">
-              <div class="panel"><img class="frame__img" src="assets/img/photo-f186370079-500.webp" width="500" height="376" alt="Akkumulátoros tárolókonténerek egy üzem mellett" data-source="stand-in" data-subject="ipari energiatároló"></div>
-              <span class="t-card">Ipari energiatárolás</span>
-              <span class="t-small muted">Konténeres és szekrényes BESS</span>
-            </a>
-            <a class="menu-card span-3" href="#megoldasok">
-              <div class="panel"><img class="frame__img" src="assets/img/photo-f33450932-500.webp" width="500" height="281" alt="Napelemes parkolótető autókkal" data-source="stand-in" data-subject="napelemes carport"></div>
-              <span class="t-card">EV-töltés</span>
-              <span class="t-small muted">Flotta- és látogatói töltők</span>
-            </a>
-            <a class="menu-card span-3" href="#ems">
-              <div class="panel"><img class="frame__img" src="assets/img/photo-f113320638-500.webp" width="500" height="250" alt="Inverter egy napelempark tartószerkezetén" data-source="stand-in" data-subject="inverter és vezérlés"></div>
-              <span class="t-card">Energiamenedzsment</span>
-              <span class="t-small muted">Egy vezérlés a telephelyre</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="nav__item"><a class="nav__link" href="#ems">Rendszer</a></div>
-      <div class="nav__item"><a class="nav__link" href="#folyamat">Folyamat</a></div>
-      <div class="nav__item"><a class="nav__link" href="#palyazat">Pályázatok</a></div>
+<a class="skip" href="#main">Ugrás a tartalomhoz</a>
+
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a href="#top" class="logo" aria-label="TecLin – vissza a tetejére"><img src="assets/brand/teclin-logo.svg" alt="TecLin" width="161" height="34"></a>
+    <nav class="nav" id="nav" aria-label="Fő menü">
+      <a href="#megoldasok">Megoldások</a>
+      <a href="#ems">Rendszer</a>
+      <a href="#folyamat">Folyamat</a>
+      <a href="#palyazat">Pályázatok</a>
+      <a href="#kapcsolat" class="btn btn--solid">Ajánlatot kérek</a>
     </nav>
-    <a class="nav__logo" href="#top" aria-label="TecLin, vissza az oldal tetejére"><picture><source media="(max-width: 419px)" srcset="assets/brand/teclin-emblem.svg" width="33" height="32"><img src="assets/brand/teclin-logo.svg" alt="TecLin" width="152" height="32"></picture></a>
-    <div class="nav__actions">
-      <a class="btn btn--primary" href="#quote">Ajánlatot kérek</a>
-    </div>
-    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menü">
-      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-    </button>
+    <button class="burger" id="burger" aria-label="Menü" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
   </div>
 </header>
 
-<main id="top">
-  <section class="hero hero--split" data-enter aria-labelledby="hero-h">
-    <div class="wrap"><div class="hero-text grid hero__grid">
-      <div class="hero__text span-5">
-        <p class="hero__kicker"><span class="dot" aria-hidden="true"></span>6 technológia, 1 felelős partner</p>
-        <h1 id="hero-h">Napelem és energiatárolás vállalatoknak</h1>
-        <p class="hero__lead">Napelem, ipari akkumulátor, hőszivattyú, EV-töltés és energiamenedzsment egy szerződésben, a felméréstől az üzemeltetésig. A megtérülés projekttől függően akár 3 év.</p>
-        <div class="btn-row"><a class="btn btn--primary" href="#quote">Ajánlatot kérek<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a><a class="btn btn--secondary" href="#megoldasok">Nézze meg a megoldásokat</a></div>
-      </div>
-      <div class="hero__media span-6 start-7">
-        <!-- client slot: a TecLin rooftop project (assets/photo-right.webp in the old site) replaces this stand-in -->
-        <img src="assets/img/photo-f23244974.webp" srcset="assets/img/photo-f23244974-500.webp 500w, assets/img/photo-f23244974-960.webp 960w, assets/img/photo-f23244974-1280.webp 1280w, assets/img/photo-f23244974.webp 1600w" sizes="(max-width: 639px) 100vw, 50vw" width="1600" height="1203" alt="Napelemekkel teljesen beborított csarnoktető egy ipari övezetben" style="--ly-pos: 72% 50%" fetchpriority="high" decoding="async" data-source="stand-in" data-subject="napelemes csarnoktető">
-        <div class="ly-float">
-          <div class="ly-float__row"><span class="ly-live">Pályázat</span><span>0% kamat</span></div>
-          <div class="ly-float__title">Energiahatékonysági hitelprogram vállalkozásoknak</div>
-        </div>
-      </div>
-    </div></div>
-  </section>
-
-  <section class="section" id="megoldasok" aria-labelledby="megoldasok-h">
+<main id="main">
+<!-- HERO: full-screen drone video over the poster -->
+<section class="hero" id="top">
+  <div class="media shade-l">
+    <img src="assets/img/photo-f23244974.webp" alt="" fetchpriority="high">
+    <video data-src="assets/video/hero.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+  </div>
+  <div class="wrap hero-in">
+    <p class="kicker rv">Integrált energiaökoszisztéma vállalatoknak</p>
+    <h1 class="rv d1">Energia, ami<br><em>üzleti előnnyé</em> válik</h1>
+    <p class="lead rv d2">Napelem, ipari energiatárolás, hőszivattyú, EV-töltés és energiamenedzsment egyetlen felelős partnertől – a felméréstől a pályázaton át az üzemeltetésig.</p>
+    <div class="ctas rv d3">
+      <a href="#kapcsolat" class="btn btn--solid">Ingyenes felmérés <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="#megoldasok" class="btn btn--line">Megoldásaink</a>
+    </div>
+  </div>
+  <div class="stats" style="position:absolute;left:0;right:0;bottom:0;width:100%">
+    <button class="vctl" id="vctl" aria-label="Háttérvideó szüneteltetése" hidden><svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg></button>
     <div class="wrap">
-      <div class="section-head"><h2 id="megoldasok-h">Napelemtől a hálózatig, egy kézből</h2></div>
-      <div class="grid grid--top fill" data-peek>
-        <ul class="rows span-6">
-          <li data-peek-to="pv" tabindex="0"><span class="rows__name">Napelemes rendszer</span><p>Tető, föld vagy carport, saját fogyasztásra.</p><span class="rows__value">PV</span></li>
-          <li data-peek-to="bess" tabindex="0"><span class="rows__name">Ipari energiatárolás</span><p>Konténeres vagy szekrényes akkumulátor.</p><span class="rows__value">BESS</span></li>
-          <li data-peek-to="hp" tabindex="0"><span class="rows__name">Hőszivattyú</span><p>Fűtés, hűtés, melegvíz, napelemmel vezérelve.</p><span class="rows__value">HP</span></li>
-          <li data-peek-to="ev" tabindex="0"><span class="rows__name">EV-töltés</span><p>Flottatöltők RFID-vel és terheléskezeléssel.</p><span class="rows__value">EV</span></li>
-          <li data-peek-to="ems" tabindex="0"><span class="rows__name">Energiamenedzsment</span><p>Valós idejű monitoring, automatikus optimalizálás.</p><span class="rows__value">EMS</span></li>
-          <li data-peek-to="grid" tabindex="0"><span class="rows__name">Hálózati csatlakozás</span><p>Engedélyek, visszwatt-védelem, tarifa.</p><span class="rows__value">Grid</span></li>
-        </ul>
-        <div class="frame frame--photo frame--fill span-6 start-7">
-          <img class="frame__img" data-peek-for="pv" src="assets/img/photo-f12261041-960.webp" srcset="assets/img/photo-f12261041-500.webp 500w, assets/img/photo-f12261041-960.webp 960w" sizes="(max-width: 639px) 120vw, (max-width: 1023px) 100vw, 50vw" width="960" height="722" alt="Napelemsorok egy lapostetőn, két szerelővel a háttérben" decoding="async" data-source="stand-in" data-subject="napelemes tetőrendszer">
-          <img class="frame__img" data-peek-for="bess" src="assets/img/photo-f186370079-960.webp" srcset="assets/img/photo-f186370079-500.webp 500w, assets/img/photo-f186370079-960.webp 960w, assets/img/photo-f186370079.webp 1280w" sizes="(max-width: 639px) 120vw, (max-width: 1023px) 100vw, 50vw" width="1280" height="962" alt="Akkumulátoros tárolókonténerek egy üzemcsarnok mellett" decoding="async" data-source="stand-in" data-subject="ipari energiatároló" hidden>
-          <img class="frame__img" data-peek-for="hp" src="assets/img/photo-f101379682-960.webp" srcset="assets/img/photo-f101379682-500.webp 500w, assets/img/photo-f101379682-960.webp 960w, assets/img/photo-f101379682.webp 1280w" sizes="(max-width: 639px) 120vw, (max-width: 1023px) 100vw, 50vw" width="1280" height="731" alt="Levegő-víz hőszivattyú kültéri egysége a havas falnál" decoding="async" data-source="stand-in" data-subject="hőszivattyú kültéri egység" hidden>
-          <img class="frame__img" data-peek-for="ev" src="assets/img/photo-f33450932-960.webp" srcset="assets/img/photo-f33450932-500.webp 500w, assets/img/photo-f33450932-960.webp 960w, assets/img/photo-f33450932.webp 1280w" sizes="(max-width: 639px) 120vw, (max-width: 1023px) 100vw, 50vw" width="1280" height="719" alt="Napelemes parkolótető egy céges parkolóban" decoding="async" data-source="stand-in" data-subject="napelemes carport" hidden>
-          <img class="frame__img" data-peek-for="ems" src="assets/img/photo-f113320638-960.webp" srcset="assets/img/photo-f113320638-500.webp 500w, assets/img/photo-f113320638-960.webp 960w, assets/img/photo-f113320638.webp 1280w" sizes="(max-width: 639px) 120vw, (max-width: 1023px) 100vw, 50vw" width="1280" height="640" alt="Inverter a napelemsorok tartószerkezetén" decoding="async" data-source="stand-in" data-subject="inverter és vezérlés" hidden>
-          <img class="frame__img" data-peek-for="grid" src="assets/img/photo-f28456133-960.webp" srcset="assets/img/photo-f28456133-500.webp 500w, assets/img/photo-f28456133-960.webp 960w, assets/img/photo-f28456133.webp 1280w" sizes="(max-width: 639px) 120vw, (max-width: 1023px) 100vw, 50vw" width="1280" height="853" alt="Gyűjtősínek és szűrők egy transzformátorállomáson" decoding="async" data-source="stand-in" data-subject="hálózati alállomás" hidden>
-        </div>
-      </div>
+      <div class="stat"><b>6</b><span>technológia egy rendszerben</span></div>
+      <div class="stat"><b>~3<small>év</small></b><span>megtérülés (projektfüggő)</span></div>
+      <div class="stat"><b>1</b><span>felelős partner a teljes projekten</span></div>
+      <div class="stat"><b>10<small>év</small></b><span>akár ennyi garancia hőszivattyúkra</span></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section ground-surface" id="ems" aria-labelledby="ems-h">
-    <div class="wrap grid grid--top">
-      <div class="span-5">
-        <div class="section-head"><h2 id="ems-h">Egy EMS vezérli a telephelyet</h2><p>A rendszer nemcsak termel és tárol: eldönti, mikor töltsön, mikor adjon és mikor vegyen a hálózatból, a fogyasztás és a piaci ár szerint.</p></div>
-        <ul class="rows">
-          <li><span class="rows__name">Napelem</span><p>A termelés minél nagyobb része helyben fogy el.</p></li>
-          <li><span class="rows__name">Akkumulátor</span><p>Levágja a csúcsokat és kihasználja az árkülönbözetet.</p></li>
-          <li><span class="rows__name">EMS</span><p>Adatok alapján, automatikusan vezérel.</p></li>
-        </ul>
-      </div>
-      <div class="span-6 start-7">
-        <div class="panel"><div class="dg" data-diagram='{"layout":"hub","alt":"Az EMS köti össze a napelemet, az akkumulátort, a hálózatot, az EV-töltőket, a hőszivattyút és az üzem fogyasztását.","pulse":"none","center":{"label":"EMS","icon":"ui:cpu"},"spokes":[{"label":"Napelem","icon":"ui:sun"},{"label":"Akkumulátor","icon":"ui:battery-charging"},{"label":"Hálózat","icon":"ui:utility-pole"},{"label":"EV-töltők","icon":"ui:plug-zap"},{"label":"Hőszivattyú","icon":"ui:thermometer"},{"label":"Üzem","icon":"ui:factory"}]}'></div></div>
-      </div>
-    </div>
-  </section>
+<div class="marq" aria-hidden="true"><div class="marq-t">
+  <span>Gyártócsarnokok</span><span>Élelmiszeripar</span><span>Logisztikai központok</span><span>Bevásárlóközpontok</span><span>Irodaházak</span><span>Vízművek</span><span>Önkormányzatok</span>
+  <span>Gyártócsarnokok</span><span>Élelmiszeripar</span><span>Logisztikai központok</span><span>Bevásárlóközpontok</span><span>Irodaházak</span><span>Vízművek</span><span>Önkormányzatok</span>
+</div></div>
 
-  <section class="section" id="folyamat" style="--h: 2; --hm: 2" data-moment="pinned-chapters" aria-labelledby="folyamat-h">
-    <div class="wrap mo-pc__grid">
-      <div class="mo-pc__text">
-        <h2 id="folyamat-h">Egy csapat a felméréstől az üzemeltetésig</h2>
-        <ol class="mo-pc__steps">
-          <li class="mo-pc__step">
-            <h3>Felmérés és tervezés</h3>
-            <p>Bejárás, fogyasztási profil és hálózati lehetőségek, utána méretezés, megtérülési modell és tervdokumentáció.</p>
-            <figure class="mo-pc__visual"><img src="assets/img/photo-f62349039-960.webp" srcset="assets/img/photo-f62349039-500.webp 500w, assets/img/photo-f62349039-960.webp 960w" sizes="(max-width: 1023px) 100vw, 50vw" loading="lazy" decoding="async" alt="Napelempark légifelvételen, a tervezéshez készült helyszínfotó" width="960" height="722" data-source="stand-in" data-subject="napelempark légifotó"></figure>
-          </li>
-          <li class="mo-pc__step">
-            <h3>Finanszírozás és kivitelezés</h3>
-            <p>Pályázat, hitelprogram vagy ESCO-konstrukció, utána ütemezett szerelés, beüzemelés és átadás.</p>
-            <figure class="mo-pc__visual"><img src="assets/img/photo-f64156491-960.webp" srcset="assets/img/photo-f64156491-500.webp 500w, assets/img/photo-f64156491-960.webp 960w" sizes="(max-width: 1023px) 100vw, 50vw" loading="lazy" decoding="async" alt="Szerelők napelemeket rögzítenek egy csarnoktetőn" width="960" height="640" data-source="stand-in" data-subject="napelem-szerelés"></figure>
-          </li>
-          <li class="mo-pc__step">
-            <h3>Üzemeltetés és szerviz</h3>
-            <p>Távfelügyelet, karbantartás és szerviz, az EMS pedig folyamatosan optimalizálja a működést.</p>
-            <figure class="mo-pc__visual"><img src="assets/img/photo-f72086002-960.webp" srcset="assets/img/photo-f72086002-500.webp 500w, assets/img/photo-f72086002-960.webp 960w" sizes="(max-width: 1023px) 100vw, 50vw" loading="lazy" decoding="async" alt="Villamos szakember mér egy kapcsolószekrénynél" width="960" height="722" style="object-position: 30% 20%" data-source="stand-in" data-subject="szerviz és mérés"></figure>
-          </li>
-        </ol>
-      </div>
-      <div class="mo-pc__visuals frame"></div>
+<!-- SOLUTIONS -->
+<section class="pad" id="megoldasok">
+  <div class="wrap">
+    <div class="head-row">
+      <div><p class="kicker rv">Megoldások</p><h2 class="rv d1">Hat technológia.<br>Egy rendszer.</h2></div>
+      <p class="lead rv d2">A legtöbb cég különálló beszállítókkal építi az energiarendszerét. Mi egyben tervezzük és üzemeltetjük – hogy minden egység a másik hatékonyságát növelje.</p>
     </div>
-  </section>
+    <div class="sol">
+      <article class="tile rv" tabindex="0"><img src="assets/img/photo-f12261041-960.webp" alt="" loading="lazy"><span class="no">01</span><div class="ab">PV</div><h3>Napelemes rendszerek</h3><p>Tető, föld és carport, a saját fogyasztáshoz méretezve, statikai és hálózati felméréssel.</p></article>
+      <article class="tile rv d1" tabindex="0"><img src="assets/img/photo-f186370079-960.webp" alt="" loading="lazy"><span class="no">02</span><div class="ab">BESS</div><h3>Ipari energiatárolás</h3><p>Konténeres és szekrényes akkumulátor csúcsvágásra, árkülönbözet-kihasználásra és tartalékra.</p></article>
+      <article class="tile rv d2" tabindex="0"><img src="assets/img/photo-f101379682-960.webp" alt="" loading="lazy"><span class="no">03</span><div class="ab">HP</div><h3>Hőszivattyú</h3><p>Fűtés, hűtés és HMV egy rendszerből, napelemmel és tárolóval együtt vezérelve.</p></article>
+      <article class="tile rv" tabindex="0"><img src="assets/img/photo-f33450932-960.webp" alt="" loading="lazy"><span class="no">04</span><div class="ab">EV</div><h3>E-mobilitás</h3><p>Flotta- és látogatói töltők RFID-azonosítással, dinamikus terheléskezeléssel, elszámolással.</p></article>
+      <article class="tile rv d1" tabindex="0"><img src="assets/img/photo-f113320638-960.webp" alt="" loading="lazy"><span class="no">05</span><div class="ab">EMS</div><h3>Energiamenedzsment</h3><p>Valós idejű monitoring és automatikus optimalizálás a termelés, a tárolás és a piaci ár szerint.</p></article>
+      <article class="tile rv d2" tabindex="0"><img src="assets/img/photo-f28456133-960.webp" alt="" loading="lazy"><span class="no">06</span><div class="ab">GRID</div><h3>Hálózati csatlakozás</h3><p>Csatlakozási igény, engedélyeztetés, visszwatt-védelem és tarifaoptimalizálás.</p></article>
+    </div>
+  </div>
+</section>
 
-  <section class="section" id="faq" aria-labelledby="faq-h">
-    <div class="wrap grid grid--top">
-      <div class="span-5 stack-4">
-        <h2 id="faq-h">Gyakori kérdések</h2>
-        <p class="muted">Amit a döntés előtt a legtöbbször kérdeznek tőlünk.</p>
-        <p><a class="link" href="mailto:iroda@teclin.hu">Írjon nekünk e-mailt</a></p>
-      </div>
-      <div class="faq span-6 start-7">
-        <div class="faq__item"><h3>Mennyi idő alatt térül meg egy céges napelem?</h3><p>Az éves fogyasztástól, a tarifától és az önfogyasztás arányától függ. A felmérés után projektre szabott megtérülési számítást adunk, pályázattal és hitellel együtt.</p></div>
-        <div class="faq__item"><h3>Mit ad hozzá az akkumulátor a napelemhez?</h3><p>A napelem termel, a tároló a délutáni és esti órákra tolja az energiát, és levágja a csúcsterhelést. Így nő az önfogyasztás és csökken a lekötött teljesítmény.</p></div>
-        <div class="faq__item"><h3>Ki intézi a hálózati engedélyeket?</h3><p>Mi. A csatlakozási kérelemtől a pályázati dokumentációig minden ügyintézést átvállalunk.</p></div>
-        <div class="faq__item"><h3>Mi történik az átadás után?</h3><p>Távfelügyelettel, karbantartással és szervizzel üzemeltetjük a rendszert, az EMS pedig folyamatosan optimalizál.</p></div>
-        <div class="faq__item"><h3>Vállalnak több telephelyes projektet?</h3><p>Igen. Több telephelyes és ipari programokat is egységes tervezéssel, projektvezetéssel és riportálással viszünk.</p></div>
-      </div>
-    </div>
-  </section>
+<!-- VIDEO BAND 1 -->
+<section class="band" id="pvbess">
+  <div class="media shade-l">
+    <img src="assets/img/photo-f74497191.webp" alt="" loading="lazy">
+    <video data-src="assets/video/band-1.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+  </div>
+  <div class="wrap"><div class="txt">
+    <p class="kicker rv">PV + BESS</p>
+    <h2 class="rv d1">Amikor a napelem<br>nem elég</h2>
+    <p class="lead rv d2">A napelem délben termel, az üzem egész nap fogyaszt. Az ipari akkumulátor áthidalja a kettőt: eltolja az energiát, levágja a csúcsokat és csökkenti a lekötött teljesítményt.</p>
+    <ul class="checks rv d3"><li>Nagyobb önfogyasztási arány</li><li>Kisebb teljesítménydíj, alacsonyabb számla</li><li>Tartalék hálózati kimaradás esetére</li></ul>
+    <a href="#kapcsolat" class="btn btn--line rv d3">Kérjen PV+BESS kalkulációt <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div></div>
+</section>
 
-  <section class="section" id="palyazat" aria-labelledby="palyazat-h">
-    <div class="wrap grid grid--top">
-      <div class="span-5">
-        <div class="section-head"><h2 id="palyazat-h">Pályázatok és hitelprogramok</h2><p>Figyeljük a kiírásokat, megírjuk a pályázatot, és úgy állítjuk össze a finanszírozást, hogy a megtérülés a lehető legrövidebb legyen.</p></div>
-        <ul class="rows">
-          <li><span class="rows__name">Energiahatékonysági hitelprogram</span><p>0%-os kamat vállalkozások energetikai fejlesztéseire.</p><span class="rows__value">Hitel</span></li>
-          <li><span class="rows__name">Nemzeti Bajnokok Hitelprogram</span><p>Növekedési és fejlesztési célokra.</p><span class="rows__value">Hitel</span></li>
-          <li><span class="rows__name">Vissza nem térítendő támogatás</span><p>Az aktuális kiírás szerint, a pályázatot mi készítjük el.</p><span class="rows__value">Pályázat</span></li>
-        </ul>
-      </div>
-      <div class="frame frame--photo frame--fill span-6 start-7">
-        <img class="frame__img" src="assets/img/photo-f74497191-960.webp" srcset="assets/img/photo-f74497191-500.webp 500w, assets/img/photo-f74497191-960.webp 960w, assets/img/photo-f74497191.webp 1280w" sizes="(max-width: 639px) 120vw, (max-width: 1023px) 100vw, 50vw" width="1280" height="674" alt="Nagy kiterjedésű napelemmező egy fémtetős csarnokon, felülről" loading="lazy" decoding="async" data-source="stand-in" data-subject="nagy napelemes csarnoktető">
+<!-- EMS -->
+<section class="pad ems" id="ems">
+  <div class="wrap ems-grid">
+    <div>
+      <p class="kicker rv">Az EMS az agy</p>
+      <h2 class="rv d1">Minden kilowatt a megfelelő helyre</h2>
+      <p class="lead rv d2" style="margin-top:26px">A rendszer nemcsak termel és tárol: eldönti, mikor töltsön, mikor adjon le és mikor vegyen a hálózatból – az ön fogyasztásához és a piaci árakhoz igazodva.</p>
+      <div class="kpis rv d3">
+        <div><b>PV</b><span>termelés közvetlen felhasználása</span></div>
+        <div><b>BESS</b><span>csúcsvágás, árkülönbözet</span></div>
+        <div><b>EMS</b><span>automatikus, adatalapú vezérlés</span></div>
       </div>
     </div>
-  </section>
+    <div class="rv d2">
+      <svg class="flow" viewBox="0 0 700 460" role="img" aria-label="Energiaáramlás: napelem, tároló, hálózat, töltők és hőszivattyú az EMS-en keresztül">
+        <g><path class="wire" d="M175 100 C270 100 250 230 318 230"/><path class="wire" d="M318 232 C250 232 270 360 175 360"/><path class="wire" d="M525 100 C430 100 450 230 382 230"/><path class="wire" d="M382 232 C450 232 430 360 525 360"/><path class="wire" d="M350 262 V378"/><path class="wire" d="M350 198 V84"/></g>
+        <g><path class="pulse" d="M175 100 C270 100 250 230 318 230"/><path class="pulse" d="M318 232 C250 232 270 360 175 360"/><path class="pulse rev" d="M525 100 C430 100 450 230 382 230" style="animation-duration:2.4s"/><path class="pulse" d="M382 232 C450 232 430 360 525 360"/><path class="pulse" d="M350 262 V378"/><path class="pulse" d="M350 198 V84"/></g>
+        <circle class="ring" cx="350" cy="230" r="32"/><circle class="ring" cx="350" cy="230" r="32" style="animation-delay:1.5s"/>
+        <circle class="hub" cx="350" cy="230" r="32"/>
+        <text x="350" y="236" text-anchor="middle" fill="#06120a" font-family="Archivo" font-weight="700" font-size="16">EMS</text>
+        <g class="node"><rect x="45" y="68" width="130" height="64" rx="4"/><text x="110" y="97">Napelem</text><text class="s" x="110" y="117">TERMELÉS</text></g>
+        <g class="node"><rect x="45" y="328" width="130" height="64" rx="4"/><text x="110" y="357">Tároló</text><text class="s" x="110" y="377">BESS</text></g>
+        <g class="node"><rect x="525" y="68" width="130" height="64" rx="4"/><text x="590" y="97">Hálózat</text><text class="s" x="590" y="117">GRID</text></g>
+        <g class="node"><rect x="525" y="328" width="130" height="64" rx="4"/><text x="590" y="357">EV-töltők</text><text class="s" x="590" y="377">E-MOBILITÁS</text></g>
+        <g class="node"><rect x="285" y="378" width="130" height="64" rx="4"/><text x="350" y="407">Hőszivattyú</text><text class="s" x="350" y="427">FŰTÉS / HŰTÉS</text></g>
+        <g class="node"><rect x="285" y="20" width="130" height="64" rx="4"/><text x="350" y="49">Üzem</text><text class="s" x="350" y="69">FOGYASZTÁS</text></g>
+      </svg>
+    </div>
+  </div>
+</section>
 
-  <section class="section" id="quote" aria-labelledby="quote-h">
-    <div class="wrap grid grid--top fill">
-      <div class="span-6 stack-5">
-        <div class="section-head"><h2 id="quote-h">Ajánlatkérés</h2><p>Írja le röviden az igényét. Munkatársunk egy munkanapon belül keresi.</p></div>
-        <form class="form" action="mailto:iroda@teclin.hu" method="post" enctype="text/plain" data-endpoint="" data-sent="Megkaptuk az ajánlatkérését. Egy munkanapon belül keressük." novalidate>
-          <div class="field"><label for="f-name">Név</label>
-            <input id="f-name" name="nev" type="text" autocomplete="name" required aria-describedby="f-name-err">
-            <p class="field__error" id="f-name-err" hidden>Írja be a nevét.</p></div>
-          <div class="field"><label for="f-org">Cég</label>
-            <input id="f-org" name="ceg" type="text" autocomplete="organization" required aria-describedby="f-org-err">
-            <p class="field__error" id="f-org-err" hidden>Írja be a cég nevét.</p></div>
-          <div class="field"><label for="f-email">E-mail</label>
-            <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="f-email-err">
-            <p class="field__error" id="f-email-err" hidden>Írjon be egy e-mail-címet @ jellel, például nev@ceg.hu.</p></div>
-          <div class="field"><label for="f-tel">Telefon</label>
-            <input id="f-tel" name="telefon" type="tel" autocomplete="tel" aria-describedby="f-tel-err">
-            <p class="field__error" id="f-tel-err" hidden>Írja be a telefonszámát.</p></div>
-          <div class="field"><label for="f-topic">Érdeklődés</label>
-            <select id="f-topic" name="tema"><option>Napelem (PV)</option><option>Energiatárolás (BESS)</option><option>Hőszivattyú</option><option>EV-töltés</option><option>Energiamenedzsment (EMS)</option><option>Komplex megoldás</option></select></div>
-          <div class="field field--full"><label for="f-msg">Telephely és éves fogyasztás</label>
-            <textarea id="f-msg" name="uzenet" rows="3" aria-describedby="f-msg-err"></textarea>
-            <p class="field__error" id="f-msg-err" hidden>Írja le röviden a telephelyet.</p></div>
-          <div class="btn-row"><button class="btn btn--primary" type="submit">Ajánlatot kérek</button></div>
-          <p class="form__status" role="status" data-form-status></p>
-        </form>
-      </div>
-      <div class="frame frame--photo span-6 start-7"><img class="frame__img" src="assets/img/photo-f160692143-960.webp" srcset="assets/img/photo-f160692143-500.webp 500w, assets/img/photo-f160692143-960.webp 960w, assets/img/photo-f160692143.webp 1280w" sizes="(max-width: 639px) 200vw, (max-width: 1023px) 100vw, 50vw" width="960" height="640" alt="Szerelő emel egy napelemmodult a tartószerkezetre" loading="lazy" decoding="async" data-source="stand-in" data-subject="napelem-szerelés"></div>
+<!-- PROCESS -->
+<section class="pad" id="folyamat">
+  <div class="wrap">
+    <div class="head-row">
+      <div><p class="kicker rv">Működésünk</p><h2 class="rv d1">Tervezéstől<br>üzemeltetésig</h2></div>
+      <p class="lead rv d2">Egy projektmenedzser, egy szerződés, egy felelős – az elejétől a végéig.</p>
     </div>
-  </section>
+    <div class="steps">
+      <div class="step rv"><div class="n">01</div><h3>Felmérés</h3><p>Helyszíni bejárás, fogyasztási profil és hálózati lehetőségek elemzése.</p></div>
+      <div class="step rv d1"><div class="n">02</div><h3>Tervezés</h3><p>Méretezés, megtérülési modell és tervdokumentáció mérnöki háttérrel.</p></div>
+      <div class="step rv d2"><div class="n">03</div><h3>Finanszírozás</h3><p>Pályázat, hitelprogram és engedélyezés – az ügyintézést átvállaljuk.</p></div>
+      <div class="step rv d3"><div class="n">04</div><h3>Kivitelezés</h3><p>Ütemezett telepítés, beüzemelés, átadás és üzembe helyezés.</p></div>
+      <div class="step rv d3"><div class="n">05</div><h3>Üzemeltetés</h3><p>Távfelügyelet, karbantartás, szerviz és folyamatos optimalizálás.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO BAND 2 -->
+<section class="band right" id="palyazat">
+  <div class="media shade-r">
+    <img src="assets/img/photo-f62349039.webp" alt="" loading="lazy">
+    <video data-src="assets/video/band-2.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+  </div>
+  <div class="wrap"><div class="txt" style="max-width:600px">
+    <p class="kicker rv">Finanszírozás</p>
+    <h2 class="rv d1">A támogatás is a projekt része</h2>
+    <p class="lead rv d2">Figyeljük a kiírásokat, megírjuk a pályázatot és úgy strukturáljuk a beruházást, hogy a megtérülés a lehető legrövidebb legyen.</p>
+    <div class="flist rv d3">
+      <div class="fitem"><span class="pill">Hitel</span><div><b>Energiahatékonysági 0%-os hitelprogram</b><span>Vállalkozások energetikai fejlesztéseire</span></div></div>
+      <div class="fitem"><span class="pill">Hitel</span><div><b>Nemzeti Bajnokok Hitelprogram</b><span>Növekedési és fejlesztési célokra</span></div></div>
+      <div class="fitem"><span class="pill">Támogatás</span><div><b>Vissza nem térítendő pályázatok</b><span>Mindig az aktuális kiírás szerint</span></div></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- FAQ -->
+<section class="pad" id="gyik">
+  <div class="wrap faq-grid">
+    <div><p class="kicker rv">Gyakori kérdések</p><h2 class="rv d1">Amit a döntés előtt tudni érdemes</h2></div>
+    <div class="faq rv d2">
+      <details open><summary>Mennyi idő alatt térül meg egy céges napelemes rendszer?</summary><p>Az éves fogyasztástól, a tarifától és az önfogyasztás arányától függ. A felmérés után projektre szabott megtérülési számítást adunk – pályázati és hitelkonstrukciók figyelembevételével.</p></details>
+      <details><summary>Mi a különbség a PV és a PV + BESS között?</summary><p>A napelem a termelést adja, az akkumulátoros tároló pedig a termelési időn túli felhasználást és a csúcsterhelés vágását. Együtt nagyobb önfogyasztási arányt és alacsonyabb teljesítménydíjat érnek el.</p></details>
+      <details><summary>Ki intézi a hálózati engedélyeket és a pályázatot?</summary><p>Mi. A hálózati csatlakozási kérelemtől és engedélyeztetéstől a pályázati dokumentációig minden ügyintézést átvállalunk.</p></details>
+      <details><summary>Mi történik a telepítés után?</summary><p>Távfelügyelettel, karbantartással és szervizzel üzemeltetjük a rendszert, az EMS pedig folyamatosan optimalizálja a működést.</p></details>
+      <details><summary>Dolgoznak több telephelyes vagy ipari megrendelőkkel?</summary><p>Igen. Több telephelyes programokat is egységes tervezéssel, projektvezetéssel és riportálással kezelünk.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA VIDEO -->
+<section class="cta">
+  <div class="media shade-b">
+    <img src="assets/img/photo-f64156491.webp" alt="" loading="lazy">
+    <video data-src="assets/video/cta.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+  </div>
+  <div class="wrap">
+    <p class="kicker rv">Kezdjük az adatokkal</p>
+    <h2 class="rv d1">Számoljuk ki az ön megtérülését</h2>
+    <p class="lead rv d2">A telephely és az éves villamosenergia-fogyasztás elég az első becsléshez. Munkatársunk 1 munkanapon belül keresi.</p>
+    <a href="#kapcsolat" class="btn btn--solid rv d3">Ajánlatot kérek <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="pad" id="kapcsolat">
+  <div class="wrap contact-grid">
+    <div>
+      <p class="kicker rv">Kapcsolat</p>
+      <h2 class="rv d1">Beszéljük át, mit nyerhet az energián</h2>
+      <div class="cinfo rv d2">
+        <div><small>E-mail</small><a href="mailto:iroda@teclin.hu">iroda@teclin.hu</a></div>
+        <div><small>Telefon</small><a href="tel:+36304443257">+36 30 444 32 57</a></div>
+        <div><small>Iroda</small><a href="https://www.openstreetmap.org/search?query=Rozmaring%20utca%203%20Sz%C3%A9kesfeh%C3%A9rv%C3%A1r" target="_blank" rel="noopener">8000 Székesfehérvár, Rozmaring utca 3.</a></div>
+      </div>
+    </div>
+    <form id="form" class="rv d2" novalidate>
+      <label>Név<input name="nev" required autocomplete="name"></label>
+      <label>Cég<input name="ceg" required autocomplete="organization"></label>
+      <label>E-mail<input type="email" name="email" required autocomplete="email"></label>
+      <label>Telefon<input type="tel" name="tel" autocomplete="tel"></label>
+      <label class="full">Érdeklődés
+        <select name="tema"><option>Napelem (PV)</option><option>Energiatárolás (BESS)</option><option>PV + BESS</option><option>Hőszivattyú</option><option>E-mobilitás (EV-töltés)</option><option>Energiamenedzsment (EMS)</option><option>Komplex megoldás</option></select>
+      </label>
+      <label class="full">Üzenet<textarea name="uzenet" placeholder="Telephely, éves villamosenergia-fogyasztás, célok…"></textarea></label>
+      <label class="chk full"><input type="checkbox" required> Elfogadom az adatkezelési tájékoztatót.</label>
+      <button class="btn btn--solid" type="submit">Ajánlatkérés küldése <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </form>
+  </div>
+</section>
 </main>
 
-<footer class="footer closing" id="contact" aria-labelledby="close-h">
+<footer>
   <div class="wrap">
-    <div class="closing__cta close--type">
-      <div class="section-head">
-        <h2 id="close-h">Számoljuk ki a megtérülést</h2>
-        <p>A telephely és az éves fogyasztás elég az első becsléshez.</p>
-      </div>
-      <a class="btn btn--primary btn--xl" href="#quote">Ajánlatot kérek<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+    <div class="fgrid">
+      <div><img src="assets/brand/teclin-logo.svg" alt="TecLin" width="171" height="36" style="height:36px;width:auto;margin-bottom:20px"><p>Integrált energiamegoldások vállalatoknak – napelem, tárolás, hőszivattyú, e-mobilitás és energiamenedzsment egy kézből.</p></div>
+      <div><h4>Megoldások</h4><ul><li><a href="#megoldasok">Napelem (PV)</a></li><li><a href="#megoldasok">Energiatárolás (BESS)</a></li><li><a href="#megoldasok">Hőszivattyú</a></li><li><a href="#ems">EV-töltés &amp; EMS</a></li></ul></div>
+      <div><h4>Cég</h4><ul><li><a href="#folyamat">Működésünk</a></li><li><a href="#palyazat">Pályázatok</a></li><li><a href="#gyik">GYIK</a></li><li><a href="#kapcsolat">Kapcsolat</a></li></ul></div>
+      <div><h4>Elérhetőség</h4><ul><li>TecLin Energy Hungary Kft.</li><li>8000 Székesfehérvár, Rozmaring utca 3.</li><li>Adószám: 25125179-2-07</li><li><a href="mailto:iroda@teclin.hu">iroda@teclin.hu</a></li></ul></div>
     </div>
-    <div class="closing__links">
-      <div class="grid">
-        <div class="span-4 stack-4">
-          <a class="nav__logo" href="#top" aria-label="TecLin, vissza az oldal tetejére"><img src="assets/brand/teclin-logo.svg" alt="TecLin" width="171" height="36"></a>
-          <p class="footer__lede">Energiamegoldások vállalatoknak.</p>
-        </div>
-        <div class="span-2 footer__col"><h3>Megoldások</h3><ul><li><a href="#megoldasok">Technológiák</a></li><li><a href="#ems">Rendszer</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Folyamat</h3><ul><li><a href="#folyamat">Lépések</a></li><li><a href="#faq">Kérdések</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Pályázatok</h3><ul><li><a href="#palyazat">Programok</a></li><li><a href="#quote">Ajánlatkérés</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Kapcsolat</h3><ul><li><a href="mailto:iroda@teclin.hu">iroda@teclin.hu</a></li><li><a href="tel:+36304443257">+36 30 444 32 57</a></li><li><a href="https://www.openstreetmap.org/search?query=Rozmaring%20utca%203%20Sz%C3%A9kesfeh%C3%A9rv%C3%A1r">8000 Székesfehérvár, Rozmaring utca 3.</a></li></ul></div>
-      </div>
-      <div class="footer__legal">
-        <span>&copy; 2026 TecLin Energy Hungary Kft. &nbsp; Adószám: 25125179-2-07</span>
-        <div class="socials"></div>
-        <a class="credits" href="credits.html">Fotók: Wikimedia Commons</a>
-      </div>
-    </div>
+    <div class="fbot"><span>© 2026 TecLin Energy Hungary Kft. – Minden jog fenntartva.</span><span><a href="credits.html">Fotó- és videóforrások</a></span></div>
   </div>
 </footer>
 
-<script type="module" src="assets/system.js"></script>
-<script type="module" src="assets/motion/motion.js"></script>
-<script type="module" src="assets/layout/layout.js"></script>
-<script type="module" src="assets/diagrams/mount.js"></script>
+<script>
+(()=>{
+  document.documentElement.classList.add('js');
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // header
+  const hdr=$('#hdr'); const onS=()=>hdr.classList.toggle('stuck',scrollY>40); addEventListener('scroll',onS,{passive:true}); onS();
+  // menu
+  const nav=$('#nav'), bg=$('#burger');
+  bg.addEventListener('click',()=>{const o=nav.classList.toggle('open');bg.setAttribute('aria-expanded',o)});
+  $$('#nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');bg.setAttribute('aria-expanded',false)}));
+
+  // reveal
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  $$('.rv').forEach(el=>io.observe(el));
+  setTimeout(()=>$$('.hero .rv').forEach(el=>el.classList.add('in')),80);
+
+  // videos: load when near, play only while visible, fade in over the poster
+  let paused=false;
+  const vids=$$('video[data-src]');
+  if(!reduce){
+    const vio=new IntersectionObserver(es=>es.forEach(e=>{
+      const v=e.target;
+      if(e.isIntersecting){
+        if(!v.src){v.src=v.dataset.src;v.addEventListener('canplay',()=>v.classList.add('on'),{once:true});v.addEventListener('error',()=>v.remove(),{once:true})}
+        if(!paused)v.play().catch(()=>{});
+      } else v.pause();
+    }),{rootMargin:'200px 0px'});
+    vids.forEach(v=>vio.observe(v));
+    const ctl=$('#vctl'); ctl.hidden=false;
+    ctl.addEventListener('click',()=>{paused=!paused;vids.forEach(v=>paused?v.pause():(v.src&&v.play().catch(()=>{})));
+      ctl.setAttribute('aria-label',paused?'Háttérvideó lejátszása':'Háttérvideó szüneteltetése');
+      ctl.innerHTML=paused?'<svg viewBox="0 0 24 24"><path d="M7 5l12 7-12 7z"/></svg>':'<svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>'});
+  }
+
+  // form -> mailto (until a form backend / HubSpot form is connected)
+  $('#form').addEventListener('submit',e=>{
+    e.preventDefault(); const f=e.target;
+    if(!f.checkValidity()){f.reportValidity();return}
+    const d=new FormData(f);
+    const body=`Név: ${d.get('nev')}\nCég: ${d.get('ceg')}\nE-mail: ${d.get('email')}\nTelefon: ${d.get('tel')}\nÉrdeklődés: ${d.get('tema')}\n\n${d.get('uzenet')}`;
+    location.href=`mailto:iroda@teclin.hu?subject=${encodeURIComponent('Ajánlatkérés – '+d.get('ceg'))}&body=${encodeURIComponent(body)}`;
+  });
+})();
+</script>
 </body>
 </html>
