@@ -124,24 +124,37 @@ section{position:relative}
 .checks li{display:flex;gap:14px;color:#e2eae5}
 .checks li::before{content:"";flex:none;width:20px;height:20px;margin-top:3px;border:1px solid var(--green);border-radius:50%;background:radial-gradient(circle,var(--green) 0 4px,transparent 5px)}
 
-/* EMS */
-.ems{background:radial-gradient(1200px 600px at 75% 50%,rgba(65,185,60,.10),transparent 60%),var(--bg-2)}
-.ems-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:72px;align-items:center}
+/* EMS: 2.5D energy map */
+.ems{background:#070e0a;overflow:hidden;min-height:100svh;display:flex;align-items:center;isolation:isolate}
+.ems::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(60% 70% at 66% 55%,rgba(65,185,60,.16),transparent 70%),radial-gradient(40% 40% at 66% 50%,rgba(255,214,140,.06),transparent 70%)}
+.ems-grid{display:grid;grid-template-columns:.62fr 1.38fr;gap:24px;align-items:center}
+.ems>.wrap{flex:0 0 auto}
+.ems-copy{position:relative;z-index:2}
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
 .kpis div{border-top:1px solid var(--green);padding-top:16px}
 .kpis b{font:500 26px var(--head);font-stretch:112%;color:var(--lime);display:block}
 .kpis span{font-size:14px;color:var(--muted)}
-.flow{width:100%;height:auto;overflow:visible}
-.flow .wire{fill:none;stroke:rgba(167,230,110,.18);stroke-width:2}
-.flow .pulse{fill:none;stroke:var(--lime);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:4 26;animation:dash 1.8s linear infinite;filter:drop-shadow(0 0 6px var(--green))}
-.flow .rev{animation-direction:reverse}
-@keyframes dash{to{stroke-dashoffset:-60}}
-.flow .node rect{fill:#0f1b15;stroke:rgba(167,230,110,.35);stroke-width:1}
-.flow .node text{fill:#fff;font:600 15px var(--head);text-anchor:middle;letter-spacing:.04em}
-.flow .node text.s{fill:var(--lime);font:500 10.5px var(--body);letter-spacing:.18em}
-.flow .hub{fill:var(--green)}
-.flow .ring{fill:none;stroke:var(--green);stroke-width:1.5;transform-origin:350px 230px;animation:ring 3s ease-out infinite}
-@keyframes ring{from{transform:scale(1);opacity:.8}to{transform:scale(2.6);opacity:0}}
+.emap-wrap{position:relative;margin-right:calc(-1 * var(--gut))}
+.emap{width:100%;height:auto;display:block;overflow:visible}
+.emap .lbl{font:600 15px var(--head);font-stretch:110%;fill:#fff;text-anchor:middle;letter-spacing:.04em;text-transform:uppercase}
+.emap .sub{font:500 10px var(--body);fill:var(--lime);text-anchor:middle;letter-spacing:.22em}
+.emap .node{cursor:pointer;outline:none}
+.emap .node .halo{opacity:0;transition:opacity .4s}
+.emap .node.on .halo,.emap .node:focus-visible .halo{opacity:1}
+.emap .node .top{transition:stroke .3s}
+.emap .node.on .top{stroke:var(--lime)}
+.emap .spoke{transition:stroke .4s,stroke-width .4s}
+.emap .spoke.on{stroke:rgba(214,255,170,.9);stroke-width:2}
+.emap .spin{animation:spin 40s linear infinite}
+.emap .spin.r{animation-duration:26s;animation-direction:reverse}
+@keyframes spin{to{stroke-dashoffset:-1000}}
+.emap .core{animation:core 2.6s ease-in-out infinite}
+@keyframes core{50%{opacity:.55}}
+.emap-cap{position:relative;margin:4px 6% 0 6%;display:flex;gap:18px;align-items:baseline;border-top:1px solid var(--line);padding-top:16px;min-height:56px}
+.emap-cap b{font:500 15px var(--head);font-stretch:110%;text-transform:uppercase;color:var(--lime);white-space:nowrap}
+.emap-cap span{font-size:15px;color:#cfdad3}
+@media (max-width:1024px){.ems-grid{grid-template-columns:1fr}.emap-wrap{margin:0 calc(-1 * var(--gut))}.emap-cap{margin:0 var(--gut)}}
+@media (prefers-reduced-motion:reduce){.emap .spin,.emap .core{animation:none}}
 
 /* engineering showcase */
 .eng-facts{display:grid;grid-template-columns:repeat(4,1fr);border-block:1px solid var(--line);margin:56px 0 40px}
@@ -438,33 +451,22 @@ footer a:hover{color:var(--lime)}
   </div>
 </section>
 
-<!-- EMS -->
+<!-- EMS: 2.5D energy map (drawn in code below, #emap) -->
 <section class="pad ems" id="ems">
   <div class="wrap ems-grid">
-    <div>
+    <div class="ems-copy">
       <p class="kicker rv">Az EMS az agy</p>
       <h2 class="rv d1">Minden kilowatt a megfelelő helyre</h2>
-      <p class="lead rv d2" style="margin-top:26px">A rendszer nemcsak termel és tárol: eldönti, mikor töltsön, mikor adjon le és mikor vegyen a hálózatból – az ön fogyasztásához és a piaci árakhoz igazodva.</p>
+      <p class="lead rv d2" style="margin-top:26px">A rendszer nemcsak termel és tárol: eldönti, mikor töltsön, mikor adjon le és mikor vegyen a hálózatból – az Ön fogyasztásához és a piaci árakhoz igazodva.</p>
       <div class="kpis rv d3">
         <div><b>PV</b><span>termelés közvetlen felhasználása</span></div>
         <div><b>BESS</b><span>csúcsvágás, árkülönbözet</span></div>
         <div><b>EMS</b><span>automatikus, adatalapú vezérlés</span></div>
       </div>
     </div>
-    <div class="rv d2">
-      <svg class="flow" viewBox="0 0 700 460" role="img" aria-label="Energiaáramlás: napelem, tároló, hálózat, töltők és hőszivattyú az EMS-en keresztül">
-        <g><path class="wire" d="M175 100 C270 100 250 230 318 230"/><path class="wire" d="M318 232 C250 232 270 360 175 360"/><path class="wire" d="M525 100 C430 100 450 230 382 230"/><path class="wire" d="M382 232 C450 232 430 360 525 360"/><path class="wire" d="M350 262 V378"/><path class="wire" d="M350 198 V84"/></g>
-        <g><path class="pulse" d="M175 100 C270 100 250 230 318 230"/><path class="pulse" d="M318 232 C250 232 270 360 175 360"/><path class="pulse rev" d="M525 100 C430 100 450 230 382 230" style="animation-duration:2.4s"/><path class="pulse" d="M382 232 C450 232 430 360 525 360"/><path class="pulse" d="M350 262 V378"/><path class="pulse" d="M350 198 V84"/></g>
-        <circle class="ring" cx="350" cy="230" r="32"/><circle class="ring" cx="350" cy="230" r="32" style="animation-delay:1.5s"/>
-        <circle class="hub" cx="350" cy="230" r="32"/>
-        <text x="350" y="236" text-anchor="middle" fill="#06120a" font-family="Archivo" font-weight="700" font-size="16">EMS</text>
-        <g class="node"><rect x="45" y="68" width="130" height="64" rx="4"/><text x="110" y="97">Napelem</text><text class="s" x="110" y="117">TERMELÉS</text></g>
-        <g class="node"><rect x="45" y="328" width="130" height="64" rx="4"/><text x="110" y="357">Tároló</text><text class="s" x="110" y="377">BESS</text></g>
-        <g class="node"><rect x="525" y="68" width="130" height="64" rx="4"/><text x="590" y="97">Hálózat</text><text class="s" x="590" y="117">GRID</text></g>
-        <g class="node"><rect x="525" y="328" width="130" height="64" rx="4"/><text x="590" y="357">EV-töltők</text><text class="s" x="590" y="377">E-MOBILITÁS</text></g>
-        <g class="node"><rect x="285" y="378" width="130" height="64" rx="4"/><text x="350" y="407">Hőszivattyú</text><text class="s" x="350" y="427">FŰTÉS / HŰTÉS</text></g>
-        <g class="node"><rect x="285" y="20" width="130" height="64" rx="4"/><text x="350" y="49">Üzem</text><text class="s" x="350" y="69">FOGYASZTÁS</text></g>
-      </svg>
+    <div class="emap-wrap rv d2">
+      <svg class="emap" id="emap" viewBox="70 28 860 572" role="img" aria-label="Energiatérkép: az EMS köti össze a napelemet, a tárolót, a hálózatot, az EV-töltőket, a hőszivattyút és az üzem fogyasztását"></svg>
+      <p class="emap-cap" id="emapCap" aria-live="polite"><b>EMS</b><span>Mutasson egy elemre, és megmutatjuk, mit csinál benne az energia.</span></p>
     </div>
   </div>
 </section>
@@ -675,6 +677,117 @@ footer a:hover{color:var(--lime)}
       ctl.setAttribute('aria-label',paused?'Háttérvideó lejátszása':'Háttérvideó szüneteltetése');
       ctl.innerHTML=paused?'<svg viewBox="0 0 24 24"><path d="M7 5l12 7-12 7z"/></svg>':'<svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>'});
   }
+
+  // EMS energy map: a tilted plane drawn as SVG (ellipses = perspective), light running along the spokes
+  (()=>{
+    const svg=document.getElementById('emap'); if(!svg) return;
+    const NS='http://www.w3.org/2000/svg', T=0.42, CX=500, CY=300, RX=372, RY=192;
+    const el=(n,a={},p=svg)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
+    const ICON={
+      pv:'M3 15h18l-2-7H5zM7 8l-1 7M12 8v7M17 8l1 7M4 11.5h16M12 15v4M8 19h8M12 2v2M7 4.5l1 1M17 4.5l-1 1',
+      bess:'M4 7h14v11H4zM18 10h2v5h-2M10 9l-2 4h4l-2 4',
+      grid:'M12 2l-5 20M12 2l5 20M8.6 9h6.8M7.4 14.5h9.2M9 9.4l7 4.8M15 9.4l-7 4.8',
+      ev:'M4 16l1.5-5a2 2 0 0 1 1.9-1.4h6.2a2 2 0 0 1 1.7 1l1.7 2.4 1.8.6a1.5 1.5 0 0 1 1.2 1.5V18H4zM7.5 18.5a1.5 1.5 0 1 0 0 .01M16.5 18.5a1.5 1.5 0 1 0 0 .01M18 3l-2 3h3l-2 3',
+      hp:'M3 5h18v13H3zM9.5 11.5a3.2 3.2 0 1 0 0 .01M15 9h3M15 12h3M15 15h3M7 21v-2M12 21v-2M17 21v-2',
+      load:'M3 21V10l5 3V10l5 3V6l8 4v11zM7 17h2M12 17h2M17 17h2',
+      ems:'M7 7h10v10H7zM9.5 14.5v-2M12 14.5v-4M14.5 14.5v-3M9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4'};
+    const NODES=[
+      {k:'load',a:-90,t:'Üzem',s:'FOGYASZTÁS',d:'in',x:'A telephely fogyasztása az első: az EMS ehhez igazítja a termelést, a töltést és a vételezést.'},
+      {k:'grid',a:-30,t:'Hálózat',s:'GRID',d:'both',x:'Csak akkor vesz a hálózatból, ha a saját termelés és a tároló nem elég – visszatáplálás nélkül.'},
+      {k:'ev',a:30,t:'EV-töltők',s:'E-MOBILITÁS',d:'in',x:'A töltők a napelemes termelés csúcsán kapnak teljesítményt, dinamikus terheléskezeléssel.'},
+      {k:'hp',a:90,t:'Hőszivattyú',s:'FŰTÉS / HŰTÉS',d:'in',x:'A fűtés-hűtés akkor dolgozik többet, amikor olcsó és saját az energia.'},
+      {k:'bess',a:150,t:'Tároló',s:'BESS',d:'both',x:'Az olcsó déli órákban tölt, a 16–20 órás csúcsban ad le – levágja a teljesítménycsúcsokat.'},
+      {k:'pv',a:210,t:'Napelem',s:'TERMELÉS',d:'out',x:'A termelés minél nagyobb része helyben fogy el – minden saját kWh-n nincs rendszerhasználati díj.'}];
+    const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const FS=innerWidth<640?1.9:1; // phone: the map is drawn at ~45%, so its words are set larger
+
+    // defs: textured ground, glows, gradients
+    const defs=el('defs');
+    defs.innerHTML=`
+      <filter id="emTex" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.016" numOctaves="5" seed="7"/>
+        <feColorMatrix values="0 0 0 0 .10  0 0 0 0 .32  0 0 0 0 .18  0 0 0 1.9 -0.78"/></filter>
+      <filter id="emCrack" x="0" y="0" width="100%" height="100%"><feTurbulence type="turbulence" baseFrequency="0.014 0.04" numOctaves="3" seed="3"/>
+        <feColorMatrix values="0 0 0 0 .62  0 0 0 0 .9  0 0 0 0 .45  0 0 0 -3.2 1.15"/></filter>
+      <filter id="emGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="emSoft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14"/></filter>
+      <radialGradient id="emFade" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset=".7" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+      <mask id="emMask"><ellipse cx="${CX}" cy="${CY}" rx="520" ry="300" fill="url(#emFade)"/></mask>
+      <radialGradient id="emCore" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fffbe8"/><stop offset=".25" stop-color="#ffe7a6"/><stop offset=".55" stop-color="#a7e66e" stop-opacity=".75"/><stop offset="1" stop-color="#41b93c" stop-opacity="0"/></radialGradient>
+      <linearGradient id="emSide" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2e23"/><stop offset="1" stop-color="#060c08"/></linearGradient>
+      <linearGradient id="emTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16271e"/><stop offset="1" stop-color="#0b150f"/></linearGradient>`;
+
+    // ground
+    const g0=el('g',{mask:'url(#emMask)'});
+    el('rect',{x:-40,y:20,width:1080,height:600,filter:'url(#emTex)',opacity:.8},g0);
+    el('rect',{x:-40,y:40,width:1080,height:580,filter:'url(#emCrack)',opacity:.22},g0);
+    for(const [r,o] of [[0.55,.16],[1,.22],[1.28,.1]]) el('ellipse',{cx:CX,cy:CY,rx:RX*r,ry:RY*r,fill:'none',stroke:'#a7e66e','stroke-opacity':o,'stroke-dasharray':r===1?'2 9':'1 14',class:r===1?'spin':'' },g0);
+
+    const pos=n=>{const t=n.a*Math.PI/180;const x=CX+RX*Math.cos(t),y=CY+RY*Math.sin(t);const sc=.8+.2*(Math.sin(t)+1)/2;return {x,y,sc}};
+    const disc=(p,x,y,r,h,cls)=>{ // a short cylinder seen from above at an angle
+      const g=el('g',{class:cls||''},p);
+      el('ellipse',{cx:x,cy:y+h+10,rx:r*1.15,ry:r*T*1.15,fill:'#000',opacity:.55,filter:'url(#emSoft)'},g);
+      el('path',{d:`M${x-r} ${y} v${h} a${r} ${r*T} 0 0 0 ${2*r} 0 v${-h} z`,fill:'url(#emSide)',stroke:'rgba(167,230,110,.25)'},g);
+      el('ellipse',{class:'top',cx:x,cy:y,rx:r,ry:r*T,fill:'url(#emTop)',stroke:'rgba(167,230,110,.45)','stroke-width':1.2},g);
+      return g;};
+
+    const spokes=el('g'), parts=el('g'), nodesG=el('g'), hubG=el('g');
+    const nodeEls={}, spokeEls={};
+    // nodes sorted back-to-front
+    const order=[...NODES].sort((a,b)=>Math.sin(a.a*Math.PI/180)-Math.sin(b.a*Math.PI/180));
+    for(const n of order){
+      const {x,y,sc}=pos(n); n.x0=x; n.y0=y;
+      const line=el('line',{x1:CX,y1:CY,x2:x,y2:y,stroke:'rgba(167,230,110,.28)','stroke-width':1.2,class:'spoke'},spokes);
+      el('line',{x1:CX,y1:CY,x2:x,y2:y,stroke:'rgba(255,231,166,.35)','stroke-width':.6,'stroke-dasharray':'1 7'},spokes);
+      spokeEls[n.k]=line;
+      // running light
+      if(!reduce){
+        const fwd=n.d!=='in';
+        const mk=(rev,delay,col)=>{const c=el('circle',{r:3.2*sc,fill:col,filter:'url(#emGlow)'},parts);
+          const am=el('animateMotion',{dur:(2.2+Math.random()*.8).toFixed(2)+'s',repeatCount:'indefinite',begin:delay+'s',path:rev?`M${x} ${y}L${CX} ${CY}`:`M${CX} ${CY}L${x} ${y}`},c);};
+        mk(fwd,(Math.random()*2).toFixed(2),'#d9ff9c');
+        if(n.d==='both') mk(!fwd,(1+Math.random()*2).toFixed(2),'#ffe7a6');
+      }
+      const r=58*sc;
+      const g=el('g',{class:'node',tabindex:0,role:'button','aria-label':n.t+': '+n.x,'data-k':n.k},nodesG);
+      el('ellipse',{class:'halo',cx:x,cy:y,rx:r*1.7,ry:r*T*1.7,fill:'rgba(167,230,110,.16)',filter:'url(#emSoft)'},g);
+      disc(g,x,y,r,14*sc);
+      el('ellipse',{cx:x,cy:y,rx:r*.72,ry:r*.72*T,fill:'none',stroke:'rgba(167,230,110,.35)','stroke-dasharray':'2 4'},g);
+      el('ellipse',{cx:x,cy:y,rx:r*.46,ry:r*.46*T,fill:'rgba(65,185,60,.12)',stroke:'rgba(255,231,166,.55)','stroke-width':1},g);
+      const ic=el('g',{transform:`translate(${x-15*sc} ${y-17*sc}) scale(${1.25*sc})`},g);
+      el('path',{d:ICON[n.k],fill:'none',stroke:'#d9ff9c','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round',filter:'url(#emGlow)'},ic);
+      const back=Math.sin(n.a*Math.PI/180)<0, ly=back?y-r*T-(18+16*FS)*sc-(FS-1)*14:y+r*T+(14+20*FS)*sc;
+      el('text',{x,y:ly,class:'lbl','font-size':15*sc*FS},g).textContent=n.t;
+      el('text',{x,y:ly+16*sc*FS,class:'sub','font-size':10*FS},g).textContent=n.s;
+      nodeEls[n.k]=g;
+    }
+    // hub
+    el('ellipse',{cx:CX,cy:CY,rx:190,ry:190*T,fill:'rgba(167,230,110,.08)',filter:'url(#emSoft)'},hubG);
+    disc(hubG,CX,CY,150,30);
+    for(const [r,st,da,c] of [[132,'rgba(167,230,110,.5)','',''],[116,'rgba(255,231,166,.6)','3 5','spin'],[98,'rgba(167,230,110,.35)','1 3','spin r'],[80,'rgba(255,231,166,.45)','',''],[62,'rgba(167,230,110,.6)','20 8','spin']])
+      el('ellipse',{cx:CX,cy:CY,rx:r,ry:r*T,fill:'none',stroke:st,'stroke-width':1.1,'stroke-dasharray':da,class:c},hubG);
+    for(let i=0;i<24;i++){const t=i/24*Math.PI*2;el('line',{x1:CX+140*Math.cos(t),y1:CY+140*T*Math.sin(t),x2:CX+147*Math.cos(t),y2:CY+147*T*Math.sin(t),stroke:'rgba(255,231,166,.5)'},hubG)}
+    el('ellipse',{cx:CX,cy:CY-2,rx:70,ry:70*T,fill:'url(#emCore)',class:'core'},hubG);
+    el('ellipse',{cx:CX,cy:CY-2,rx:16,ry:16*T,fill:'#fffbe8',filter:'url(#emGlow)'},hubG);
+    el('text',{x:CX,y:CY+150*T+21+(FS-1)*4,class:'sub','font-size':11*FS},hubG).textContent=FS>1?'EMS':'EMS · KÖZPONTI VEZÉRLÉS';
+    // floating motes
+    if(!reduce) for(let i=0;i<14;i++){const x=120+Math.random()*760,y=120+Math.random()*420;
+      const c=el('circle',{cx:x,cy:y,r:(Math.random()*1.4+.6).toFixed(1),fill:'#a7e66e',opacity:0},parts);
+      el('animate',{attributeName:'opacity',values:'0;.8;0',dur:(3+Math.random()*4).toFixed(1)+'s',begin:(Math.random()*4).toFixed(1)+'s',repeatCount:'indefinite'},c);
+      el('animate',{attributeName:'cy',values:`${y};${y-30}`,dur:'7s',repeatCount:'indefinite'},c);}
+
+    // caption + highlight
+    const cap=document.getElementById('emapCap');
+    let cur=null, auto=null, i=0;
+    const show=k=>{for(const n of NODES){nodeEls[n.k].classList.toggle('on',n.k===k);spokeEls[n.k].classList.toggle('on',n.k===k)}
+      const n=NODES.find(n=>n.k===k); if(n){cap.innerHTML='';const b=document.createElement('b');b.textContent=n.t;const sp=document.createElement('span');sp.textContent=n.x;cap.append(b,sp)} cur=k;};
+    const stop=()=>{clearInterval(auto);auto=null};
+    for(const n of NODES){const g=nodeEls[n.k];
+      g.addEventListener('mouseenter',()=>{stop();show(n.k)});g.addEventListener('focus',()=>{stop();show(n.k)});g.addEventListener('click',()=>{stop();show(n.k)});
+      g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();stop();show(n.k)}});}
+    // gentle tour while the map is on screen, once the visitor has not taken over
+    if(!reduce){const io=new IntersectionObserver(([e])=>{if(e.isIntersecting&&!auto&&!cur){show(NODES[0].k);auto=setInterval(()=>{i=(i+1)%NODES.length;show(NODES[i].k)},3200)}else if(!e.isIntersecting)stop()},{threshold:.4});io.observe(svg);
+      svg.addEventListener('pointerdown',stop,{once:true});}
+  })();
 
   // PDF downloads: a normal link on the live site; inside the claude.ai viewer the save goes through the downloads capability
   let dlNs=null;
